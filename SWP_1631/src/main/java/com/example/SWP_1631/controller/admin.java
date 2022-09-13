@@ -5,12 +5,14 @@ import com.example.SWP_1631.entity.Role;
 import com.example.SWP_1631.service.AccountService;
 import com.example.SWP_1631.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 //import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,13 +36,15 @@ public class admin{
         return "admin/adminAccount";
     }
 
-    @PutMapping("/Update{id}")
-    public Account update(@PathVariable Integer id, @RequestBody Account user) {
-        return accSer.update(id, user);
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String editUser(@RequestParam("id") Integer userId, Model model) {
+        Optional<Account> userEdit = accSer.getAccount(userId);
+        userEdit.ifPresent(user -> model.addAttribute("account", user));
+        return "editUser";
     }
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Integer id, Model model) {
-        accSer.delete(id);
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String deleteUser(@RequestParam("id") Integer userId, Model model) {
+        accSer.delete(userId);
         List<Account> listAcc = accSer.getListAccount();
         List<Role> listRo = roleSer.getAllRole();
         model.addAttribute("liseA",listAcc );
@@ -48,19 +52,18 @@ public class admin{
         return "admin/adminAccount";
     }
 
-    @GetMapping("/add-admin")
-    public String viewAdd(Model model){
+    @RequestMapping(value = "/add-admin")
+    public String addUser(Model model) {
         List<Role> listRo = roleSer.getAllRole();
-        Account n= new Account();
         model.addAttribute("listR",listRo );
-        model.addAttribute("Account",n );
+        model.addAttribute("Account", new Account());
         return "admin/adminAddAccount";
     }
 
-    @PostMapping("/saveAccount")
-    public String save(@ModelAttribute("txtEmail") String acc){
-
-        return acc;
+    @RequestMapping(value = "/saveAccount", method = RequestMethod.POST)
+    public String save(Account user) {
+//        accSer.save(user);
+        return "index";
     }
 
 

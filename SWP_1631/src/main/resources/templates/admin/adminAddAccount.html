@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <!--=== Coding by CodingLab | www.codinglabweb.com === -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb http://www.thymeleaf.org">>
 
 <head>
   <meta charset="UTF-8">
@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<form class="form" th:action="@{/admin/saveAccount}"  method="POST">
+<form class="form" th:action="@{/admin/saveAccount}"  th:object="${Account}"  action="#"  method="POST">
   <nav>
     <div class="logo-name">
       <div class="logo-image">
@@ -38,12 +38,6 @@
           <i class="uil uil-estate"></i>
           <span class="link-name">Account</span>
         </a></li>
-
-
-        <!--                        <li><a href="#">
-                                        <i class="uil uil-share"></i>
-                                        <span class="link-name">Attendance</span>
-                                    </a></li>-->
       </ul>
 
       <ul class="logout-mode">
@@ -67,21 +61,21 @@
     <div class="form-content" style="width: 80%;height: auto; margin-left: 10%; padding-top: 0;padding-bottom: 0;">
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{Account.accountId}" name="txtFirstName" required="">
+        <input type="text" class="form-control" th:field="*{firstName}" name="txtFirstName" required="">
       </div>
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Last Name</label>
-        <input type="text" class="form-control"   id="exampleFormControlInput1" name="txtLastName" required="">
+        <input type="text" class="form-control"   th:field="*{lastName}" name="txtLastName" required="">
       </div>
       <div class="rdCheck" style="display: flex">
         <div class="form-check">
-          <input class="form-check-input" type="radio" value="male"   name="flexRadioDefault" id="flexRadioDefault1">
+          <input class="form-check-input" type="radio" value="0"  th:field="*{gender}"  name="flexRadioDefault" id="flexRadioDefault1">
           <label class="form-check-label" for="flexRadioDefault1">
             Male
           </label>
         </div>
         <div class="form-check" style="padding-left: 40px">
-          <input class="form-check-input" type="radio" value="female" name="flexRadioDefault" id="flexRadioDefault2" checked>
+          <input class="form-check-input" type="radio" value="1"  th:field="*{gender}" name="flexRadioDefault" id="flexRadioDefault2" checked>
           <label class="form-check-label" for="flexRadioDefault2">
             FeMale
           </label>
@@ -90,33 +84,33 @@
 
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Email</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" name="txtEmail" placeholder="name@example.com" required="">
+        <input type="email" class="form-control" th:field="*{email}" name="txtEmail" placeholder="name@example.com" required="">
       </div>
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Password</label>
-        <input type="password" class="form-control" name="txtPassword" id="exampleFormControlInput1" required="">
+        <input type="password" class="form-control" th:field="*{password}" name="txtPassword"  required="">
       </div>
 
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">DOB</label>
-        <input type="date" name="dob" required=""/>(yyyy-MM-dd)<br/>
+        <input type="date" name="dob" required th:field="*{dob}" />(yyyy-MM-dd)<br/>
       </div>
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Number Phone</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" name="txtPhone" required="">
+        <input type="text" class="form-control" th:field="*{phoneNumber}"   name="txtPhone" required="">
       </div>
       <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Address</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" name="ttAddress" rows="3" required=""></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{address}" name="ttAddress" rows="3" required=""></textarea>
       </div>
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Image</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" name="txtImg" >
+        <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{img}" name="txtImg" >
       </div>
       <label for="exampleFormControlInput1" class="form-label">Role</label>
-      <select class="form-select" name="slRole" aria-label="Default select example">
+      <select class="form-select" name="slRole" th:field="*{role}"  aria-label="Default select example">
         <!--<option value="0" selected>All</option>-->
-        <option th:field="*{listR}" th:each="listR : ${listR}"
+        <option   th:each="listR : ${listR}"
                 th:utext="${listR.roleName}"
                 th:value="${listR.roleID}">
         </option>

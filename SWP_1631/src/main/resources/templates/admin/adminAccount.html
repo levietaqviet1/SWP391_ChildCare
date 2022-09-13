@@ -142,8 +142,9 @@
                         <img th:src="${liseA.img}" alt="No image" style="height: 96px; width: 96px">
                     </td>
                     <td th:utext="${liseA.role.roleName}"></td>
-                <td><a th:href="@{/admin/Update(id=${liseA.accountId})}">Update</a></td>
-                <td><a th:href="@{/admin/delete/(id=${liseA.accountId})}">Delete</a></td>
+                     <td><a th:href="@{/admin/edit?id={id}(id=${liseA.accountId})}">Update</a></td>
+                    <td><a th:href="@{/admin/delete?id={id}(id=${liseA.accountId})}">Delete</a></td>
+
                 </tr>
                 <!--        </c:forEach>-->
                 </tbody>

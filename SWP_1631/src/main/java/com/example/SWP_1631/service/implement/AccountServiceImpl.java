@@ -5,6 +5,7 @@ import com.example.SWP_1631.entity.Role;
 import com.example.SWP_1631.repository.AccountRepository;
 import com.example.SWP_1631.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -62,7 +63,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccount(Account account) {
-        return accRes.getAccByEmail(account.getEmail());
+    public  Optional<Account>  getAccount(Integer id) {
+        Optional<Account> acc = accRes.findById(id);
+        return acc;
     }
 }

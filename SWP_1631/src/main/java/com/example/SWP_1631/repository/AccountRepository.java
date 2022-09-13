@@ -19,6 +19,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer > {
     @Query("DELETE from Account a where a.accountId = :id")
     public Role deteteById(@Param("id") Integer id);
 
+    @Query("SELECT u FROM Account u WHERE u.accountId= :id")
+    public Account getAccById(@Param("id") Integer id);
+
     @Query("SELECT r FROM Account u INNER JOIN  Role r ON u.role.roleID = r.roleID WHERE u.email= :email")
     public Role getRoleByEmail(@Param("email") String email);
 }
