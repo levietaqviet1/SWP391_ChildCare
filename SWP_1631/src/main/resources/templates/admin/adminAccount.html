@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -21,39 +21,21 @@
 </head>
 
 <body>
-<form action="listaccount" method="POST">
+<form th:action="@{/admin/search}" method="POST">
     <nav>
         <div class="logo-name">
             <div class="logo-image">
                 <img src="images/logo.jpg" alt="">
             </div>
-
-            <span class="logo_name"><a href="listaccount" style="text-decoration: none;color: black">Admin Page</a></span>
+            <span class="logo_name"><a href="/admin/" style="text-decoration: none;color: black">Admin Page</a></span>
         </div>
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="listaccount">
+                <li><a href="/admin/">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Account</span>
                 </a></li>
-
-<!--                <li><a href="listkinder">-->
-<!--                    <i class="uil uil-chart"></i>-->
-<!--                    <span class="link-name">Kindergartner</span>-->
-<!--                </a></li>-->
-<!--                <li><a href="listclass">-->
-<!--                    <i class="uil uil-thumbs-up"></i>-->
-<!--                    <span class="link-name">Class</span>-->
-<!--                </a></li>-->
-<!--                <li><a href="listschedule">-->
-<!--                    <i class="uil uil-comments"></i>-->
-<!--                    <span class="link-name">Schedule</span>-->
-<!--                </a></li>-->
-                <!--                        <li><a href="#">
-                                                <i class="uil uil-share"></i>
-                                                <span class="link-name">Attendance</span>
-                                            </a></li>-->
             </ul>
 
             <ul class="logout-mode">
@@ -69,37 +51,29 @@
     <div class="dashboard">
 
         <div class="dash-lefttop">
-            <img src="https://i.pinimg.com/originals/72/45/fb/7245fb0ca786bb4a98fb8465e437c5bb.jpg" alt="">
+<!--            <img src="https://i.pinimg.com/originals/72/45/fb/7245fb0ca786bb4a98fb8465e437c5bb.jpg" alt="">-->
 <!--            <a href="#" style="text-decoration: none">${sessionScope.account.firstName}</a>-->
         </div>
 
         <div class="dash-bottom">
 
-            <input class="form-control me-2" type="search" value=" " name="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+<!--            <input class="form-control me-2" type="search" value=" " name="search" placeholder="Search" aria-label="Search">-->
+<!--            <button class="btn btn-outline-success" type="submit">Search</button>-->
 
 
         </div>
         <div class="sl-id" style="display: flex;">
 
-            <div>
-                <select name="slRole"  style="width: auto;margin-left: 70px;margin-top: 20px;">
-                    <option value="0" selected>All</option>
-                    <option th:field="*{listR}" th:each="listR : ${listR}"
-                            th:utext="${listR.roleName}"
-                            th:value="${listR.roleID}">
-                    </option>
-                    <!--          <c:forEach items="${requestScope.roles}" var="roles">-->
-                    <!--            <option value="${roles.roleID}"-->
-                    <!--            <c:if test="${roles.roleID == searchRole}" >-->
-                    <!--              selected-->
-                    <!--            </c:if>-->
-                    <!--            >${roles.roleName}</option>-->
-                    <!--          </c:forEach>-->
+<!--            <div>-->
+<!--                <select name="slRole"  style="width: auto;margin-left: 70px;margin-top: 20px;">-->
+<!--                    <option value="0" selected>All</option>-->
+<!--                    <option th:field="*{listR}" th:each="listR : ${listR}"-->
+<!--                            th:utext="${listR.roleName}"-->
+<!--                            th:value="${listR.roleID}">-->
+<!--                    </option>-->
+<!--                </select>-->
 
-                </select>
-
-            </div>
+<!--            </div>-->
             <div>
                 <button  type="submit" style="width: 40%;margin-left: 70px;margin-top: 20px;"><a th:href="@{/admin/add-admin}" style="text-decoration: none">Add</a> </button>
             </div>
@@ -132,7 +106,12 @@
                     <td th:utext="${liseA.firstName}"></td>
                     <td th:utext="${liseA.lastName}"></td>
                     <td th:utext="${liseA.firstName}+${liseA.lastName} "></td>
-                    <td th:utext="${liseA.gender}"></td>
+                    <td th:switch="${liseA.gender}">
+                <span th:case="true"> Male
+                </span>
+                        <span th:case="false">Female
+                </span>
+                    </td>
                     <td th:utext="${liseA.email}"></td>
                     <td th:utext="${liseA.password}"></td>
                     <td th:utext="${liseA.dob}"></td>

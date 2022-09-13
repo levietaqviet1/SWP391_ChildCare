@@ -36,4 +36,6 @@ public class HomeController {
         model.addAttribute("title", "Logout");
         return "home";
     }
+
+
 }

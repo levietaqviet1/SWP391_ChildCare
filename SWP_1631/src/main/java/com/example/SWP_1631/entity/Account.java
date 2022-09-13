@@ -2,8 +2,10 @@ package com.example.SWP_1631.entity;
 
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -37,101 +39,31 @@ public class Account {
     private String img;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(style = "")
     @Column(name = "dob")
     private Date dob;
 
     @Column(name = "gender")
-    private boolean gender;
+    private boolean gender ;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role ;
-
-    public int getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
+    private Role role;
 
     public Date getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setDob(String dob) throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.dob = formatter.parse(dob);
+        } catch (Exception e) {
+            String sDate = "17/07/2017";
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+            this.dob = date;
+        }
+
     }
 
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

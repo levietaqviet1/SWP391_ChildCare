@@ -4,6 +4,7 @@ import com.example.SWP_1631.entity.Account;
 import com.example.SWP_1631.entity.Role;
 import com.example.SWP_1631.repository.AccountRepository;
 import com.example.SWP_1631.service.AccountService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,23 +39,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account update(Integer id, Account user) {
-        Account ac = accRes.findById(id).orElse(null);
-        if (ac == null){
-            return null;
-        }
-        ac.setAccountId(user.getAccountId());
-        ac.setDob(user.getDob());
-        ac.setAddress(user.getAddress());
-        ac.setGender(user.isGender());
-        ac.setFirstName(user.getFirstName());
-        ac.setLastName(user.getLastName());
-        ac.setEmail(user.getEmail());
-        ac.setPassword(user.getPassword());
-        ac.setPhoneNumber(user.getPhoneNumber());
-        ac.setImg(user.getImg());
-        ac.setRole(user.getRole());
-        return accRes.save(ac);
+    public void update(Account user) {
+    accRes.save(user);
     }
 
     @Override

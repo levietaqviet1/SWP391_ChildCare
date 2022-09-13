@@ -24,4 +24,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer > {
 
     @Query("SELECT r FROM Account u INNER JOIN  Role r ON u.role.roleID = r.roleID WHERE u.email= :email")
     public Role getRoleByEmail(@Param("email") String email);
+
+
+
 }

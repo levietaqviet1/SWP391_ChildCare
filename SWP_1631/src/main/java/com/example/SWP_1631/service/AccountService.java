@@ -13,7 +13,7 @@ public interface AccountService extends UserDetailsService {
     public Optional<Account> getAccount(Integer id);
 
 
-    Account update(Integer id, Account user);
+    public void update(Account user);
 
     void delete(Integer id);
     void save( Account user);
