@@ -32,4 +32,7 @@ public class Clazz {
     )
     private Set<Account> account;
 
+    @ManyToOne
+    @JoinColumn(name = "class_id")
+    private Schedule schedule;
 }
