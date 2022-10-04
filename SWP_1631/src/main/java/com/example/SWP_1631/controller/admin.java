@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class    admin {
+public class admin {
 
 //    @Autowired
 //    private ModelMapper modelMappe;
