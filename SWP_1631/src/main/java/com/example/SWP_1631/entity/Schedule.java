@@ -15,16 +15,35 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
     private int scheduleId;
+    @ManyToOne
+    @JoinColumn(name = "class_id")
+    private Clazz clazzId;
+    @ManyToOne
+    @JoinColumn(name = "activity_id")
+    private Activity activityid;
 
-    @Column(name = "class_id")
-    private String classId;
+    @ManyToOne
+    @JoinColumn(name = "slot_id")
+    private Slot slot_id;
 
-    @Column(name = "activity_id")
-    private String activityId;
-
-    @Column(name = "slot_id")
-    private String slotId;
-
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(style = "")
     @Column(name = "schedule_date")
-    private String scheduleDate;
+    private Date scheduleDate;
+
+    public Date getDob() {
+        return scheduleDate;
+    }
+
+    public void setDob(String dob) throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.scheduleDate = formatter.parse(dob);
+        } catch (Exception e) {
+            String sDate = "17/07/2017";
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+            this.scheduleDate = date;
+        }
+
+    }
 }
