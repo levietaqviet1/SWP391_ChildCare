@@ -1,7 +1,12 @@
 package com.example.SWP_1631.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Entity
+@Data
+@Table(name = "slot")
 public class Slot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
