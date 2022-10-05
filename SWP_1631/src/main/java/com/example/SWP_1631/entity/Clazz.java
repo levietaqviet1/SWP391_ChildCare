@@ -31,8 +31,4 @@ public class Clazz {
             inverseJoinColumns = @JoinColumn(name = "account_id")
     )
     private Set<Account> account;
-
-    @ManyToOne
-    @JoinColumn(name = "class_id")
-    private Schedule schedule;
 }
