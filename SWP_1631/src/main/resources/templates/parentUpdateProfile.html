@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<!--=== Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!----======== CSS ======== -->
+  <link rel="stylesheet" th:href="@{/admin/css/style.css}">
+  <link rel="stylesheet" th:href="@{/admin/boot/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/admin/boot/bootstrap.css}">
+  <!----===== Iconscout CSS ===== -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <link rel="icon" th:href="@{/image/logo2-removebg-preview.png}">
+
+  <!--<title>Admin Dashboard Panel</title>-->
+</head>
+
+<body>
+<form th:action="@{/admin/update?id={id}(id=${Account.accountId})}"   method="POST">
+  <nav>
+    <div class="logo-name">
+      <div class="logo-image">
+        <img src="images/logo.jpg" alt="">
+      </div>
+      <span name="idd" hidden th:text="${Account.accountId}" ></span>
+
+      <span class="logo_name"><a href="/admin/" style="text-decoration: none;color: black">Admin Page</a></span>
+    </div>
+
+    <div class="menu-items">
+      <ul class="nav-links">
+        <li><a href="/admin/">
+          <i class="uil uil-estate"></i>
+          <span class="link-name">Account</span>
+        </a></li>
+      </ul>
+
+      <ul class="logout-mode">
+        <li><a href="#">
+          <i class="uil uil-signout"></i>
+          <span class="link-name">Logout</span>
+        </a></li>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+
+    <div class="dash-lefttop">
+      <!--      <img src="https://i.pinimg.com/originals/72/45/fb/7245fb0ca786bb4a98fb8465e437c5bb.jpg" alt="">-->
+      <!--      <a href="#">User</a>-->
+    </div>
+
+    <div class="form-title" style="text-align: center;font-size: 50px;">Update Account</div>
+    <div class="form-content" style="width: 80%;height: auto; margin-left: 10%; padding-top: 0;padding-bottom: 0;">
+
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">First Name</label>
+        <input type="text" class="form-control" name="txtFirstName"  th:value="${Account.firstName}" >
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Last Name</label>
+        <input type="text" class="form-control"  name="txtLastName"   th:value="${Account.lastName}">
+      </div>
+      <div class="rdCheck" style="display: flex">
+        <div class="form-check">
+          <label for="exampleFormControlInput1" class="form-label">Gender</label>
+          <td th:switch="${Account.gender}">
+                <span th:case="true">
+                  <input type="radio" name="gender" id="gender1" checked value="male" /> <label for="gender1">Male</label>
+                   <input type="radio" name="gender" id="gender2" value="female" /> <label for="gender2">Female</label>
+                </span>
+            <span th:case="false">
+                   <input type="radio" name="gender" id="gender3"  value="male" /> <label for="gender3">Male</label>
+                   <input type="radio" name="gender" id="gender4" checked value="female" /> <label for="gender4">Female</label>
+               </span>
+          </td>
+          <br/>
+        </div>
+
+
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email</label>
+        <input type="email" class="form-control" name="txtEmail"  th:value="${Account.email}" placeholder="name@example.com" readonly="">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Pass Word</label>
+        <input type="password" class="form-control" name="txtPassword" th:value="${Account.password}" id="exampleFormControlInput1">
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">DOB</label>
+        <input type="date" name="dob" th:value="${Account.dob}" />(yyyy-MM-dd)<br/>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Number Phone</label>
+        <input type="text" class="form-control"  name="txtPhone" th:value="${Account.phoneNumber}"  placeholder="name@example.com">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Address</label>
+        <input type="text" class="form-control" th:value="${Account.address}"  name="ttAddress" value="${s.address}" placeholder="HN, Vietnam">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Image</label>
+        <input type="text" class="form-control" th:value="${Account.img}"  name="txtImg" value="${s.img}">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Role</label>
+        <input value="${s.role.roleID}" name="slRole" type="hidden"/>
+        <!--        <input type="text" class="form-control"   name="role" th:value="${Account.role.roleName}" >-->
+        <select name="roleUp" id="nationality">
+          <option
+                  th:each="Role:${listR}"
+                  th:text="${Role.roleName}"
+                  th:value="${Role.roleID}"
+                  th:selected="${Account.role.roleID==Role.roleID}"></option>
+        </select>
+        <!--                        <select class="form-select" name="slRole" aria-label="Default select example">
+                                    <option value="0" selected>All</option>
+
+                                    <c:forEach items="${requestScope.listR}" var="role">
+                                        <option
+                                            <c:if test="${role.roleID eq s.role.roleID}">selected=""</c:if>
+
+                                                value="${role.roleID}">${role.roleName}</option>
+                                    </c:forEach>
+                                </select>-->
+      </div>
+
+
+
+      <div class="d-grid gap-2 d-md-block" style="margin-top: 30px; margin-bottom: 30px; ;">
+        <input type="submit" value="Save"/>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</form>
+
+<!-- <script src="agu.js"></script> -->
+</body>
+
+</html>
