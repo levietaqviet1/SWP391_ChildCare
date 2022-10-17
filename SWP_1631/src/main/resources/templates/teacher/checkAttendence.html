@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--  CSS  -->
+    <link rel="icon" th:href="@{/assets/image/logo2-removebg-preview.png}">
+
+    <link rel="stylesheet" th:href="@{/teacher/css/teacherhome.css}">
+    <link rel="stylesheet" th:href="@{teacher/css/kidprofile.css}">
+    <script src="https://kit.fontawesome.com/67b5c45612.js" crossorigin="anonymous"></script>
+    <script src="teacher/js/teacherhome.js"></script>
+    <link rel="stylesheet" href="teacher/css/checkattendence.css">
+    <title>YS ChildCare</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="home">
+        <div class="left-side-menu">
+            <div class="vertical-menu">
+                <div class="user-welcome">
+                    <img class="user-img" src="teacher/img/userImg/dummy-user-img.png" style="width: 80px; height: 80px;" alt="">
+                    <p>Harry Porter</p>
+                </div>
+                <div class="menu-item-container">
+                    <ul class="item-lists">
+                        <li class="menu-item ">
+                            <a href="attendance">Home</a>
+                        <li class="menu-item">
+                            <a href="@{teacherProfile}">Teacher Information</a>
+                        </li>
+                        <li class="menu-item current1">
+                            <a href="#" style="color: #fff;">View student</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="log-out">
+                    <a th:href="@{logout}">Log out</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="page-content">
+                <div class="kid-profile">
+                    <th:c:set var="kinder" value="${requestScope.kinder}"/>
+                    <div class="kid-profile_header">
+                        <div class="img-section">
+                            <img src="teacher/img/userImg/dummy-user-img.png" alt="">
+                        </div>
+
+                        <div class="personel-section">
+                            <h1>${kinder.first_name} ${kinder.last_name}</h1>
+                            <p>${kinder.dob}</p>
+                        </div>
+                    </div>
+                    <div class="list-option" id="options">
+                        <div class="attendence option-item current">
+                            <a th:href="@{#}">Attendance</a>
+                        </div>
+                        <div class="feedback option-item">
+                            <a th:href="@{studentinfor?action=feedback&kid_id=${kinder.kinder_id}}">Feedback</a>
+                        </div>
+                        <div class="profile option-item">
+                            <a th:href="@{kidprofile?kid_id=${kinder.kinder_id}}">Profile</a>
+                        </div>
+                    </div>
+
+                    <div class="attendence-section">
+                        <div class="table-attendance">
+                            <th:c:forEach var="date" items="${requestScope.listDate}" varStatus="loop1">
+                                <th:c:set var="isTrue" value="false"/>
+                                <th:c:forEach var="check" items="${requestScope.attendance}" varStatus="loop">
+                                    <th:c:if test="${check.check_date == date && check.status==2}">
+                                        <div class="attendance-box present">
+                                            <p>${loop1.index +1}</p>
+                                            <th:c:set var="isTrue" value="true"/>
+                                        </div>
+                                    </th:c:if>
+                                    <th:c:if test="${check.check_date == date && check.status==1}">
+                                        <div class="attendance-box neutral">
+                                            <p>${loop1.index +1}</p>
+                                            <th:c:set var="isTrue" value="true"/>
+                                        </div>
+                                    </th:c:if>
+                                    <th:c:if test="${isTrue == true}">
+                                        <th:c:set var="check" value="${requestScope.maxindexobject}"/>
+                                    </th:c:if>
+                                </th:c:forEach>
+                                <th:c:if test="${isTrue==false}">
+                                    <div class="attendance-box absent">
+                                        <p>${loop1.index +1}</p>
+                                        <th:c:set var="isTrue" value="false"/>
+                                    </div>
+                                </th:c:if>
+                            </th:c:forEach>
+                            <div class="attendance-box notInclude">
+                                <p></p>
+                            </div>
+                            <div class="attendance-box notInclude">
+                                <p></p>
+                            </div>
+                            <div class="attendance-box notInclude">
+                                <p></p>
+                            </div>
+                            <div class="attendance-box notInclude">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="guide">
+                            <i class="fa-solid fa-square" style="color: #EB5353;"><p>Absent or not take attendance yet</p></i>
+                            <i class="fa-solid fa-square" style="color: #f0ef21;"><p>Checked in</p></i>
+                            <i class="fa-solid fa-square" style="color: #36AE7C;"><p>Checked out</p></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
