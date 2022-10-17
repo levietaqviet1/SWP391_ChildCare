@@ -1,4 +1,4 @@
-package com.example.SWP_1631.service.controller;
+package com.example.SWP_1631.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
