@@ -36,5 +36,4 @@ public class Attendance {
             this.checkDate = date1;
         }
     }
-
 }
