@@ -20,6 +20,11 @@ public class HomeController {
         return "register";
     }
 
+    @RequestMapping("/childregister")
+    public String chireq(Model model){
+        return "childrenregister/childregister";
+    }
+
     @RequestMapping("/login")
     public String login(Model model){
         return "login";

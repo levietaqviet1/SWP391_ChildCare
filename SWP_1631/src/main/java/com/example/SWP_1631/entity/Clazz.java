@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "clazz")
+@Table(name = "Class")
 public class Clazz {
 
     @Id
@@ -24,11 +24,7 @@ public class Clazz {
     @Column(name = "class_description")
     private String classDescription;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "clazz_account",
-            joinColumns = @JoinColumn(name = "clazz_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_id")
-    )
-    private Set<Account> account;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Account account;
 }
