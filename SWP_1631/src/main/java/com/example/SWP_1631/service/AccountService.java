@@ -10,11 +10,13 @@ import java.util.Optional;
 public interface AccountService extends UserDetailsService {
     public List<Account> getListAccount();
 
+    void delete(Integer id);
+
     public Optional<Account> getAccount(Integer id);
 
 
     public void update(Account user);
 
-    void delete(Integer id);
+    public boolean delete( long id);
     void save( Account user);
 }

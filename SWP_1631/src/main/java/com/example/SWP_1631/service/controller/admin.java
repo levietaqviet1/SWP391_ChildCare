@@ -1,4 +1,4 @@
-package com.example.SWP_1631.controller;
+package com.example.SWP_1631.service.controller;
 
 import com.example.SWP_1631.entity.*;
 import com.example.SWP_1631.service.*;
