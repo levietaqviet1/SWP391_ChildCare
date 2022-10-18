@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "Kindergartner")
-public class Kindergartner  {
+public class Kindergartner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "kinder_id")
@@ -36,7 +36,7 @@ public class Kindergartner  {
     private Date dob;
 
     @Column(name = "gender")
-    private boolean gender ;
+    private boolean gender;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

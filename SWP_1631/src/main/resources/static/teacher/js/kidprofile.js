@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
     var patharr = location.pathname.split("/");
     var fileName = patharr[1];
     var options = document.getElementById('options');

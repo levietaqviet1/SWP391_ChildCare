@@ -23,10 +23,11 @@ public class childController {
 
     @Autowired
     private ClazzService clazzSer;
+
     @GetMapping("/child")
-    public String view(Model model){
+    public String view(Model model) {
         List<Clazz> list = clazz.getAllClazz();
-        model.addAttribute("ListClazz",list);
+        model.addAttribute("ListClazz", list);
         return "childrenregister/childregister";
     }
 

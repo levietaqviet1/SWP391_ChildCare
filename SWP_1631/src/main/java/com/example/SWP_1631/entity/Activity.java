@@ -24,7 +24,6 @@ public class Activity {
     private String name;
 
 
-
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

@@ -22,19 +22,19 @@ public class AttendanceController {
     private RoleService roleSer;
 
     @RequestMapping("/checkAttendence")
-    public String atten(Model model){
+    public String atten(Model model) {
         return "teacher/checkAttendence";
     }
 
     @RequestMapping("/teacherProfile")
-    public String profile(@RequestParam("id") Integer id, Model model){
+    public String profile(@RequestParam("id") Integer id, Model model) {
         Optional<Account> teacherFound = accSer.getAccount(id);
         teacherFound.ifPresent(teacher -> model.addAttribute("Teacher", teacher));
         return "teacher/teacherProfile";
     }
 
     @RequestMapping("/update")
-    public String update(@RequestParam("id") Integer id,Model model){
+    public String update(@RequestParam("id") Integer id, Model model) {
         Optional<Account> teacherFound = accSer.getAccount(id);
         teacherFound.ifPresent(teacher -> model.addAttribute("Teacher", teacher));
         return "teacher/teacherUpdate";

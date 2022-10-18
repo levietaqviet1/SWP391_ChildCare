@@ -12,6 +12,7 @@
 html {
     scroll-behavior: smooth !important;
 }
+
 :root {
     --purple: #90a1f8;
     --light-purple: #eef1ff;
@@ -25,9 +26,11 @@ h2 {
     margin-bottom: 16px;
     line-height: 0.8;
 }
+
 h2 span {
     color: var(--purple);
 }
+
 h5 span {
     color: var(--purple);
 }
@@ -52,7 +55,7 @@ a {
     border-radius: 6px;
     border-width: 0;
     box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-        rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+    rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
@@ -84,8 +87,8 @@ a {
 
 .button-9:focus {
     box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-        rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
-        rgba(50, 151, 211, 0.3) 0 0 0 4px;
+    rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
+    rgba(50, 151, 211, 0.3) 0 0 0 4px;
 }
 
 .button-6 {
@@ -133,6 +136,7 @@ a {
     color: rgba(0, 0, 0, 0.65);
     transform: translateY(0);
 }
+
 header {
     font-family: 'Caveat Brush', cursive;
     z-index: 1;
@@ -155,6 +159,7 @@ header {
 .navigation-links:hover {
     color: var(--purple2);
 }
+
 .navigation-links {
     font-size: 20px;
     margin-left: 28px;
@@ -165,6 +170,7 @@ header {
 .header-logo:hover {
     opacity: 1;
 }
+
 .header-logo {
     height: 40px;
     object-fit: cover;
@@ -210,6 +216,7 @@ header .login-btns:hover {
 .section-custom p {
     font-size: 20px;
 }
+
 .section-custom h2 {
     font-size: 48px;
 }
@@ -218,13 +225,15 @@ header .login-btns:hover {
     color: white;
     position: relative;
     background: linear-gradient(rgba(62, 62, 62, 0.5), rgba(57, 57, 57, 0.5)),
-        url('../image/cover.jpg') no-repeat right;
+    url('../image/cover.jpg') no-repeat right;
     background-size: cover;
 }
+
 #welcome .title-container {
     margin-left: -60px;
     margin-right: 35%;
 }
+
 #welcome .title-container h1 {
     font-family: 'Caveat Brush', cursive;
     font-size: 100px;
@@ -252,6 +261,7 @@ header .login-btns:hover {
     border-radius: 0px 0px 15px 15px;
     box-shadow: 0px 10px 20px;
 }
+
 #welcome #get-in-touch-form p {
     margin: 16px;
     text-align: center;
@@ -265,12 +275,14 @@ header .login-btns:hover {
     align-items: center;
     width: 80%;
 }
+
 #welcome #get-in-touch-form input {
     display: block;
     width: 100%;
     padding: 8px 8px;
     margin: 4px;
 }
+
 #welcome #get-in-touch-form button {
     height: 48px;
     width: 100%;
@@ -324,17 +336,21 @@ header .login-btns:hover {
     margin: 0px 16px;
     height: 315px;
 }
+
 .small-block-3 {
     width: 33%;
     height: 515px;
 }
+
 .small-block-2 h1 {
     font-size: 100px;
     margin-bottom: -42px;
 }
+
 .small-block-2 h5 {
     margin-top: 24px;
 }
+
 .small-block-2 {
     width: 50%;
 }
@@ -353,6 +369,7 @@ button {
     width: 227.2px !important;
     height: 48px !important;
 }
+
 span.highlight {
     color: white;
     background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=b689c0);
@@ -375,6 +392,7 @@ button {
     opacity: 0.7;
     background-color: var(--purple) !important;
 }
+
 .btn-highlight {
     background-color: var(--purple) !important;
     color: white !important;
@@ -401,6 +419,7 @@ button {
     .navigation-links {
         display: none;
     }
+
     .sub-text {
         flex-direction: column;
     }
@@ -422,6 +441,7 @@ button {
         width: 100%;
         text-align: center;
     }
+
     img {
         max-width: 80% !important;
         width: 100% !important;
@@ -441,6 +461,7 @@ button {
         max-height: 36%;
         padding: 24px;
     }
+
     h2 {
         font-size: 32px !important;
     }
@@ -458,15 +479,18 @@ button {
     footer {
         font-size: 12px !important;
     }
+
     #about-us {
-        font-size: 24lpx !important;
+        font-size: 24 lpx !important;
         padding: 0 64px;
     }
 }
+
 @media only screen and (max-width: 500px) {
     .right-side {
         display: none;
     }
+
     header {
         display: flex;
         justify-content: center;
@@ -502,6 +526,7 @@ button {
     .small-block-3 p {
         text-overflow: ellipsis;
     }
+
     .small-block-3 {
         height: 28% !important;
         overflow: hidden;

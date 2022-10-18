@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
 /* div,
 label {
     margin: 0;
@@ -84,11 +85,11 @@ form {
 
 /*ẩn input radio - vì chúng ta đã có label là GUI*/
 
-#rating>input {
+#rating > input {
     display: none;
 }
 
-#rating>label:before {
+#rating > label:before {
     margin: 5px;
     font-size: 1.25em;
     font-family: FontAwesome;
@@ -99,7 +100,7 @@ form {
 
 /*1 ngôi sao*/
 
-#rating>.half:before {
+#rating > .half:before {
     content: "\f089";
     position: absolute;
 }
@@ -107,7 +108,7 @@ form {
 
 /*0.5 ngôi sao*/
 
-#rating>label {
+#rating > label {
     color: #ddd;
     float: right;
 }
@@ -118,18 +119,18 @@ form {
 
 /*thêm màu cho sao đã chọn và các ngôi sao phía trước*/
 
-#rating>input:checked~label,
-#rating:not(:checked)>label:hover,
-#rating:not(:checked)>label:hover~label {
+#rating > input:checked ~ label,
+#rating:not(:checked) > label:hover,
+#rating:not(:checked) > label:hover ~ label {
     color: #FFD700;
 }
 
 
 /* Hover vào các sao phía trước ngôi sao đã chọn*/
 
-#rating>input:checked+label:hover,
-#rating>input:checked~label:hover,
-#rating>label:hover~input:checked~label,
-#rating>input:checked~label:hover~label {
+#rating > input:checked + label:hover,
+#rating > input:checked ~ label:hover,
+#rating > label:hover ~ input:checked ~ label,
+#rating > input:checked ~ label:hover ~ label {
     color: #FFED85;
 }

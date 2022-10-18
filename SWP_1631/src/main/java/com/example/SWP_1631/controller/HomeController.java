@@ -9,32 +9,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping("/")
-    public String init(Model model){
+    public String init(Model model) {
 //        String name = "Viet";
 //        model.addAttribute("long",name);
         return "index";
     }
+
     @RequestMapping("/checkAttendence")
-    public String atten(Model model){
+    public String atten(Model model) {
         return "teacher/checkAttendence";
     }
+
     @RequestMapping("/register")
-    public String req(Model model){
+    public String req(Model model) {
         return "register";
     }
 
     @RequestMapping("/childregister")
-    public String chireq(Model model){
+    public String chireq(Model model) {
         return "childrenregister/childregister";
     }
 
     @RequestMapping("/login")
-    public String login(Model model){
+    public String login(Model model) {
         return "login";
     }
 
     @RequestMapping("/userAccountInfo")
-    public String userAccountInfo(Model model){
+    public String userAccountInfo(Model model) {
         return "home";
     }
 

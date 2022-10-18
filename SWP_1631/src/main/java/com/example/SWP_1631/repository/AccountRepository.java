@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Integer > {
+public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query("SELECT u FROM Account u WHERE u.email= :email AND u.password = :pass")
     public Account getAccByInfo(@Param("email") String email, @Param("pass") String pass);
@@ -24,7 +24,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer > {
 
     @Query("SELECT r FROM Account u INNER JOIN  Role r ON u.role.roleID = r.roleID WHERE u.email= :email")
     public Role getRoleByEmail(@Param("email") String email);
-
 
 
 }

@@ -17,6 +17,7 @@ public interface AccountService extends UserDetailsService {
 
     public void update(Account user);
 
-    public boolean delete( long id);
-    void save( Account user);
+    public boolean delete(long id);
+
+    void save(Account user);
 }

@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     padding-top: 30px;
-   
+
 }
 
 .img-section {
@@ -20,8 +20,8 @@
 h1 {
     font-family: 'Inter', sans-serif;
     font-weight: bold;
-    
-    
+
+
 }
 
 .personel-section p:not(:first-child) {
@@ -68,11 +68,11 @@ h1 {
 }
 
 .list-option button-option {
-    padding: 10px 24px;    
+    padding: 10px 24px;
     font-size: 16px;
     border-radius: 12px;
-    background-color: #889BFF; 
-    border:  none;
+    background-color: #889BFF;
+    border: none;
     margin-left: 50px;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
@@ -80,11 +80,13 @@ h1 {
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
 }
 
-.button-option::hover {background-color: #889BFF;}
+.button-option::hover {
+    background-color: #889BFF;
+}
 
 .button-option:active {
-  background-color: #889BFF;
-  transform: translateY(4px);
+    background-color: #889BFF;
+    transform: translateY(4px);
 }
 
 .kid-profile_content {
@@ -123,9 +125,9 @@ h1 {
 }
 
 .kinder-list .list-item {
-    
+
     height: 55px;
-    
+
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
     display: flex;
     align-items: center;
@@ -147,14 +149,15 @@ h1 {
     display: flex;
     align-items: center;
     position: relative;
-}    
-.content-item .parent-infor{
+}
+
+.content-item .parent-infor {
     background-color: #f2f2f2;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.content-item .child-gender{
+.content-item .child-gender {
     background-color: #fff;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -183,17 +186,17 @@ h1 {
     color: white;
 }
 
-.item-title input{
+.item-title input {
     padding: 15px;
     border-radius: 20px;
     background-color: #fff;
     border: none;
     font-family: "Inter", sans-serif;
     font-size: 18px;
-        font-weight: 700;
+    font-weight: 700;
 }
 
-.description>p {
+.description > p {
     padding: 10px 5px;
 }
 
@@ -211,16 +214,16 @@ h1 {
     border-radius: 20px;
 }
 
-.current>a {
+.current > a {
     color: #fff;
 }
 
 .button {
-    padding: 1px 3px;    
+    padding: 1px 3px;
     font-size: 15px;
     border-radius: 12px;
-    background-color: #cccccc; 
-    border:  none;
+    background-color: #cccccc;
+    border: none;
     margin-left: 5px;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
@@ -228,20 +231,23 @@ h1 {
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
 
 }
-.button:hover {background-color:  #00ff00;}
+
+.button:hover {
+    background-color: #00ff00;
+}
 
 .button:active {
-  background-color:  #00ff00;
-  transform: translateY(4px);
+    background-color: #00ff00;
+    transform: translateY(4px);
 }
 
 .child-update {
     cursor: pointer;
-    padding: 10px 24px;    
+    padding: 10px 24px;
     font-size: 16px;
     border-radius: 12px;
-    background-color: #889BFF; 
-    border:  none;
+    background-color: #889BFF;
+    border: none;
     margin-left: 45%;
     margin-bottom: 30px;
     font-family: 'Inter', sans-serif;
@@ -251,45 +257,49 @@ h1 {
 
 }
 
-.child-update:hover {background-color:  #889BFF;}
-
-.child-update:active {
-  background-color:  #889BFF;
-  transform: translateY(4px);
+.child-update:hover {
+    background-color: #889BFF;
 }
 
-.log-out_button{
-    padding: 10px 10px;    
+.child-update:active {
+    background-color: #889BFF;
+    transform: translateY(4px);
+}
+
+.log-out_button {
+    padding: 10px 10px;
     font-size: 15px;
     border-radius: 12px;
-    background-color: #cccccc; 
-    border:  none;
+    background-color: #cccccc;
+    border: none;
     margin-left: 0px;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
     color: white;
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
- }
- 
-.log-out_button:hover {background-color: red;}
+}
+
+.log-out_button:hover {
+    background-color: red;
+}
 
 .log-out_button:active {
-  background-color: red;
-  transform: translateY(4px);
+    background-color: red;
+    transform: translateY(4px);
 }
 
 .item-list {
-    
+
     height: 25px;
     display: flex;
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
     display: flex;
     align-items: center;
-   border-radius: 5px;
+    border-radius: 5px;
     border-color: white;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
     text-align: center;
     font-size: 15px;
-    }
+}
 

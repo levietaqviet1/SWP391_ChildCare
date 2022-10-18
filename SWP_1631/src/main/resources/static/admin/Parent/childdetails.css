@@ -32,13 +32,13 @@ td {
     border-bottom: 1px solid var(--primary-border-color);
 }
 
-.table-attendance{
+.table-attendance {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto;
     padding: 10px;
 }
 
-.attendance-box{
+.attendance-box {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 10px;
@@ -46,19 +46,19 @@ td {
     text-align: center;
 }
 
-.attendance-box:first-child{
+.attendance-box:first-child {
     border-radius: 20px 0 0 0;
 }
 
-.attendance-box:nth-child(7){
+.attendance-box:nth-child(7) {
     border-radius: 0 20px 0 0;
 }
 
-.attendance-box:nth-child(29){
+.attendance-box:nth-child(29) {
     border-radius: 0 0 0 20px;
 }
 
-.attendance-box:nth-child(35){
+.attendance-box:nth-child(35) {
     border-radius: 0 0 20px 0;
 }
 
@@ -92,24 +92,24 @@ td {
 }
 
 .present {
-    background-color: var(--present-color)!important;
-    color: #fff!important;
+    background-color: var(--present-color) !important;
+    color: #fff !important;
 }
 
 .absent {
-    background-color: var(--absent-color)!important;
-    color: #fff!important;
+    background-color: var(--absent-color) !important;
+    color: #fff !important;
 }
 
-.neutral{
-    background-color: #f0ef21!important;
+.neutral {
+    background-color: #f0ef21 !important;
 }
 
-.notInclude{
+.notInclude {
     background-color: #e0d4d4;
 }
 
-.nochild{
+.nochild {
     text-align: center;
     margin: auto;
 }

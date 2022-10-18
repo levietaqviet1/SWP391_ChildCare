@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -11,12 +12,12 @@
 }
 
 ::value {
-  color: #000;
-  font-size: 20px;
-  font-family: 'Inter', sans-serif;
-  font-weight: bold;
-  text-align: center;
-   
+    color: #000;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    text-align: center;
+
 }
 
 .home {
@@ -107,13 +108,13 @@
     border-radius: 20px;
 }
 
-.current1{
+.current1 {
     background-color: #889BFF;
     color: #fff;
     border-radius: 20px;
 }
 
-.current>a{
+.current > a {
     color: #fff;
 }
 
@@ -219,7 +220,7 @@ input[type="search"]:hover {
     border-radius: 20px;
 }
 
-.header-filter input{
+.header-filter input {
     padding: 15px;
     border-radius: 20px;
     background-color: #fff;
@@ -238,7 +239,7 @@ input[type="search"]:hover {
     color: #000;
 }
 
-.check-item a, .filter-item a{
+.check-item a, .filter-item a {
     font-family: inherit;
     font-size: 16px;
     font-weight: 700;
@@ -314,7 +315,7 @@ input[type="search"]:hover {
     font-size: 16px;
     font-weight: bold;
     color: #000;
-    
+
 }
 
 .student-infor h3,
@@ -336,15 +337,15 @@ input[type="search"]:hover {
     border-radius: 50%;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     width: 5px;
 }
 
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
     background-color: #fff;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
     background: #dddddd;
 }
 
@@ -380,24 +381,24 @@ input[type="search"]:hover {
     margin: 0 5px;
 }
 
-form{
+form {
     width: 100%;
     display: flex;
     border: none;
-    
+
 }
 
-.header-intro .search-section form{
+.header-intro .search-section form {
     background-color: #fff;
     border-radius: 20px;
 }
 
-.submit-btn{
+.submit-btn {
     display: flex;
     justify-content: flex-end;
 }
 
-.submit-btn input{
+.submit-btn input {
     padding: 15px 40px;
     background-color: #fff;
     color: #000;
@@ -408,12 +409,12 @@ form{
     border-radius: 20px;
 }
 
-.submit-btn input:hover{
+.submit-btn input:hover {
     background-color: #889BFF;
     color: #fff;
 }
 
-.message{
+.message {
     background-color: #fff;
     border-left: 6px solid #4CAF50;
     width: 400px;
@@ -421,7 +422,7 @@ form{
     border-radius: 10px;
 }
 
-.popup{
+.popup {
     position: fixed;
     top: 175px;
     z-index: 1;
@@ -432,85 +433,99 @@ form{
     animation-delay: 2s;
 }
 
-.popup-content{
+.popup-content {
     position: relative;
 }
 
-.close{
+.close {
     position: absolute;
     right: 0;
     padding-right: 5px;
     padding-top: 5px;
 }
 
-optgroup { font-size:15px; font-family: 'Inter', sans-serif;}
+optgroup {
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+}
 
 
 @keyframes slide {
-    100% { right: 0; }
+    100% {
+        right: 0;
+    }
 }
 
 @keyframes fadeout {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .cancel_button {
-    padding: 10px 24px;    
+    padding: 10px 24px;
     font-size: 15px;
     border-radius: 12px;
-    background-color: #cccccc; 
-    border:  none;
+    background-color: #cccccc;
+    border: none;
     margin-left: 0px;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
     color: white;
     cursor: pointer;
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
-   
+
 
 }
+
 .cancel_button:hover {
-    background-color: red;}
+    background-color: red;
+}
 
 .cancel_button:active {
-  background-color: gray;
-  transform: translateY(4px);
+    background-color: gray;
+    transform: translateY(4px);
 }
 
 .confirm_button {
-    padding: 10px 24px;    
+    padding: 10px 24px;
     font-size: 16px;
     border-radius: 12px;
-    background-color: #cccccc; 
-    border:  none;
+    background-color: #cccccc;
+    border: none;
     margin-left: 50px;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
     color: white;
     cursor: pointer;
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
-    
+
 
 }
-.confirm_button:hover {background-color: #00cc66;}
+
+.confirm_button:hover {
+    background-color: #00cc66;
+}
 
 .confirm_button:active {
-  background-color: #00ff00;
-  transform: translateY(4px);
+    background-color: #00ff00;
+    transform: translateY(4px);
 }
 
-.popup{
+.popup {
     font-family: 'Inter', sans-serif;
     font-weight: bold;
     width: 500px;
-    background:  #fff;
+    background: #fff;
     border-radius: 6px;
     position: absolute;
     color: #595959;
     top: 0;
     left: 60%;
-    transform: translate(-50%,-50%) scale(0.1);
+    transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
     padding: 0 30px 30px;
     visibility: hidden;
@@ -518,29 +533,29 @@ optgroup { font-size:15px; font-family: 'Inter', sans-serif;}
     border-color: #000;
     border-style: solid;
     box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 12%);
-    
+
 }
 
-.open-popup{
+.open-popup {
     visibility: visible;
     top: 50%;
-    transform: translate(-50%,-50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
 }
 
-.popup img{
+.popup img {
     width: 100px;
     margin-top: -50px;
     border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.popup h2{
+.popup h2 {
     font-size: 38px;
     font-weight: 500;
     margin: 30px 0 10px;
 }
 
-.popup button{
+.popup button {
     width: 100%;
     margin-top: 50px;
     padding: 10px 0;
@@ -548,37 +563,37 @@ optgroup { font-size:15px; font-family: 'Inter', sans-serif;}
     color: #fff;
     border: 0;
     outline: 18px;
-    border-radius:4px;
+    border-radius: 4px;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .symbol-input100 {
-                font-size: 15px;
+    font-size: 15px;
 
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: flex;
-                align-items: center;
-                position: absolute;
-                border-radius: 25px;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                padding-left: 35px;
-                padding-top: 3px;
-                pointer-events: none;
-                color: #666666;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-left: 35px;
+    padding-top: 3px;
+    pointer-events: none;
+    color: #666666;
 
-                -webkit-transition: all 0.4s;
-                -o-transition: all 0.4s;
-                -moz-transition: all 0.4s;
-                transition: all 0.4s;
-            }
-            
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
 .focus-input100 {
     display: block;
     position: absolute;
@@ -598,10 +613,10 @@ optgroup { font-size:15px; font-family: 'Inter', sans-serif;}
     z-index: 1;
     margin-bottom: 10px;
 }
-            
+
 .validate-input {
     position: relative;
-} 
+}
 
 .invalid {
     color: red;

@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void update(Account user) {
-    accRes.save(user);
+        accRes.save(user);
     }
 
     @Override
@@ -43,11 +43,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void delete(Integer id) {
-    accRes.deleteById(id);
+        accRes.deleteById(id);
     }
 
     @Override
-    public  Optional<Account>  getAccount(Integer id) {
+    public Optional<Account> getAccount(Integer id) {
         Optional<Account> acc = accRes.findById(id);
         return acc;
     }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name="attendance")
+@Table(name = "attendance")
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +18,21 @@ public class Attendance {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(style = "")
     @Column(name = "check_date")
-    private  Date checkDate;
+    private Date checkDate;
     @Column(name = "status")
-    private  int status;
+    private int status;
     @Column(name = "teacher_id")
-    private  int teacherId;
+    private int teacherId;
 
-    public Date getDate(){return checkDate;}
+    public Date getDate() {
+        return checkDate;
+    }
 
-    public void checkDate(String checkDate) throws Exception{
+    public void checkDate(String checkDate) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             this.checkDate = sdf.parse(checkDate);
-        }catch (Exception e){
+        } catch (Exception e) {
             String date = "";
             Date date1 = sdf.parse(checkDate);
             this.checkDate = date1;

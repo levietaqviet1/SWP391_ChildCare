@@ -44,7 +44,7 @@ public class Account {
     private Date dob;
 
     @Column(name = "gender")
-    private boolean gender ;
+    private boolean gender;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
