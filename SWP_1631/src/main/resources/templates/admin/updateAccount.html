@@ -122,19 +122,7 @@
                   th:value="${Role.roleID}"
                   th:selected="${Account.role.roleID==Role.roleID}"></option>
         </select>
-        <!--                        <select class="form-select" name="slRole" aria-label="Default select example">
-                                    <option value="0" selected>All</option>
-
-                                    <c:forEach items="${requestScope.listR}" var="role">
-                                        <option
-                                            <c:if test="${role.roleID eq s.role.roleID}">selected=""</c:if>
-
-                                                value="${role.roleID}">${role.roleName}</option>
-                                    </c:forEach>
-                                </select>-->
       </div>
-
-
 
       <div class="d-grid gap-2 d-md-block" style="margin-top: 30px; margin-bottom: 30px; ;">
         <input type="submit" value="Save"/>
@@ -145,7 +133,6 @@
   </div>
 </form>
 
-<!-- <script src="agu.js"></script> -->
 </body>
 
 </html>

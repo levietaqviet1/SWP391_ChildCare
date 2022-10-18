@@ -55,4 +55,16 @@ public class Kindergartner  {
 
     }
 
+    @Override
+    public String toString() {
+        return "Kindergartner{" +
+                "KinderId=" + KinderId +
+                ", account=" + account.toString() +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", img='" + img + '\'' +
+                ", dob=" + dob +
+                ", gender=" + gender +
+                '}';
+    }
 }
