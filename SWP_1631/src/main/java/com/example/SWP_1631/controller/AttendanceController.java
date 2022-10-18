@@ -32,7 +32,7 @@ public class AttendanceController {
 
     @GetMapping("/")
     public String profile( Model model){
-        Optional<Account> teacherFound = accSer.getAccount(1);
+        Optional<Account> teacherFound = accSer.getAccount(10);
         teacherFound.ifPresent(teacher -> model.addAttribute("Teacher", teacher));
         return "teacher/teacherProfile";
     }
