@@ -2,8 +2,10 @@ package com.example.SWP_1631.controller;
 
 import com.example.SWP_1631.entity.Account;
 import com.example.SWP_1631.entity.Clazz;
+import com.example.SWP_1631.entity.Kindergartner;
 import com.example.SWP_1631.entity.Role;
 import com.example.SWP_1631.service.ClazzService;
+import com.example.SWP_1631.service.KindergartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,34 +21,34 @@ import java.util.List;
 public class childController {
 
     @Autowired
-    ClazzService clazz;
+    private ClazzService clazzService;
 
     @Autowired
-    private ClazzService clazzSer;
+    private KindergartnerService kindergartnerService;
 
     @GetMapping("/child")
-    public String view(Model model) {
-        List<Clazz> list = clazz.getAllClazz();
-        model.addAttribute("ListClazz", list);
+    public String view(Model model){
+        List<Clazz> list = clazzService.getAllClazz();
+        model.addAttribute("ListClazz",list);
         return "childrenregister/childregister";
     }
 
-
-//    @RequestMapping(value = "/updateChild", method = RequestMethod.POST)
-//    public String update(@RequestParam("id") Integer userId, HttpServletRequest res) throws Exception {
-//        Account ac = new Account();
-//        ac.setFirstName(res.getParameter("ChildFirstName"));
-//        ac.setLastName(res.getParameter("ChildLastName"));
-//        boolean gen = !res.getParameter("gender").equals("female");
-//        ac.setGender(gen);
-//        ac.setDob(res.getParameter("dob"));
-//        Role role = new Role();
-//        role.setRoleID(Integer.parseInt(res.getParameter("roleUp")));
-//        ac.setRole(role);
-//        System.out.println("OOOOOOOOOOOOOOOOOO id" + userId);
-//        System.out.println(ac);
-//        ac.setAccountId(userId);
-//        clazzSer.update(ac);
-//        return "child";
+//    @RequestMapping(value = "/saveInforChild", method = RequestMethod.POST)
+//    public String save(Kindergartner child) {
+//        kinderSer.save(child);
+//        return "childrenregister/childregister";
 //    }
+
+
+    @RequestMapping(value = "/updateChild", method = RequestMethod.POST)
+    public String update( HttpServletRequest res) throws Exception {
+        Kindergartner ch = new Kindergartner();
+        ch.setFirstName(res.getParameter("ChildFirstName"));
+        ch.setLastName(res.getParameter("ChildLastName"));
+        boolean gen = !res.getParameter("flexRadioDefault").equals("female");
+        ch.setGender(gen);
+        ch.setDob(res.getParameter("dob"));
+        kindergartnerService.save(ch);
+        return "redirect:/child";
+    }
 }

@@ -15,6 +15,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
 <form th:action="@{/teacher/update?id={id}(id=${Teacher.accountId})}" method="post">
     <div class="wrapper">
         <div class="home">
@@ -62,15 +63,68 @@
                         </div>
 
 
+=======
+
+<div class="wrapper">
+    <div class="home">
+        <div class="left-side-menu">
+            <div class="vertical-menu" style="position: relative;">
+                <div class="user-welcome">
+                    <img class="user-img" src="@{/parent/img/userImg/dummy-user-img.png}"
+                         style="width: 80px; height: 80px;" alt="">
+                    <p th:text="${Teacher.firstName}+' '+${Teacher.lastName}"></p>
+                </div>
+                <div class="menu-item-container">
+                    <ul class="item-lists">
+                        <li class="menu-item ">
+                            <a th:href="@{/teacher/homeTeacher}">Home</a>
+                        </li>
+                        <li class="menu-item current1">
+                            <a th:href="@{/teacher/teacherProfile}">Teacher Information</a>
+                        </li>
+                        <li class="menu-item">
+                            <a th:href="@{/teacher/viewStudent}">View student</a>
+                        </li>
+                    </ul>
+                </div>
+                <div style="border-top: 3px solid gray;"></div>
+                <div style="position: absolute;margin-top: 1vh; margin-left: 40px">
+                    <input type="button" class="log-out_button"
+                           onclick="window.location.replace('/home/logoutSuccessful')" value="Log out"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="page-content">
+                <div class="kid-profile">
+                    <div class="kid-profile_header">
+
+                        <div class="img-section">
+                            <img src="@{/parent/img/userImg/dummy-user-img.png}" alt="">
+                        </div>
+                        <div class="personel-section">
+                            <h1 th:text="${Teacher.firstName}+' '+${Teacher.lastName}"></h1>
+                            <p th:text="${Teacher.dob}" }></p>
+                        </div>
+                    </div>
+
+                    <form th:action="@{/teacher/update?id={id}(id=${Teacher.accountId})}" method="POST">
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                         <!--          <form action="/ATKD_Project/homepage/parentupdate" method="POST">-->
                         <div class="kid-profile_content">
                             <div class="class content-item wrap-input100 validate-input">
                                 <div class="item-title">
                                     <strong>First Name</strong>
                                 </div>
+<<<<<<< HEAD
                                 <th:c:set var="parent"/>
                                 <label class="form-label"></label>
                                 <input type="text" class="class content-item" name="txtFirstName" id="parentfirstname"
+=======
+                                <label class="form-label"></label>
+                                <input type="text" class="class content-item" name="txtFirstName"
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                                        th:value="${Teacher.firstName}" pattern="[a-zA-Z]+"
                                        title="Alphabetical letters only" required="">
                                 <span class="focus-input100"></span>
@@ -84,9 +138,16 @@
                                 <div class="item-title">
                                     <strong>Last name</strong>
                                 </div>
+<<<<<<< HEAD
                                 <th:c:set var="parent" value="${requestScope.account}"/>
                                 <input type="text" class="class content-item" name="txtLastName" pattern="[a-zA-Z]+"
                                        title="Alphabetical letters only" required="" th:value="${Teacher.lastName}">
+=======
+
+                                <input type="text" class="class content-item" name="txtLastName"
+                                       th:value="${Teacher.lastName}" pattern="[a-zA-Z]+"
+                                       title="Alphabetical letters only" required="">
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                                 <label class="form-label"></label>
                                 <span class="focus-input100"></span>
                             </div>
@@ -99,7 +160,10 @@
                                 <div class="item-title">
                                     <strong>Date of birth</strong>
                                 </div>
+<<<<<<< HEAD
                                 <th:c:set var="parent"/>
+=======
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                                 <input type="date" class="class content-item" name="dob" required=""
                                        th:value="${Teacher.dob}">
                             </div>
@@ -107,6 +171,7 @@
                                 <div class="item-title">
                                     <strong>Gender</strong>
                                 </div>
+<<<<<<< HEAD
                                 <td th:switch="${Teacher.gender}">
                 <span th:case="true">
                   <input type="radio" name="gender" id="gender1" checked value="male"/> <label
@@ -133,11 +198,30 @@
                                 <!--                </select>-->
                             </div>
 
+=======
+                                <select style="width:570px; " class="class content-item" name ="gender" id="parentgender" th:value="${Teacher.gender}">
+                                    <th:c:if test="${Teacher.gender == true }">
+                                        <h1>Male</h1>
+                                    </th:c:if>
+                                    <th:c:if test="${Teacher.gender == false }">
+                                        <h1>Female</h1>
+                                    </th:c:if>"
+
+                                    <optgroup>
+                                        <option value="male"><h1>Male</h1></option>
+                                        <option value="female"><h1>Female</h1></option>
+                                    </optgroup>
+                                </select>
+                            </div>
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                             <div class="content-item wrap-input100 validate-input">
                                 <div class="item-title">
                                     <strong>Phone</strong>
                                 </div>
+<<<<<<< HEAD
                                 <th:c:set var="parent"/>
+=======
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                                 <input type="number" class="class content-item" pattern="(0)(3|5|7|8|9)+([0-9]{8})"
                                        name="txtPhone" id="parentphonenumber"
                                        title="Must start with 09/03/07/08/05 and contain 10 characters"
@@ -157,17 +241,25 @@
                                     <strong>Address</strong>
 
                                 </div>
+<<<<<<< HEAD
                                 <th:c:set var="parent"/>
                                 <input type="text" class="class content-item" name="ttAddress" required=""
                                        th:value="${Teacher.address}">
 
 
+=======
+                                <input type="text" class="class content-item" name="ttAddress" required=""
+                                       th:value="${Teacher.address}">
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                             </div>
                             <div class="content-item wrap-input100 validate-input ">
                                 <div class="item-title">
                                     <strong>Email</strong>
                                 </div>
+<<<<<<< HEAD
                                 <th:c:set var="parent" value="${requestScope.account}"/>
+=======
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
                                 <input type="text" class="class content-item" name="txtEmail" id="parentemail"
                                        title="Must contain @" required th:value="${Teacher.email}">
                                 <span class="focus-input100"></span>
@@ -187,8 +279,12 @@
                             <div class="mb-6" style="margin-top: 30px; margin-bottom: 30px; padding-left: 250px ">
 
                                 <input type="button" class="cancel_button"
+<<<<<<< HEAD
                                        onclick="window.location.replace('/teacher/teacherProfile?id= 6')"
                                        value="Cancel"/>
+=======
+                                       onclick="window.location.replace('/teacher/')" value="Cancel"/>
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
 
                                 <input style="margin-left: 130px;" type="button" class="confirm_button"
                                        onclick="openPopup()" value="Confirm Update"/>
@@ -204,6 +300,7 @@
 
                         </div>
                         <!--          </form>-->
+<<<<<<< HEAD
                     </div>
                 </div>
             </div>
@@ -211,6 +308,16 @@
 
     </div>
 </form>
+=======
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+>>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
 </body>
 <script>
     let popup = document.getElementById("popup");
