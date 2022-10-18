@@ -38,9 +38,6 @@ public class Kindergartner  {
     @Column(name = "gender")
     private boolean gender ;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
 
     public Date getDob() {
         return dob;
