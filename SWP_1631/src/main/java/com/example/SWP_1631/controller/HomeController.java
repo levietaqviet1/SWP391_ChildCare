@@ -14,7 +14,10 @@ public class HomeController {
 //        model.addAttribute("long",name);
         return "index";
     }
-
+    @RequestMapping("/checkAttendence")
+    public String atten(Model model){
+        return "teacher/checkAttendence";
+    }
     @RequestMapping("/register")
     public String req(Model model){
         return "register";
