@@ -32,28 +32,28 @@
                 </div>
                 <div class="menu-item-container">
                     <ul class="item-lists">
-                        <li class="menu-item">
-                            <a th:href="@{childdetailservlet}">Child Information</a>
+                        <li class="menu-item ">
+                            <a href="/parents/childprofile">Child Information</a>
                         </li>
                         <li class="menu-item">
-                            <a th:href="@{/parent/}">Parent Information</a>
+                            <a href="/parents/ParentsProfile">Parent Information</a>
                         </li>
-                        <li class="menu-item  current1">
-                            <a th:href="@{/home/childregister}">Child Register</a>
+                        <li class="menu-item current1">
+                            <a href="/parents/child">Child Register</a>
                         </li>
                     </ul>
                 </div>
                 <div style="border-top: 3px solid gray;"></div>
                 <div style="position: absolute;margin-top: 1vh; margin-left: 40px">
                     <input type="button" class="log-out_button"
-                           onclick="window.location.replace('/ATKD_Project/homepage/logout')" value="Log out"/>
+                           onclick="window.location.replace('/home/logoutSuccessful')" value="Log out"/>
                 </div>
             </div>
         </div>
         <!-- Form add -->
 
 
-        <form th:action="@{/updateChild}" method="POST">
+        <form th:action="@{/parents/registerChild}" method="POST">
             <div class="child-register">
                 <div class="page-content">
                     <div class="kid-register">

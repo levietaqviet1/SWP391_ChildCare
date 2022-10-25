@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")// tham số này nhận từ form login ở bước 3 có input  name='username'
                 .passwordParameter("password")// tham số này nhận từ form login ở bước 3 có input  name='password'
                 // Cấu hình cho Logout Page. Khi logout mình trả về trang
-                .and().logout().logoutUrl("/home/logout").logoutSuccessUrl("/home/");
+                .and().logout().logoutUrl("/home/logoutSuccessful").logoutSuccessUrl("/home/");
 
     }
 }

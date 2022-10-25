@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/kinderController")
-public class kinderController {
+public class KinderController {
 
     @Autowired
     private KindergartnerService ks;

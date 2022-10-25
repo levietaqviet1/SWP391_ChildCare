@@ -15,4 +15,9 @@ public class StudyRecordServiceImpl implements StudyRecordService {
     public StudyRecord getStudyRecordByIdKinderId(Integer id) {
         return studyRecordRepository.getStudyRecordByIdKinderId(id);
     }
+
+    @Override
+    public void save(StudyRecord studyRecord) {
+        studyRecordRepository.save(studyRecord);
+    }
 }

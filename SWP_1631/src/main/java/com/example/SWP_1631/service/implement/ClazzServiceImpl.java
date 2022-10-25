@@ -28,7 +28,7 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Override
     public Optional<Clazz> getById(int i) {
-        Optional<Clazz> cl = classRes.findById(i);
-        return cl;
+        Optional<Clazz> clazz = classRes.findById(i);
+        return clazz;
     }
 }

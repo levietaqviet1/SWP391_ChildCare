@@ -28,7 +28,6 @@ public class HomeController {
         if (session.getAttribute("VaiTro").equals("teacher")) {
             return "redirect:/teacher/";
         }
-
         return "index";
     }
 
@@ -59,9 +58,15 @@ public class HomeController {
 
     // khi người dùng logout khỏi hệ thống
     @RequestMapping(value = "/logoutSuccessful")
-    public String logoutSuccessfulPage(Model model) {
+    public String logoutSuccessfulPage(Model model,HttpSession session) {
+        if (session.getAttribute("VaiTro") != null) {
+            session.removeAttribute("VaiTro");
+        }
+        if (session.getAttribute("acc") != null) {
+            session.removeAttribute("acc");
+        }
         model.addAttribute("title", "Logout");
-        return "home";
+        return "redirect:/home/";
     }
 
 

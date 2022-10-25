@@ -28,13 +28,13 @@
                 <div class="menu-item-container">
                     <ul class="item-lists">
                         <li class="menu-item ">
-                            <a th:href="@{/Parents/homeTeacher}">Home</a>
+                            <a href="/parents/childprofile">Child Information</a>
                         </li>
                         <li class="menu-item current1">
-                            <a th:href="@{/teacher/teacherProfile}">Teacher Information</a>
+                            <a href="/parents/ParentsProfile">Parent Information</a>
                         </li>
                         <li class="menu-item">
-                            <a th:href="@{/teacher/viewStudent}">View student</a>
+                            <a href="/parents/child">Child Register</a>
                         </li>
                     </ul>
                 </div>
@@ -97,20 +97,10 @@
                                 <div class="item-title">
                                     <strong>Gender</strong>
                                 </div>
-                                <select style="width:570px; " class="class content-item" name="gender" id="parentgender"
-                                        th:value="${Parents.gender}">
-                                    <th:c:if test="${Parents.gender == true }">
-                                        <h1>Male</h1>
-                                    </th:c:if>
-                                    <th:c:if test="${Parents.gender == false }">
-                                        <h1>Female</h1>
-                                    </th:c:if>
-                                    "
-
-                                    <optgroup>
-                                        <option value="male"><h1>Male</h1></option>
-                                        <option value="female"><h1>Female</h1></option>
-                                    </optgroup>
+                                <select style="width:570px; " class="class content-item" name="gender"
+                                        id="parentgender">
+                                    <option th:selected="${Parents.gender}" value="1">Male</option>
+                                    <option th:selected="${!Parents.gender}" value="0">FeMale</option>
                                 </select>
                             </div>
                             <div class="content-item wrap-input100 validate-input">
@@ -154,7 +144,7 @@
                             <div class="mb-6" style="margin-top: 30px; margin-bottom: 30px; padding-left: 250px ">
 
                                 <input type="button" class="cancel_button"
-                                       onclick="window.location.replace('/Parents/ParentsProfile')" value="Cancel"/>
+                                       onclick="window.location.replace('/parents/ParentsProfile')" value="Cancel"/>
 
                                 <input style="margin-left: 130px;" type="button" class="confirm_button"
                                        onclick="openPopup()" value="Confirm Update"/>

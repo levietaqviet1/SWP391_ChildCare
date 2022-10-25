@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/teacher")
-public class AttendanceController {
+public class TeacherController {
 
     @Autowired
     private AccountService accountService;
