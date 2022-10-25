@@ -16,52 +16,52 @@
 
 <body>
 
-    <div class="wrapper">
-        <div class="home">
-            <div class="left-side-menu">
-                <div class="vertical-menu">
-                    <div class="user-welcome">
-                        <img class="user-img" src="/parent/img/userImg/dummy-user-img.png"
-                             style="width: 80px; height: 80px;" alt="">
-                        <p th:text="${Parents.firstName}"></p>
-                    </div>
-                    <div class="menu-item-container">
-                        <ul class="item-lists">
-                            <li class="menu-item ">
-                                <a th:href="@{/Parents/homeTeacher}">Home</a>
-                            </li>
-                            <li class="menu-item current1">
-                                <a th:href="@{/teacher/teacherProfile}">Teacher Information</a>
-                            </li>
-                            <li class="menu-item">
-                                <a th:href="@{/teacher/viewStudent}">View student</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div style="border-top: 3px solid gray;"></div>
-                    <div style="position: absolute;margin-top: 1vh; margin-left: 40px">
-                        <input type="button" class="log-out_button"
-                               onclick="window.location.replace('/home/logoutSuccessful')" value="Log out"/>
-                    </div>
+<div class="wrapper">
+    <div class="home">
+        <div class="left-side-menu">
+            <div class="vertical-menu">
+                <div class="user-welcome">
+                    <img class="user-img" src="/parent/img/userImg/dummy-user-img.png"
+                         style="width: 80px; height: 80px;" alt="">
+                    <p th:text="${Parents.firstName}"></p>
+                </div>
+                <div class="menu-item-container">
+                    <ul class="item-lists">
+                        <li class="menu-item ">
+                            <a th:href="@{/Parents/homeTeacher}">Home</a>
+                        </li>
+                        <li class="menu-item current1">
+                            <a th:href="@{/teacher/teacherProfile}">Teacher Information</a>
+                        </li>
+                        <li class="menu-item">
+                            <a th:href="@{/teacher/viewStudent}">View student</a>
+                        </li>
+                    </ul>
+                </div>
+                <div style="border-top: 3px solid gray;"></div>
+                <div style="position: absolute;margin-top: 1vh; margin-left: 40px">
+                    <input type="button" class="log-out_button"
+                           onclick="window.location.replace('/home/logoutSuccessful')" value="Log out"/>
                 </div>
             </div>
+        </div>
 
-            <div class="right-side">
-                <div class="page-content">
-                    <div class="kid-profile">
-                        <div class="kid-profile_header">
+        <div class="right-side">
+            <div class="page-content">
+                <div class="kid-profile">
+                    <div class="kid-profile_header">
 
-                            <div class="img-section">
-                                <img th:src="@{/parent/img/userImg/dummy-user-img.png}" alt="">
-                            </div>
-
-                            <div>
-                                <h1></h1>
-                                <p></p>
-                            </div>
+                        <div class="img-section">
+                            <img th:src="@{/parent/img/userImg/dummy-user-img.png}" alt="">
                         </div>
 
-                        <form th:action="@{/Parents/update?id={id}(id=${Parents.accountId})}" method="post">
+                        <div>
+                            <h1></h1>
+                            <p></p>
+                        </div>
+                    </div>
+
+                    <form th:action="@{/parents/update?id={id}(id=${Parents.accountId})}" method="post">
                         <div class="kid-profile_content">
                             <div class="class content-item wrap-input100 validate-input">
                                 <div class="item-title">
@@ -69,7 +69,9 @@
                                 </div>
 
                                 <label for="exampleFormControlInput1" class="form-label"></label>
-                                <input type="text" class="class content-item" name="txtFirstName" id="parentfirstname" th:value="${Parents.firstName}" pattern="[a-zA-Z]+" title="Alphabetical letters only" required="">
+                                <input type="text" class="class content-item" name="txtFirstName" id="parentfirstname"
+                                       th:value="${Parents.firstName}" pattern="[a-zA-Z]+"
+                                       title="Alphabetical letters only" required="">
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="content-item wrap-input100 validate-input">
@@ -77,7 +79,9 @@
                                     <strong>Last name</strong>
                                 </div>
                                 <!--<c:set var="parent" value="}"/>-->
-                                <input type="text" class="class content-item" id="parentlastname" name="txtLastName" pattern="[a-zA-Z]+" title="Alphabetical letters only" required="" th:value="${Parents.lastName}" >
+                                <input type="text" class="class content-item" id="parentlastname" name="txtLastName"
+                                       pattern="[a-zA-Z]+" title="Alphabetical letters only" required=""
+                                       th:value="${Parents.lastName}">
                                 <label for="exampleFormControlInput1" class="form-label"></label>
                                 <span class="focus-input100"></span>
                             </div>
@@ -86,32 +90,38 @@
                                     <strong>Date of birth</strong>
                                 </div>
                                 <!--<c:set var="parent" value=""/>-->
-                                <input type="date"  class="class content-item" name="dob" required="" th:value="${Parents.dob}">
+                                <input type="date" class="class content-item" name="dob" required=""
+                                       th:value="${Parents.dob}">
                             </div>
                             <div class="content-item">
                                 <div class="item-title">
                                     <strong>Gender</strong>
                                 </div>
-                                <select style="width:570px; " class="class content-item" name ="gender" id="parentgender" th:value="${Parents.gender}">
+                                <select style="width:570px; " class="class content-item" name="gender" id="parentgender"
+                                        th:value="${Parents.gender}">
                                     <th:c:if test="${Parents.gender == true }">
-                                <h1>Male</h1>
-                                </th:c:if>
-                                <th:c:if test="${Parents.gender == false }">
-                                    <h1>Female</h1>
-                                </th:c:if>"
+                                        <h1>Male</h1>
+                                    </th:c:if>
+                                    <th:c:if test="${Parents.gender == false }">
+                                        <h1>Female</h1>
+                                    </th:c:if>
+                                    "
 
-                                <optgroup>
-                                    <option value="male"><h1>Male</h1></option>
-                                    <option value="female"><h1>Female</h1></option>
-                                </optgroup>
+                                    <optgroup>
+                                        <option value="male"><h1>Male</h1></option>
+                                        <option value="female"><h1>Female</h1></option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="content-item wrap-input100 validate-input">
                                 <div class="item-title">
                                     <strong>Phone</strong>
                                 </div>
-<!--                                <th:c:set var="parent" value="${requestScope.account}"/>-->
-                                <input type="number" class="class content-item" pattern="(0)(3|5|7|8|9)+([0-9]{8})" name="txtPhone" id="parentphonenumber" title="Must start with 09/03/07/08/05 and contain 10 characters" th:value="${Parents.phoneNumber}" required="">
+                                <!--                                <th:c:set var="parent" value="${requestScope.account}"/>-->
+                                <input type="number" class="class content-item" pattern="(0)(3|5|7|8|9)+([0-9]{8})"
+                                       name="txtPhone" id="parentphonenumber"
+                                       title="Must start with 09/03/07/08/05 and contain 10 characters"
+                                       th:value="${Parents.phoneNumber}" required="">
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="content-item description">
@@ -119,15 +129,17 @@
                                     <strong>Address</strong>
 
                                 </div>
-<!--                                <th:c:set var="parent" value="${requestScope.account}"/>-->
-                                <input type="text" class="class content-item" name="ttAddress" required="" th:value="${Parents.address}">
+                                <!--                                <th:c:set var="parent" value="${requestScope.account}"/>-->
+                                <input type="text" class="class content-item" name="ttAddress" required=""
+                                       th:value="${Parents.address}">
                             </div>
                             <div class="content-item wrap-input100 validate-input ">
                                 <div class="item-title">
                                     <strong>Email</strong>
                                 </div>
-<!--                                <th:c:set var="parent" value="${requestScope.account}"/>-->
-                                <input type="text" class="class content-item" name="txtEmail" id="parentemail" title="Must contain @" required th:value="${Parents.email}">
+                                <!--                                <th:c:set var="parent" value="${requestScope.account}"/>-->
+                                <input type="text" class="class content-item" name="txtEmail" id="parentemail"
+                                       title="Must contain @" required th:value="${Parents.email}">
                                 <span class="focus-input100"></span>
                                 <span class="invalid" id="emailinvalid" style="display: none;">Email must contain
                                             @</span>
@@ -141,25 +153,28 @@
                                                             </div>-->
                             <div class="mb-6" style="margin-top: 30px; margin-bottom: 30px; padding-left: 250px ">
 
-                                <input type="button" class="cancel_button"  onclick="window.location.replace('/Parents/ParentsProfile')" value="Cancel"/>
+                                <input type="button" class="cancel_button"
+                                       onclick="window.location.replace('/Parents/ParentsProfile')" value="Cancel"/>
 
-                                <input style="margin-left: 130px;"  type="button" class="confirm_button" onclick="openPopup()" value="Confirm Update"/>
+                                <input style="margin-left: 130px;" type="button" class="confirm_button"
+                                       onclick="openPopup()" value="Confirm Update"/>
                                 <div class="popup" id="popup">
 
                                     <h2>Confirm Update ?</h2>
                                     <input type="button" class="cancel_button" onclick="closePopup()" value="Cancel">
-                                    <input style="margin-left: 60px;" type="submit" class="confirm_button"  value="Confirm">
+                                    <input style="margin-left: 60px;" type="submit" class="confirm_button"
+                                           value="Confirm">
                                 </div>
 
                             </div>
                         </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
+
+</div>
 
 </body>
 <script>
@@ -168,6 +183,7 @@
     function openPopup() {
         popup.classList.add("open-popup");
     }
+
     function closePopup() {
         popup.classList.remove("open-popup");
     }

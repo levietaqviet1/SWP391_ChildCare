@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface KindergartnerRepository extends JpaRepository<Kindergartner, Integer> {
 
-    
-    @Query("SELECT k FROM Kindergartner k WHERE k.KinderId= :id")
-    public Kindergartner getKindergartnerById(@Param("id") Integer id);
+
+    @Query("SELECT k FROM Kindergartner k WHERE k.account.accountId = :id")
+    public List<Kindergartner> getKindergartnerByIdParentId(@Param("id") Integer id);
 
 }

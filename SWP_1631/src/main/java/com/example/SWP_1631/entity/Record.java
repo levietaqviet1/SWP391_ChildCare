@@ -16,15 +16,17 @@ public class Record {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id")
     private int recordId;
+
     @ManyToOne
     @JoinColumn(name = "student_id")
-    private Kindergartner KinderId;
+    private Kindergartner kindergartner;
 
     @Column(name = "note")
-    private String Note;
+    private String note;
+
     @ManyToOne
     @JoinColumn(name = "criteria_id")
-    private Criteria criteriaid;
+    private Criteria criteriaId;
 
     @Column(name = "semester")
     private String Semester;

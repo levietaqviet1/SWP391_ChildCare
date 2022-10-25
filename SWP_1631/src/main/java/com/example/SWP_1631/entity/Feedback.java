@@ -17,35 +17,37 @@ public class Feedback {
     @Column(name = "feedback_id")
     private int feedbackId;
 
-    @Column(name = "kid_id")
-    private int kidId;
+    @ManyToOne
+    @JoinColumn(name = "kid_id")
+    private Kindergartner kidId;
 
-    @Column(name = "teacher_id")
-    private int teacherId;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Account teacherId;
 
     @Column(name = "fb_content")
-    private String FbContent;
+    private String fbContent;
 
     @Column(name = "rating")
-    private String rating;
+    private Float rating;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(style = "")
     @Column(name = "fb_date")
-    private Date FbDate;
+    private Date fbDate;
 
     public Date getDob() {
-        return FbDate;
+        return fbDate;
     }
 
     public void setDob(String dob) throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            this.FbDate = formatter.parse(dob);
+            this.fbDate = formatter.parse(dob);
         } catch (Exception e) {
             String sDate = "17/07/2017";
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
-            this.FbDate = date;
+            this.fbDate = date;
         }
 
     }

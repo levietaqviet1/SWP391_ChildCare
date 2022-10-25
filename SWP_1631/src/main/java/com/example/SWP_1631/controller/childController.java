@@ -27,9 +27,9 @@ public class childController {
     private KindergartnerService kindergartnerService;
 
     @GetMapping("/child")
-    public String view(Model model){
+    public String view(Model model) {
         List<Clazz> list = clazzService.getAllClazz();
-        model.addAttribute("ListClazz",list);
+        model.addAttribute("ListClazz", list);
         return "childrenregister/childregister";
     }
 
@@ -41,7 +41,7 @@ public class childController {
 
 
     @RequestMapping(value = "/updateChild", method = RequestMethod.POST)
-    public String update( HttpServletRequest res) throws Exception {
+    public String update(HttpServletRequest res) throws Exception {
         Kindergartner ch = new Kindergartner();
         ch.setFirstName(res.getParameter("ChildFirstName"));
         ch.setLastName(res.getParameter("ChildLastName"));

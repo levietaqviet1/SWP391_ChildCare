@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL của trang login
                 .loginProcessingUrl("/authenticateTheUser") // Bạn còn nhớ bước 3 khi tạo form login thì action của nó là j_spring_security_check giống ở
                 .loginPage("/home/login")//
-                .defaultSuccessUrl("/admin/")//đây Khi đăng nhập thành công thì vào trang này. userAccountInfo sẽ được khai báo trong controller để hiển thị trang view tương ứng
+                .defaultSuccessUrl("/home/loginSuccess")//đây Khi đăng nhập thành công thì vào trang này. userAccountInfo sẽ được khai báo trong controller để hiển thị trang view tương ứng
                 .failureUrl("/home/login")// Khi đăng nhập sai username và password thì nhập lại
                 .usernameParameter("email")// tham số này nhận từ form login ở bước 3 có input  name='username'
                 .passwordParameter("password")// tham số này nhận từ form login ở bước 3 có input  name='password'

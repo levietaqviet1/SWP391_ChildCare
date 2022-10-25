@@ -33,6 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 //        HttpSession session = null;
         session.set("VaiTro", user.getRole().getRoleName());
+        session.set("acc",user);
         System.out.printf(user.toString());
         return new MyUserDetails(user);
     }

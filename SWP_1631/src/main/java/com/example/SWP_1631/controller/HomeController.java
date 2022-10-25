@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/home")
 public class HomeController {
@@ -12,6 +14,21 @@ public class HomeController {
     public String init(Model model) {
 //        String name = "Viet";
 //        model.addAttribute("long",name);
+        return "index";
+    }
+
+    @RequestMapping("/loginSuccess")
+    public String ViewS(HttpSession session) {
+        if (session.getAttribute("VaiTro").equals("admin")) {
+            return "redirect:/admin/";
+        }
+        if (session.getAttribute("VaiTro").equals("parent")) {
+            return "redirect:/parents/ParentsProfile";
+        }
+        if (session.getAttribute("VaiTro").equals("teacher")) {
+            return "redirect:/teacher/";
+        }
+
         return "index";
     }
 

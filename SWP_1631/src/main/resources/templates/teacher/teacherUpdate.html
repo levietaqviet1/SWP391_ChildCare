@@ -105,13 +105,15 @@
                                 <div class="item-title">
                                     <strong>Gender</strong>
                                 </div>
-                                <select style="width:570px; " class="class content-item" name ="gender" id="parentgender" th:value="${Teacher.gender}">
+                                <select style="width:570px; " class="class content-item" name="gender" id="parentgender"
+                                        th:value="${Teacher.gender}">
                                     <th:c:if test="${Teacher.gender == true }">
                                         <h1>Male</h1>
                                     </th:c:if>
                                     <th:c:if test="${Teacher.gender == false }">
                                         <h1>Female</h1>
-                                    </th:c:if>"
+                                    </th:c:if>
+                                    "
 
                                     <optgroup>
                                         <option value="male"><h1>Male</h1></option>

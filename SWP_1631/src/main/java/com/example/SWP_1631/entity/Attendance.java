@@ -13,16 +13,23 @@ import java.util.Date;
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
-    private int studentId;
+    @Column(name = "attendance_id")
+    private int attendanceId;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Kindergartner studentId;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(style = "")
     @Column(name = "check_date")
     private Date checkDate;
+
     @Column(name = "status")
     private int status;
-    @Column(name = "teacher_id")
-    private int teacherId;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Account teacherId;
 
     public Date getDate() {
         return checkDate;

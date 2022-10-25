@@ -10,14 +10,15 @@ and open the template in the editor.
 
 /* ===== Google Font Import - Poppins ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
-:root{
+:root {
     /* ===== Colors ===== */
     --primary-color: #0E4BF1;
     --panel-color: #FFF;
@@ -36,10 +37,11 @@ and open the template in the editor.
     --tran-03: all 0.2s ease;
 }
 
-body{
+body {
     min-height: 100vh;
     background-color: var(--primary-color);
 }
+
 /* body.dark{
     --primary-color: #3A3B3C;
     --panel-color: #242526;
@@ -74,7 +76,7 @@ body.dark .activity-data::-webkit-scrollbar-thumb:hover{
     background: #3A3B3C;
 } */
 
-nav{
+nav {
     position: fixed;
     top: 0;
     left: 0;
@@ -85,53 +87,62 @@ nav{
     border-right: 1px solid var(--border-color);
     transition: var(--tran-05);
 }
-nav.close{
+
+nav.close {
     width: 73px;
 }
-nav .logo-name{
+
+nav .logo-name {
     display: flex;
     align-items: center;
 }
-nav .logo-image{
+
+nav .logo-image {
     display: flex;
     justify-content: center;
     min-width: 45px;
 }
-nav .logo-image img{
+
+nav .logo-image img {
     width: 40px;
     object-fit: cover;
     border-radius: 50%;
 }
 
-nav .logo-name .logo_name{
+nav .logo-name .logo_name {
     font-size: 22px;
     font-weight: 600;
     color: var(--text-color);
     margin-left: 14px;
     transition: var(--tran-05);
 }
-nav.close .logo_name{
+
+nav.close .logo_name {
     opacity: 0;
     pointer-events: none;
 }
-nav .menu-items{
+
+nav .menu-items {
     margin-top: 40px;
     height: calc(100% - 90px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.menu-items li{
+
+.menu-items li {
     list-style: none;
 }
-.menu-items li a{
+
+.menu-items li a {
     display: flex;
     align-items: center;
     height: 50px;
     text-decoration: none;
     position: relative;
 }
-.nav-links li a:hover:before{
+
+.nav-links li a:hover:before {
     content: "";
     position: absolute;
     left: -7px;
@@ -140,10 +151,12 @@ nav .menu-items{
     border-radius: 50%;
     background-color: var(--primary-color);
 }
-body.dark li a:hover:before{
+
+body.dark li a:hover:before {
     background-color: var(--text-color);
 }
-.menu-items li a i{
+
+.menu-items li a i {
     font-size: 24px;
     min-width: 45px;
     height: 100%;
@@ -152,34 +165,41 @@ body.dark li a:hover:before{
     justify-content: center;
     color: var(--black-light-color);
 }
-.menu-items li a .link-name{
+
+.menu-items li a .link-name {
     font-size: 18px;
     font-weight: 400;
     color: var(--black-light-color);
     transition: var(--tran-05);
 }
-nav.close li a .link-name{
+
+nav.close li a .link-name {
     opacity: 0;
     pointer-events: none;
 }
+
 .nav-links li a:hover i,
-.nav-links li a:hover .link-name{
+.nav-links li a:hover .link-name {
     color: var(--primary-color);
 }
+
 body.dark .nav-links li a:hover i,
-body.dark .nav-links li a:hover .link-name{
+body.dark .nav-links li a:hover .link-name {
     color: var(--text-color);
 }
-.menu-items .logout-mode{
+
+.menu-items .logout-mode {
     padding-top: 10px;
     border-top: 1px solid var(--border-color);
 }
-.menu-items .mode{
+
+.menu-items .mode {
     display: flex;
     align-items: center;
     white-space: nowrap;
 }
-.menu-items .mode-toggle{
+
+.menu-items .mode-toggle {
     position: absolute;
     right: 14px;
     height: 50px;
@@ -189,7 +209,8 @@ body.dark .nav-links li a:hover .link-name{
     justify-content: center;
     cursor: pointer;
 }
-.mode-toggle .switch{
+
+.mode-toggle .switch {
     position: relative;
     display: inline-block;
     height: 22px;
@@ -197,7 +218,8 @@ body.dark .nav-links li a:hover .link-name{
     border-radius: 25px;
     background-color: var(--toggle-color);
 }
-.switch:before{
+
+.switch:before {
     content: "";
     position: absolute;
     left: 5px;
@@ -209,11 +231,12 @@ body.dark .nav-links li a:hover .link-name{
     border-radius: 50%;
     transition: var(--tran-03);
 }
-body.dark .switch:before{
+
+body.dark .switch:before {
     left: 20px;
 }
 
-.dashboard{
+.dashboard {
     position: relative;
     left: 250px;
     background-color: var(--panel-color);
@@ -222,19 +245,21 @@ body.dark .switch:before{
 
     transition: var(--tran-05);
 }
+
 /* .dash-top{
     width: 100%;
     height: 70px;
     background: #000;
 } */
-.dash-lefttop{
+.dash-lefttop {
     width: 100%;
     height: 70px;
     background-color: #D8D8D8;
     display: flex;
     justify-content: right;
 }
-.dash-lefttop a{
+
+.dash-lefttop a {
     /* display: flex;
     justify-content: right; */
     /* margin-right: 30px;
@@ -244,7 +269,8 @@ body.dark .switch:before{
     padding-left: 10px;
 
 }
-.dash-lefttop img{
+
+.dash-lefttop img {
     margin-top: 10px;
     border: none;
     border-radius: 50%;
@@ -252,16 +278,19 @@ body.dark .switch:before{
     height: 40px;
 
 }
-.dash-bottom{
+
+.dash-bottom {
     display: flex;
     padding-top: 30px;
     padding-right: 30px;
     padding-left: 70px;
 }
-.btn-outline-success{
+
+.btn-outline-success {
     margin-left: 10px;
 }
-.table{
+
+.table {
     /*margin-top: 40px;*/
     margin: 0;
 }
@@ -273,27 +302,29 @@ body.dark .switch:before{
     background: darkgray;
 }
 
-.dash-bottomtable{
+.dash-bottomtable {
     display: flex;
     overflow: auto;
     height: 72vh;
 }
 
 
-.dashboard-bootom{
+.dashboard-bootom {
     width: 70%;
     height: auto;
     display: flex;
     justify-content: right;
 
 }
-.date-select{
+
+.date-select {
     padding-top: 30px;
     padding-right: 30px;
     padding-left: 70px;
     width: 20%;
 }
-.sl-id{
+
+.sl-id {
     display: flex;
     margin-bottom: 10px;
     display: flex;

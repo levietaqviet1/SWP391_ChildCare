@@ -7,15 +7,20 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "study_record")
-public class Study_Record {
+public class StudyRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "study_record_id")
     private int recordId;
-    @Column(name = "class_id")
-    private int classId;
-    @Column(name = "kinder_id")
-    private int kinderId;
+
+    @ManyToOne
+    @JoinColumn(name = "class_id")
+    private Clazz classId;
+
+    @ManyToOne
+    @JoinColumn(name = "kinder_id")
+    private Kindergartner kinderId;
+
     @Column(name = "study_year")
     private int studyYear;
 

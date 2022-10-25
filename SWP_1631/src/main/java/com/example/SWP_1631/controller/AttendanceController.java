@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
@@ -20,35 +21,36 @@ import java.util.Optional;
 public class AttendanceController {
 
     @Autowired
-    private AccountService accSer;
+    private AccountService accountService;
 
     @Autowired
     private RoleService roleSer;
 
     @RequestMapping("/checkAttendence")
-    public String atten(Model model){
+    public String atten(Model model) {
         return "teacher/checkAttendence";
     }
 
     @GetMapping("/")
-    public String profile( Model model){
-        Optional<Account> teacherFound = accSer.getAccount(10);
+    public String profile(Model model, HttpSession session) {
+        Account accSe = (Account) session.getAttribute("acc");
+        Optional<Account> teacherFound = accountService.getAccount(accSe.getAccountId());
         teacherFound.ifPresent(teacher -> model.addAttribute("Teacher", teacher));
         return "teacher/teacherProfile";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String update(@RequestParam("id") Integer id,Model model){
-        Optional<Account> teacherFound = accSer.getAccount(id);
+    public String update(@RequestParam("id") Integer id, Model model) {
+        Optional<Account> teacherFound = accountService.getAccount(id);
         teacherFound.ifPresent(teacher -> model.addAttribute("Teacher", teacher));
         return "teacher/teacherUpdate";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@RequestParam("id") Integer userId, HttpServletRequest res) throws Exception {
-        Optional<Account> ac2 = accSer.getAccount(userId);
+        Optional<Account> ac2 = accountService.getAccount(userId);
         Account ac = new Account();
-        if(ac2.isPresent()){
+        if (ac2.isPresent()) {
             ac.setPassword(ac2.get().getPassword());
             ac.setRole(ac2.get().getRole());
             ac.setImg(ac2.get().getImg());
@@ -63,7 +65,7 @@ public class AttendanceController {
         ac.setAddress(res.getParameter("ttAddress"));
         ac.setAccountId(userId);
         System.out.println(ac);
-        accSer.update(ac);
+        accountService.update(ac);
         return "redirect:/teacher/";
     }
 }

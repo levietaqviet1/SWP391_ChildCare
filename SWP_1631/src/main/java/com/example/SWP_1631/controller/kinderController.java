@@ -1,4 +1,5 @@
 package com.example.SWP_1631.controller;
+
 import com.example.SWP_1631.entity.Account;
 import com.example.SWP_1631.entity.Kindergartner;
 import com.example.SWP_1631.entity.Role;
@@ -29,6 +30,7 @@ public class kinderController {
         System.out.println(listKinder);
         return "admin/kinderAdminPage";
     }
+
     @RequestMapping(value = "/saveKinder", method = RequestMethod.POST)
     public String save(Kindergartner kinder) {
         ks.save(kinder);
@@ -41,7 +43,6 @@ public class kinderController {
         kindergartnerEdit.ifPresent(kindergartner -> model.addAttribute("Kindergartner", kindergartner));
         return "admin/kinderAdminUpdate";
     }
-
 
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -63,11 +64,6 @@ public class kinderController {
         ks.update(kd);
         return "redirect:/kinderController/";
     }
-
-
-
-
-
 
 
 }

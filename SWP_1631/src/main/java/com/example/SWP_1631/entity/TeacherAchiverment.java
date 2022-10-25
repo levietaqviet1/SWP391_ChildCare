@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "teacher_achiverment")
-public class Teacher_achiverment {
+public class TeacherAchiverment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,7 @@ public class Teacher_achiverment {
     private String content;
 
 
-    @Column(name = "teacher_id")
-    private String teacherId;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Account teacherId;
 }

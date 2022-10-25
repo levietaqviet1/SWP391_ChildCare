@@ -3,8 +3,7 @@ package com.example.SWP_1631.controller;
 import com.example.SWP_1631.entity.*;
 import com.example.SWP_1631.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +15,20 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class admin {
+public class Admin {
 
 //    @Autowired
 //    private ModelMapper modelMappe;
 
     @Autowired
-    private AccountService accSer;
+    private AccountService accountService;
 
     @Autowired
     private RoleService roleSer;
 
     @GetMapping("/")
     public String view(Model model) {
-        List<Account> listAcc = accSer.getListAccount();
+        List<Account> listAcc = accountService.getListAccount();
         List<Role> listRo = roleSer.getAllRole();
         model.addAttribute("liseA", listAcc);
         model.addAttribute("listR", listRo);
@@ -43,7 +42,7 @@ public class admin {
         }
         String search = request.getParameter("search").trim();
         search = search.replaceAll("\\s\\s+", " ").trim();
-        List<Account> listAcc = accSer.getListAccount();
+        List<Account> listAcc = accountService.getListAccount();
         List<Role> listRo = roleSer.getAllRole();
         model.addAttribute("liseA", listAcc);
         model.addAttribute("listR", listRo);
@@ -53,7 +52,7 @@ public class admin {
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteUser(@RequestParam("id") Integer userId, Model model) {
-        accSer.delete(userId);
+        accountService.delete(userId);
         return "redirect:/admin/";
     }
 
@@ -67,13 +66,14 @@ public class admin {
 
     @RequestMapping(value = "/saveAccount", method = RequestMethod.POST)
     public String save(Account user) {
-        accSer.save(user);
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12)));
+        accountService.save(user);
         return "redirect:/admin/";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editUser(@RequestParam("id") Integer userId, Model model) {
-        Optional<Account> userEdit = accSer.getAccount(userId);
+        Optional<Account> userEdit = accountService.getAccount(userId);
         userEdit.ifPresent(user -> model.addAttribute("Account", user));
         List<Role> listRo = roleSer.getAllRole();
         model.addAttribute("listR", listRo);
@@ -99,7 +99,7 @@ public class admin {
         System.out.println("OOOOOOOOOOOOOOOOOO id" + userId);
         System.out.println(ac);
         ac.setAccountId(userId);
-        accSer.update(ac);
+        accountService.update(ac);
         return "redirect:/admin/";
     }
 

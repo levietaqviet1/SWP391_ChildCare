@@ -15,16 +15,18 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
     private int scheduleId;
+
     @ManyToOne
     @JoinColumn(name = "class_id")
     private Clazz clazzId;
+
     @ManyToOne
     @JoinColumn(name = "activity_id")
     private Activity activityid;
 
     @ManyToOne
     @JoinColumn(name = "slot_id")
-    private Slot slot_id;
+    private Slot slotId;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(style = "")

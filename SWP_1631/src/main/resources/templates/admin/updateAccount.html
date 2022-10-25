@@ -50,7 +50,7 @@
 
     <div class="dashboard">
 
-<<<<<<< HEAD
+        <<<<<<< HEAD
         <div class="dash-lefttop">
             <!--      <img src="https://i.pinimg.com/originals/72/45/fb/7245fb0ca786bb4a98fb8465e437c5bb.jpg" alt="">-->
             <!--      <a href="#">User</a>-->
@@ -98,40 +98,42 @@
                 <input type="password" class="form-control" name="txtPassword" th:value="${Account.password}"
                        id="exampleFormControlInput1">
             </div>
-=======
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">DOB</label>
-        <input type="date" name="dob" th:value="${Account.dob}" />(yyyy-MM-dd)<br/>
-      </div>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Number Phone</label>
-        <input type="text" class="form-control"  name="txtPhone" th:value="${Account.phoneNumber}"  placeholder="name@example.com">
-      </div>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Address</label>
-        <input type="text" class="form-control" th:value="${Account.address}"  name="ttAddress" value="${s.address}" placeholder="HN, Vietnam">
-      </div>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Image</label>
-        <input type="text" class="form-control" th:value="${Account.img}"  name="txtImg" value="${s.img}">
-      </div>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Role</label>
-        <input value="${s.role.roleID}" name="slRole" type="hidden"/>
-<!--        <input type="text" class="form-control"   name="role" th:value="${Account.role.roleName}" >-->
-        <select name="roleUp" id="nationality">
-          <option
-                  th:each="Role:${listR}"
-                  th:text="${Role.roleName}"
-                  th:value="${Role.roleID}"
-                  th:selected="${Account.role.roleID==Role.roleID}"></option>
-        </select>
-      </div>
+            =======
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">DOB</label>
+                <input type="date" name="dob" th:value="${Account.dob}"/>(yyyy-MM-dd)<br/>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Number Phone</label>
+                <input type="text" class="form-control" name="txtPhone" th:value="${Account.phoneNumber}"
+                       placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Address</label>
+                <input type="text" class="form-control" th:value="${Account.address}" name="ttAddress"
+                       value="${s.address}" placeholder="HN, Vietnam">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Image</label>
+                <input type="text" class="form-control" th:value="${Account.img}" name="txtImg" value="${s.img}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Role</label>
+                <input value="${s.role.roleID}" name="slRole" type="hidden"/>
+                <!--        <input type="text" class="form-control"   name="role" th:value="${Account.role.roleName}" >-->
+                <select name="roleUp" id="nationality">
+                    <option
+                            th:each="Role:${listR}"
+                            th:text="${Role.roleName}"
+                            th:value="${Role.roleID}"
+                            th:selected="${Account.role.roleID==Role.roleID}"></option>
+                </select>
+            </div>
 
-      <div class="d-grid gap-2 d-md-block" style="margin-top: 30px; margin-bottom: 30px; ;">
-        <input type="submit" value="Save"/>
-      </div>
->>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
+            <div class="d-grid gap-2 d-md-block" style="margin-top: 30px; margin-bottom: 30px; ;">
+                <input type="submit" value="Save"/>
+            </div>
+            >>>>>>> fc3a6eb5ea67b79ce4f7d73477824d7722adead3
 
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">DOB</label>
