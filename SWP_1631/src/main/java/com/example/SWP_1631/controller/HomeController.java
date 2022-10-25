@@ -58,7 +58,7 @@ public class HomeController {
 
     // khi người dùng logout khỏi hệ thống
     @RequestMapping(value = "/logoutSuccessful")
-    public String logoutSuccessfulPage(Model model,HttpSession session) {
+    public String logoutSuccessfulPage(Model model, HttpSession session) {
         if (session.getAttribute("VaiTro") != null) {
             session.removeAttribute("VaiTro");
         }

@@ -29,6 +29,9 @@ public class ParentController {
     @Autowired
     private StudyRecordService studyRecordService;
 
+    @Autowired
+    private  AttendanceService attendanceService;
+
 
     @RequestMapping("/ParentsProfile")
     public String profile(Model model, HttpSession session) {
@@ -111,6 +114,34 @@ public class ParentController {
 
         }
         return "Parents/childprofile";
+    }
+
+    @RequestMapping("/childdetailAttdence")
+    public String showchildDetail(Model model, HttpSession session, HttpServletRequest res) {
+        Account accSession = (Account) session.getAttribute("acc");
+        Optional<Account> acc = accountService.getAccount(accSession.getAccountId());
+        acc.ifPresent(ac -> model.addAttribute("Account", ac));
+        if (acc.isPresent()) {
+            List<Kindergartner> listKinder = kindergartnerService.getListKinderByIdParent(acc.get().getAccountId());
+            model.addAttribute("listKinder", listKinder);
+            if (res.getParameter("mainchildid") != null) {
+                int index = Integer.parseInt(res.getParameter("mainchildid"));
+                Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(index);
+                kindergartner.ifPresent(user -> model.addAttribute("Kinder", user));
+                model.addAttribute("mainchildid", index);
+                List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(index);
+                model.addAttribute("listAttendance",listAttendance);
+            } else {
+                if (listKinder.size() > 0) {
+                    model.addAttribute("Kinder", listKinder.get(0));
+                    model.addAttribute("mainchildid", listKinder.get(0).getKinderId());
+                    List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(listKinder.get(0).getKinderId());
+                    model.addAttribute("listAttendance",listAttendance);
+                }
+            }
+
+        }
+        return "Parents/childdetailAttdence";
     }
 
     @RequestMapping(value = "/editChild", method = RequestMethod.GET)

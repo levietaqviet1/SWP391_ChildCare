@@ -74,69 +74,38 @@
                     </div>
 
                     <div class="list-option" id="options">
-                        <div class="attendence option-item">
+                        <div class="attendence option-item current">
                             <a href="/parents/childdetailAttdence">Attendance</a>
                         </div>
-                        <div class="profile option-item current">
+                        <div class="profile option-item ">
                             <a href="/parents/childprofile">Profile</a>
                         </div>
                     </div>
 
 
-                    <div class="kid-profile_content">
-                        <div class="class content-item">
-                            <div class="item-title">
-                                <strong>Date of birth</strong>
+                    <div class="attendence-section">
+                        <div class="body-container">
+                            <div class="list-students-ver2">
+                                <div  th:each="Attendance:${listAttendance}" style="width: 75%;margin:0 auto ">
+                                    <input type="hidden" name="action" value="check_in"/>
+                                    <div class="student-infor">
+                                        <div class="img-section">
+                                            <img th:src="@{/parent/img/userImg/download.png}" alt="">
+                                        </div>
+                                        <p>Date: <span th:text="${Attendance.checkDate}"></span></p>
+                                        <p style="padding-left: 200px">Attendance status: </p>
+                                        <p th:switch="${Attendance.status}">
+                                            <span style="color:red" th:case="0" >Absent</span>
+                                            <span style="color:#ff9933" th:case="1" >Checked in</span>
+                                            <span style="color:green" th:case="2" >Checked out</span>
+                                        </p>
 
-
+                                    </div>
+                                </div>
                             </div>
-                            <p th:text="${Kinder.dob}"></p>
 
                         </div>
-                        <div class="content-item description">
-                            <div class="item-title">
-                                <strong>Gender</strong>
 
-                            </div>
-                            <p th:text="${Kinder.gender}? 'Nam': 'Nu'"></p>
-
-                        </div>
-                        <div class="class content-item">
-                            <div class="item-title">
-                                <strong>Class</strong>
-
-
-                            </div>
-                            <p th:text="${studyRecord.classId.className}"></p>
-
-                        </div>
-                        <div class="content-item phone">
-                            <div class="item-title">
-                                <strong>Parent's phone</strong>
-                            </div>
-                            <p th:text="${Account.phoneNumber}"></p>
-
-
-                        </div>
-                        <div class="content-item address">
-                            <div class="item-title">
-                                <strong>Address</strong>
-                            </div>
-                            <p th:text="${Account.address}"></p>
-
-                        </div>
-                        <div class="content-item description">
-                            <div class="item-title">
-                                <strong>Parent</strong>
-                            </div>
-                            <p th:text="${Account.firstName}+' '+${Account.lastName} "></p>
-
-                        </div>
-                    </div>
-                    <div class="mb-6" STYLE="margin-top: 30px; margin-bottom: 30px;text-align: center">
-                        <a type="submit" class="button" th:href="@{/parents/editChild?id={id}(id=${mainchildid})}">
-                            UPDATE PROFILE
-                        </a>
                     </div>
 
                 </div>
