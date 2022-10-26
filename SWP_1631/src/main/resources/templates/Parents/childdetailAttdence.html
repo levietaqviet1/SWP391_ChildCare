@@ -86,7 +86,7 @@
                     <div class="attendence-section">
                         <div class="body-container">
                             <div class="list-students-ver2">
-                                <div  th:each="Attendance:${listAttendance}" style="width: 75%;margin:0 auto ">
+                                <div th:each="Attendance:${listAttendance}" style="width: 75%;margin:0 auto ">
                                     <input type="hidden" name="action" value="check_in"/>
                                     <div class="student-infor">
                                         <div class="img-section">
@@ -95,9 +95,9 @@
                                         <p>Date: <span th:text="${Attendance.checkDate}"></span></p>
                                         <p style="padding-left: 200px">Attendance status: </p>
                                         <p th:switch="${Attendance.status}">
-                                            <span style="color:red" th:case="0" >Absent</span>
-                                            <span style="color:#ff9933" th:case="1" >Checked in</span>
-                                            <span style="color:green" th:case="2" >Checked out</span>
+                                            <span style="color:red" th:case="0">Absent</span>
+                                            <span style="color:#ff9933" th:case="1">Checked in</span>
+                                            <span style="color:green" th:case="2">Checked out</span>
                                         </p>
 
                                     </div>

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
@@ -25,5 +27,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query("SELECT r FROM Account u INNER JOIN  Role r ON u.role.roleID = r.roleID WHERE u.email= :email")
     public Role getRoleByEmail(@Param("email") String email);
 
-
+    @Query("SELECT u FROM Account u WHERE u.role.roleID= :id")
+    public List<Account> getAllAccountByRoldId(@Param("id") Integer id);
 }

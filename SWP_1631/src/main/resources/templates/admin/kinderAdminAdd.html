@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--=== Coding by CodingLab | www.codinglabweb.com === -->
 <html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb http://www.thymeleaf.org">
 
 <head>
@@ -22,7 +21,7 @@
     <nav>
         <div class="logo-name">
             <div class="logo-image">
-                <img src="images/logo.jpg" alt="">
+                <img th:src="@{/images/logo.jpg}" alt="">
             </div>
 
             <span class="logo_name"><a href="listaccount"
@@ -40,15 +39,14 @@
                     <i class="uil uil-chart"></i>
                     <span class="link-name">Kindergartner</span>
                 </a></li>
-                <li><a href="#">
+                <li><a href="/admin/clazz">
                     <i class="uil uil-thumbs-up"></i>
                     <span class="link-name">Class</span>
                 </a></li>
-                <li><a href="#">
+                <li><a href="/admin/scheduleT">
                     <i class="uil uil-comments"></i>
                     <span class="link-name">Schedule</span>
                 </a></li>
-
             </ul>
 
             <ul class="logout-mode">

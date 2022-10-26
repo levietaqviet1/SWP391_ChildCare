@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer> {
     @Query("SELECT u FROM Attendance u WHERE u.studentId.KinderId= :id ")
-    public  List<Attendance> getAllAttendanceByIdKinder(@Param("id") Integer id);
+    public List<Attendance> getAllAttendanceByIdKinder(@Param("id") Integer id);
 
 
 }

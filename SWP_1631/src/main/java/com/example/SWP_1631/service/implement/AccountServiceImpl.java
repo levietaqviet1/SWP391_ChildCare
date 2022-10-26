@@ -27,6 +27,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public List<Account> getListAccountByIdRole(int id) {
+        return accRes.getAllAccountByRoldId(id);
+    }
+
+    @Override
     public List<Account> getListAccount() {
         return accRes.findAll();
     }

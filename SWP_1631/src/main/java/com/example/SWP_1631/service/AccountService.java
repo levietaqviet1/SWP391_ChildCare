@@ -20,4 +20,7 @@ public interface AccountService extends UserDetailsService {
     public boolean delete(long id);
 
     void save(Account user);
+
+
+    List<Account> getListAccountByIdRole(int id);
 }

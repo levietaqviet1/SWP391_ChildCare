@@ -22,13 +22,21 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public void update(Account child) {
-
-    }
-
-    @Override
     public Optional<Clazz> getById(int i) {
         Optional<Clazz> clazz = classRes.findById(i);
         return clazz;
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        Optional<Clazz> clazz = classRes.findById(id);
+        if (clazz.isPresent()) {
+            classRes.delete(clazz.get());
+        }
+    }
+
+    @Override
+    public void save(Clazz cal) {
+        classRes.save(cal);
     }
 }

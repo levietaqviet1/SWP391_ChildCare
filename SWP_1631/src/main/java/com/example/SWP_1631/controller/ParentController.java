@@ -30,7 +30,7 @@ public class ParentController {
     private StudyRecordService studyRecordService;
 
     @Autowired
-    private  AttendanceService attendanceService;
+    private AttendanceService attendanceService;
 
 
     @RequestMapping("/ParentsProfile")
@@ -130,13 +130,13 @@ public class ParentController {
                 kindergartner.ifPresent(user -> model.addAttribute("Kinder", user));
                 model.addAttribute("mainchildid", index);
                 List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(index);
-                model.addAttribute("listAttendance",listAttendance);
+                model.addAttribute("listAttendance", listAttendance);
             } else {
                 if (listKinder.size() > 0) {
                     model.addAttribute("Kinder", listKinder.get(0));
                     model.addAttribute("mainchildid", listKinder.get(0).getKinderId());
                     List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(listKinder.get(0).getKinderId());
-                    model.addAttribute("listAttendance",listAttendance);
+                    model.addAttribute("listAttendance", listAttendance);
                 }
             }
 
