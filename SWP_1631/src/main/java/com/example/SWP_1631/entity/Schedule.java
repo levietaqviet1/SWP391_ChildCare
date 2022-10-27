@@ -28,24 +28,9 @@ public class Schedule {
     @JoinColumn(name = "slot_id")
     private Slot slotId;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(style = "")
+
     @Column(name = "schedule_date")
-    private Date scheduleDate;
+    private String scheduleDate;
 
-    public Date getDob() {
-        return scheduleDate;
-    }
 
-    public void setDob(String dob) throws Exception {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            this.scheduleDate = formatter.parse(dob);
-        } catch (Exception e) {
-            String sDate = "17/07/2017";
-            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
-            this.scheduleDate = date;
-        }
-
-    }
 }

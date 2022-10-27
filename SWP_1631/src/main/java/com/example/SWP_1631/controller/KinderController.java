@@ -54,6 +54,10 @@ public class KinderController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@RequestParam("id") Integer KinderId, HttpServletRequest res) throws Exception {
         Kindergartner kd = new Kindergartner();
+        Optional<Kindergartner> kindergartnerDB = ks.getKindergartnerById(KinderId);
+        if (kindergartnerDB.isPresent()) {
+            kd = kindergartnerDB.get();
+        }
         kd.setKinderId(KinderId);
         kd.setFirstName(res.getParameter("txtFirstName"));
         kd.setLastName(res.getParameter("txtLastName"));

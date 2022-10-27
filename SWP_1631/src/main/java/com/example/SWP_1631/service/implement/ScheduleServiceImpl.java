@@ -70,8 +70,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     public List<Date> getWeekDay(String date) {
-        double t1, t2;
-        t1 = System.currentTimeMillis();
         List<Date> listDate = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -84,14 +82,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         } catch (ParseException e) {
 
         }
-        t2 = System.currentTimeMillis();
         return listDate;
     }
 
     public String convertDate(String date) {
         //22/06/20022
-        double t1, t2;
-        t1 = System.currentTimeMillis();
         String result = "";
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
@@ -101,20 +96,17 @@ public class ScheduleServiceImpl implements ScheduleService {
         } catch (ParseException e) {
 
         }
-        t2 = System.currentTimeMillis();
+
         return result;
     }
 
     public List<Schedule> getAllSchedulesByClassDate(int classID, String date) {
-        double t1, t2;
-        t1 = System.currentTimeMillis();
         List<Schedule> list = new ArrayList<>();
         String newDate = convertDate(date);
         for (int i = 1; i <= 7; i++) {
             Schedule s = getScheduleByClassDateSlot(classID, newDate, i);
             list.add(s);
         }
-        t2 = System.currentTimeMillis();
         return list;
     }
 
@@ -124,24 +116,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleDetails getScheduleDetailsByClassDate(int classID, String date) {
-        double t1, t2;
-        t1 = System.currentTimeMillis();
         ScheduleDetails sde = new ScheduleDetails();
         LinkedHashMap map = new LinkedHashMap<Date, List<Schedule>>();
         sde.setClassID(classID);
         try {
             List<Date> listDate = getWeekDay(date);
+
             listDate.forEach(d -> {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String dd = sdf.format(d);
                 List<Schedule> list = getAllSchedulesByClassDate(classID, dd);
                 map.put(d, list);
             });
+            System.out.println(map);
             sde.setScheduleMap(map);
         } catch (Exception e) {
-
+            System.err.println(e.getMessage());
         }
-        t2 = System.currentTimeMillis();
         return sde;
     }
 }

@@ -193,7 +193,6 @@ public class Admin {
             try {
                 classid = Integer.parseInt(classid_raw);
             } catch (Exception e) {
-
             }
         }
         model.addAttribute("cid_raw", classid);
@@ -202,7 +201,7 @@ public class Admin {
         model.addAttribute("weeks", allWeeks);
 
         List<Clazz> listClass = clazzService.getAllClazz();
-        model.addAttribute("listClass", listClass);
+        model.addAttribute("classes", listClass);
 
         List<Activity> listActivity = activityService.getAll();
         model.addAttribute("activity", listActivity);
@@ -236,8 +235,12 @@ public class Admin {
             session.setAttribute("recentMonday", date3);
         }
         ScheduleDetails sde = scheduleService.getScheduleDetailsByClassDate(classid, date);
-        model.addAttribute("scheduleDetails", sde);
 
+//        System.out.println("*********************");
+//        System.out.println(sde.getScheduleMap());
+        model.addAttribute("scheduleDetails", sde);
+        int[] loop = {0, 1, 2, 3, 4, 5, 6};
+        model.addAttribute("loop", loop);
         //return true date
         String action = request.getParameter("action");
         if (action == null) {
@@ -251,6 +254,6 @@ public class Admin {
 //            session.setAttribute("recentMonday", date);
 
         }
-        return "admin/class/adminClassAdd";
+        return "admin/schedule/admin_schedule";
     }
 }
