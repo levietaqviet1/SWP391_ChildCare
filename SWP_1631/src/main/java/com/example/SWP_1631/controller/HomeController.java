@@ -65,6 +65,9 @@ public class HomeController {
         if (session.getAttribute("acc") != null) {
             session.removeAttribute("acc");
         }
+        if (session.getAttribute("cidSession") != null) {
+            session.removeAttribute("cidSession");
+        }
         model.addAttribute("title", "Logout");
         return "redirect:/home/";
     }

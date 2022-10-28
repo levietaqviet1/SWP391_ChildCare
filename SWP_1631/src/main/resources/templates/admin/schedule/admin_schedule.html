@@ -65,61 +65,44 @@
     <div class="test">
 
     </div>
-    <form id="f" action="listschedule" method="post">
+    <form id="f" th:action="@{/admin/scheduleTSearch}" method="post">
         <div class="select-menu">
             <!--class-->
             <div class="class-select">
                 <!--                <c:set value="${requestScope.cid_raw}" var="cid_raw"/>-->
 
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="cid"
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="cid" onchange="chage();"
                         style="height: 36px;">
                     <!--<option selected>Select Class</option>-->
                     <option
                             th:each="cl:${classes}"
                             th:text="${cl.className}"
-                            th:value="${cl.clazzId}"></option>
-                    <!--                            th:selected="${Account.role.roleID==Role.roleID}"-->
+                            th:value="${cl.clazzId}"
+                            th:selected="${cl.clazzId==cid_raw}">
+                    </option>
 
-
-                    <!--                    <c:forEach items="${requestScope.classes}" var="cl">-->
-                    <!--                        <option <c:if test="${cl.class_id eq cid_raw}">selected</c:if>-->
-                    <!--                                value="${cl.class_id}">${cl.class_name}</option>-->
-                    <!--                    </c:forEach>-->
                 </select>
             </div>
 
-            <!--            <c:set value="${requestScope.firstMonday}" var="fM"/>-->
-            <!--            <c:set value="${requestScope.recentMonday}" var="rM"/>-->
-
-            <select name="datee" id="ddlViewBy">
+            <select name="datee" id="ddlViewBy" onchange="chage();">
                 <option
                         th:each="w:${weeks}"
                         th:text="${w.value}"
                         th:value="${w.key}"
                         th:selected="${w.key==firstMonday}"></option>
-
-                <!--                <c:forEach items="${requestScope.weeks}" var="w">-->
-                <!--                    <c:set value="${w.key}" var="wk"></c:set>-->
-                <!--                    <option <c:if test="${wk eq fM || wk eq rM}">selected</c:if>-->
-                <!--                            value="${wk}">${w.value}</option>-->
-                <!--                </c:forEach>-->
             </select>
 
-            <button class="btn btn-outline-success" type="submit"
-                    onclick="changeDate()">Search
-            </button>
+<!--            <button class="btn btn-outline-success" type="submit"-->
+<!--                    onclick="changeDate()">Search-->
+<!--            </button>-->
     </form>
 </div>
 
 <div class="dash-bottomtable">
     <table class="table" style="margin-bottom: 0">
         <thead style="bgcolor: red">
-        <!--        <c:set var="sde" value="${requestScope.scheduleDetails}">-->
-        <!--        </c:set>-->
-
         <tr>
             <th></th>
-            <!--            <td th:text="${#dates.format(sprint.releaseDate, 'dd-MMM-yyyy')}"></td>-->
             <th scope="col"
                 th:each="map:${scheduleDetails.scheduleMap}"
                 th:text="${#dates.format(map.key, 'EEE') }"></th>
@@ -133,54 +116,39 @@
                 th:text="${#dates.format(map.key, 'dd/MM') }"></th>
         </tr>
         </thead>
-        <div th:each="loop:${loop}">
+        <div th:each="loopT:${loop}">
             <tr>
                 <td style="text-align: center;vertical-align: middle;font-weight: bold">
-                    Slot <span th:text="${loop+1}"></span>
+                    Slot <span th:text="${loopT+1}"></span>
                 </td>
                 <div th:each="map:${scheduleDetails.scheduleMap}">
                     <!--if slot not null-->
-                    <div th:switch="${map.value[loop] != null}">
+                    <div th:switch="${map.value[loopT] != null}">
                         <div th:case="true">
 
                             <td style="min-height: 1px">
                                 <div style="display: flex">
-<!--                                    <fmt:formatDate pattern='yyyy-MM-dd' value="${map.key}" var="date_picked"/>-->
-<!--                                    <c:set var="date_picked_converted" value="${date_picked}"/>-->
-<!--                                    <c:set var="schedule_update_index"-->
-<!--                                           value="${date_picked_converted}:${loop.index + 1}"/>-->
-<!--                                    <c:set var="schedule_update_old"-->
-<!--                                           value="${date_picked_converted}:${loop.index + 1}:old"/>-->
-
-                                    <div class="schedule-list" style="width: 80px;" id="${schedule_update_old}">
-                                        ${map.value[loop.index].activity.act_name}
-                                        <!--${map.value[loop.index].schedule_id}-->
+                                    <div class="schedule-list" style="width: 80px;" id="${map.key}:${loopT + 1}:old" >
+                                            [[${map.value[loopT].activityid.name}]]
                                     </div>
 
-                                    <div id="${schedule_update_index}" style="display: none">
+                                    <div id="${map.key}" style="display: none" >
 
                                         <form action="updateschedule" method="post">
-                                            <!--<h1>${map.value[loop.index].schedule_id}</h1>-->
-                                            <input name="schedule_id" value="${map.value[loop.index].schedule_id}"
+                                            <input name="schedule_id" value="${map.value[loopT.index].schedule_id}"
                                                    type="hidden"/>
                                             <input name="schedule-update-index" value="${schedule_update_index}"
                                                    type="hidden"/>
                                             <input name="date_picked_converted" value="${date_picked_converted}"
                                                    type="hidden"/>
                                             <input name="cid_raw" value="${cid_raw}" type="hidden"/>
-                                            <!--<input name="cid_raw" value="${cid_raw}" type="hidden"/>-->
-                                            <input name="slot_chosen" value="${loop.index + 1}" type="hidden"/>
+                                            <input name="slot_chosen" value="${loopT.index + 1}" type="hidden"/>
                                             <select name="select_activity" style="max-width: 100%; margin-bottom: 4px;">
-                                                <c:forEach items="${requestScope.activity}" var="act">
-                                                    <option value="${act.activity_id}"
-                                                    <c:if test="${map.value[loop.index].activity.activity_id eq act.activity_id}">
-                                                        selected
-                                                    </c:if>
-                                                    >
-                                                    ${act.act_name}</option>
-                                                </c:forEach>
+                                                <option  th:each="act:${activity}"
+                                                         th:text="${act.name}"
+                                                         th:value="${act.activityid}"
+                                                         th:selected="${act.activityid == map.value[loopT].activityid.activityid}"></option>
                                             </select>
-                                            <!--<div>-->
                                             <a class="update_confirm">
                                                 <button type="submit">
                                                     Update <i class="fa-solid fa-pen"></i>
@@ -188,10 +156,9 @@
                                             </a>
 
                                             <a class="update_cancel"
-                                               onclick="cancelUpdate('${schedule_update_index}', '${schedule_update_old}')">
+                                               onclick="cancelUpdate('${map.key}:${loopT + 1}', '${map.key}:${loopT + 1}:old')">
                                                 Cancel <i class="fa-solid fa-ban"></i>
                                             </a>
-                                            <!--</div>-->
                                         </form>
                                     </div>
 
@@ -202,31 +169,30 @@
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#"
-                                               onclick="doDelete('${map.value[loop.index].schedule_id}')">
+                                            <a class="dropdown-item" th:href="@{/admin/deleteSchedule?id={id}(id=${map.value[loopT].scheduleId})}">
+<!--                                               onclick="doDelete('${map.value[loopT].scheduleId}')">-->
                                                 <i class="fa-delete fa-solid fa-trash fa-fw fa-align-center"></i> Delete</a>
-                                            <a class="dropdown-item" href="#"
-                                               onclick="doUpdate('${schedule_update_index}', '${schedule_update_old}')">
-                                                <i class="fa fa-edit"></i> Update</a>
+<!--                                            <a class="dropdown-item" href="#"-->
+<!--                                               onclick="doUpdate( '${map.key}' , '${map.key}:${loopT + 1}:old')">-->
+<!--                                                <i class="fa fa-edit"></i> Update</a>-->
                                         </div>
                                     </div>
+
+
                                 </div>
                             </td>
 
                         </div>
                         <div th:case="false">
                             <!--if slot null-->
-
                             <td style="text-align: center;vertical-align: middle;" class="empty-cell">
-                                <form action="addschedule" method="post">
-<!--                                    <fmt:formatDate pattern='yyyy-MM-dd' value="${map.key}" var="date_picked"/>-->
-<!--                                    <c:set var="date_picked_converted" value="${date_picked}"/>-->
+                                <form th:action="@{/admin/updateSchedule?slotId={slotId}(slotId=${loopT+1})}" method="POST">
                                     <input name="date_picked_converted" th:value="${#dates.format(map.key, 'yyyy/MM/dd')}" type="hidden"/>
-                                    <input name="cid_raw" value="${cid_raw}" type="hidden"/>
-                                    <input name="slot_chosen" value="${loop + 1}" type="hidden"/>
+                                    <input name="cid_raw" th:value="${cid_raw}" type="hidden"/>
+                                    <input name="slot_chosen" value="${loopT + 1}" type="hidden"/>
 
                                     <div class="add-button">
-                                        <select name="select_activity" style="max-width: 100px">
+                                        <select name="select_activity" style="width: 90%">
                                             <option
                                                     th:each="act:${activity}"
                                                     th:text="${act.name}"
@@ -260,7 +226,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="admin/schedule/js/schedule.js"></script>
+<script th:src="@{/admin/schedule/js/schedule.js}"></script>
 </body>
 
 </html>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -42,6 +43,8 @@ public class Admin {
 
     @Autowired
     private ActivityService activityService;
+    @Autowired
+    private  SlotService slotService  ;
 
     @GetMapping("/")
     public String view(Model model) {
@@ -181,26 +184,34 @@ public class Admin {
 
     @GetMapping("/scheduleT")
     public String viewSchedule(Model model, HttpServletRequest request, HttpSession session) {
+        List<Clazz> listClass = clazzService.getAllClazz();
         String classid_raw = request.getParameter("cid");
         int classid = 1;
         if (classid_raw == null) {
-            classid = 1;
-            Integer cid = (Integer) session.getAttribute("cid");
-            if (cid != null) {
-                classid = cid;
-            }
+            classid = listClass.get(0).getClazzId();
+
         } else {
             try {
                 classid = Integer.parseInt(classid_raw);
             } catch (Exception e) {
             }
         }
-        model.addAttribute("cid_raw", classid);
-        session.setAttribute("cid", classid);
+        if(session.getAttribute("cidSession")!= null){
+            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim()) ;
+            classid = cid;
+            model.addAttribute("cid_raw", classid);
+        }else {
+            try {
+                model.addAttribute("cid_raw", listClass.get(0).getClazzId());
+            }catch (Exception e){
+
+            }
+        }
+        session.setAttribute("cidSession", classid);
         LinkedHashMap<LocalDate, String> allWeeks = scheduleService.getAllWeeksInYear(2022);
         model.addAttribute("weeks", allWeeks);
 
-        List<Clazz> listClass = clazzService.getAllClazz();
+
         model.addAttribute("classes", listClass);
 
         List<Activity> listActivity = activityService.getAll();
@@ -255,5 +266,68 @@ public class Admin {
 
         }
         return "admin/schedule/admin_schedule";
+    }
+
+    @RequestMapping(value ="/scheduleTSearch" , method = RequestMethod.POST)
+    public String viewScheduleSearch(Model model, HttpServletRequest request, HttpSession session) {
+
+        String date = request.getParameter("datee");
+        String classID_raw = request.getParameter("cid");
+        int classID = 1;
+        LocalDate datechose = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        model.addAttribute("firstMonday", datechose);
+//        session.setAttribute("recentMonday", date);     //yyyy-MM-dd
+        try {
+            int[] loop = {0, 1, 2, 3, 4, 5, 6};
+            model.addAttribute("loop", loop);
+            classID = Integer.parseInt(classID_raw);
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = sdf1.parse(date);
+            SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+            date = sdf2.format(d);
+
+            model.addAttribute("cid", classID);
+            model.addAttribute("datechosen", date);
+
+            List<Activity> listActivity = activityService.getAll();
+            model.addAttribute("activity", listActivity);
+
+            ScheduleDetails sde = scheduleService.getScheduleDetailsByClassDate(classID, date);
+            model.addAttribute("scheduleDetails", sde);
+            LinkedHashMap<LocalDate, String> allWeeks = scheduleService.getAllWeeksInYear(2022);
+            model.addAttribute("weeks", allWeeks);
+            List<Clazz> list = clazzService.getAllClazz();
+            model.addAttribute("classes", list);
+            session.setAttribute("cidSession", classID);
+            model.addAttribute("cid_raw", classID);
+
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+        return "admin/schedule/admin_schedule";
+    }
+
+    @RequestMapping(value = "/updateSchedule", method = RequestMethod.POST)
+    public String updateSchedule(@RequestParam("slotId") Integer slotId, HttpServletRequest res,HttpSession session) throws Exception {
+
+        int classId = Integer.parseInt(res.getParameter("cid_raw")) ;
+        String idActi = res.getParameter("select_activity");
+        Optional<Clazz> clazz = clazzService.getById(classId);
+        Optional<Activity> activity = activityService.getActivityById(Integer.parseInt(idActi));
+        Optional<Slot> slot = slotService.getSlotById(slotId);
+        session.setAttribute("cidSession", classId);
+        Schedule schedule = new Schedule();
+        schedule.setActivityid(activity.get());
+        schedule.setClazzId(clazz.get());
+        schedule.setSlotId(slot.get());
+        schedule.setScheduleDate(res.getParameter("date_picked_converted"));
+        scheduleService.save(schedule);
+        return "redirect:/admin/scheduleT";
+    }
+
+    @RequestMapping(value = "/deleteSchedule", method = RequestMethod.GET)
+    public String deleteSchedule(@RequestParam("id") Integer userId, Model model) {
+        scheduleService.deleteById(userId);
+        return "redirect:/admin/scheduleT";
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ActivityServiceImpl implements ActivityService {
@@ -16,6 +17,11 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public List<Activity> getAll() {
         return accRes.findAll();
+    }
+
+    @Override
+    public Optional<Activity> getActivityById(Integer id) {
+        return accRes.findById(id);
     }
 
 

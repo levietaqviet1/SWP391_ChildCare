@@ -30,17 +30,21 @@
 //        localStorage.setItem("status", "open");
 //    }
 //});
+function chage(){
+    document.getElementById("f").submit();
+}
 
 function doDelete(id) {
     if (confirm("Are you sure to delete this schedule id?")) {
-        window.location = "deleteschedule?sid=" + id;
+        window.location = "#";
+        return true;
     }
 }
 
 function doUpdate(id_update, id_old) {
 //    alert(id_update);
 //    alert(id_old);
-    const myElement1 = document.getElementById(id_update);
+    const myElement1 = document.getElementById(id_update) ;
     myElement1.style.display = "block";
     const myElement2 = document.getElementById(id_old);
     myElement2.style.display = "none";
@@ -50,14 +54,9 @@ function cancelUpdate(id_update, id_old) {
     const myElement1 = document.getElementById(id_update);
     myElement1.style.display = "none";
     const myElement2 = document.getElementById(id_old);
+
     myElement2.style.display = "block";
 }
 
-function changeDate() {
-    var e = document.getElementById("ddlViewBy");
-    var strUser = e.value;
-    document.getElementById("ddlViewByinput").value = strUser;
-    console.log(strUser);
-}
 
 
