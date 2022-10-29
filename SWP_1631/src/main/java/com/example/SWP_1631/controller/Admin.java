@@ -44,7 +44,7 @@ public class Admin {
     @Autowired
     private ActivityService activityService;
     @Autowired
-    private  SlotService slotService  ;
+    private SlotService slotService;
 
     @GetMapping("/")
     public String view(Model model) {
@@ -196,14 +196,14 @@ public class Admin {
             } catch (Exception e) {
             }
         }
-        if(session.getAttribute("cidSession")!= null){
-            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim()) ;
+        if (session.getAttribute("cidSession") != null) {
+            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim());
             classid = cid;
             model.addAttribute("cid_raw", classid);
-        }else {
+        } else {
             try {
                 model.addAttribute("cid_raw", listClass.get(0).getClazzId());
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
@@ -268,7 +268,7 @@ public class Admin {
         return "admin/schedule/admin_schedule";
     }
 
-    @RequestMapping(value ="/scheduleTSearch" , method = RequestMethod.POST)
+    @RequestMapping(value = "/scheduleTSearch", method = RequestMethod.POST)
     public String viewScheduleSearch(Model model, HttpServletRequest request, HttpSession session) {
 
         String date = request.getParameter("datee");
@@ -301,16 +301,16 @@ public class Admin {
             session.setAttribute("cidSession", classID);
             model.addAttribute("cid_raw", classID);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
         return "admin/schedule/admin_schedule";
     }
 
     @RequestMapping(value = "/updateSchedule", method = RequestMethod.POST)
-    public String updateSchedule(@RequestParam("slotId") Integer slotId, HttpServletRequest res,HttpSession session) throws Exception {
+    public String updateSchedule(@RequestParam("slotId") Integer slotId, HttpServletRequest res, HttpSession session) throws Exception {
 
-        int classId = Integer.parseInt(res.getParameter("cid_raw")) ;
+        int classId = Integer.parseInt(res.getParameter("cid_raw"));
         String idActi = res.getParameter("select_activity");
         Optional<Clazz> clazz = clazzService.getById(classId);
         Optional<Activity> activity = activityService.getActivityById(Integer.parseInt(idActi));

@@ -36,8 +36,14 @@ public class ParentController {
     @RequestMapping("/ParentsProfile")
     public String profile(Model model, HttpSession session) {
         Account accSe = (Account) session.getAttribute("acc");
-        Optional<Account> teacherFound = accountService.getAccount(accSe.getAccountId());
-        teacherFound.ifPresent(teacher -> model.addAttribute("Parents", teacher));
+        Optional<Account> parentsFound = accountService.getAccount(accSe.getAccountId());
+        parentsFound.ifPresent(parent -> model.addAttribute("Parents", parent));
+        List<Kindergartner> listKinder = kindergartnerService.getListKinderByIdParent(parentsFound.get().getAccountId()); // lấy danh sách trẻ em của phụ huynh đó
+        boolean isKin = true;
+        if (listKinder.size() == 0) {
+            isKin = false;
+        }
+        session.setAttribute("isKin", isKin);
         return "Parents/ParentProfile";
     }
 
@@ -91,18 +97,26 @@ public class ParentController {
     @RequestMapping("/childprofile")
     public String showchild(Model model, HttpSession session, HttpServletRequest res) {
         Account accSession = (Account) session.getAttribute("acc");
-        Optional<Account> acc = accountService.getAccount(accSession.getAccountId());
-        acc.ifPresent(ac -> model.addAttribute("Account", ac));
+        Optional<Account> acc = accountService.getAccount(accSession.getAccountId()); // lấy account
+        acc.ifPresent(ac -> model.addAttribute("Account", ac)); // set attribute
         if (acc.isPresent()) {
-            List<Kindergartner> listKinder = kindergartnerService.getListKinderByIdParent(acc.get().getAccountId());
-            model.addAttribute("listKinder", listKinder);
+            List<Kindergartner> listKinder = kindergartnerService.getListKinderByIdParent(acc.get().getAccountId()); // lấy danh sách trẻ em của phụ huynh đó
+
+            if (listKinder.size() == 0) { // ko có đứa trẻ nào thì bị đẩy về trang thông tin phụ huynh
+                return "redirect:/parents/ParentsProfile";
+            } else {
+                boolean isKin = true;
+                session.setAttribute("isKin", isKin);
+            }
+
+            model.addAttribute("listKinder", listKinder); // set attribute
             if (res.getParameter("mainchildid") != null) {
-                int index = Integer.parseInt(res.getParameter("mainchildid"));
-                Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(index);
-                kindergartner.ifPresent(user -> model.addAttribute("Kinder", user));
-                StudyRecord studyRecord = studyRecordService.getStudyRecordByIdKinderId(index);
-                model.addAttribute("studyRecord", studyRecord);
-                model.addAttribute("mainchildid", index);
+                int index = Integer.parseInt(res.getParameter("mainchildid")); // id của trẻ em muốn get data
+                Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(index); // lấy thông tin của đứa trẻ
+                kindergartner.ifPresent(user -> model.addAttribute("Kinder", user));  // set attribute
+                StudyRecord studyRecord = studyRecordService.getStudyRecordByIdKinderId(index); // lấy thông tin việc học của trẻ theo id trẻ
+                model.addAttribute("studyRecord", studyRecord); // set attribute
+                model.addAttribute("mainchildid", index); // set attribute id của trẻ
             } else {
                 if (listKinder.size() > 0) {
                     model.addAttribute("Kinder", listKinder.get(0));
@@ -163,7 +177,7 @@ public class ParentController {
     }
 
     @RequestMapping(value = "/updateChild", method = RequestMethod.POST)
-    public String updateC(@RequestParam("id") Integer userId, HttpServletRequest res) {
+    public String updateC(@RequestParam("id") Integer userId, HttpServletRequest res, HttpSession session) {
         Kindergartner kindergartner = new Kindergartner();
         Optional<Kindergartner> opKin = kindergartnerService.getKindergartnerById(userId);
         if (opKin.isPresent()) {
@@ -210,6 +224,8 @@ public class ParentController {
             studyRecord.setStudyYear(java.time.LocalDate.now().getYear());
         }
         studyRecordService.save(studyRecord);
+        boolean isKin = true;
+        session.setAttribute("isKin", isKin);
         return "redirect:/parents/child";
     }
 }

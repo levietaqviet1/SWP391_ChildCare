@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AttendanceService {
     public List<Attendance> getAllAttendanceByIdKinder(Integer id);
+
+    public void deleteAttendanceByIdKinder(Integer id);
 }

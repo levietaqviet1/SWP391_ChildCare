@@ -22,8 +22,8 @@
 
                 </div>
                 <div class="menu-item-container">
-                    <ul class="item-lists">
-                        <li class="menu-item current1">
+                    <ul class="item-lists" th:switch="${session.isKin}">
+                        <li class="menu-item current1" th:case="true">
                             <a href="/parents/childprofile">Child Information</a>
                         </li>
                         <li class="menu-item">

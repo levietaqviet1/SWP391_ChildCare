@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface ActivityService {
     public List<Activity> getAll();
 
-    public Optional<Activity>  getActivityById(Integer id);
+    public Optional<Activity> getActivityById(Integer id);
 }

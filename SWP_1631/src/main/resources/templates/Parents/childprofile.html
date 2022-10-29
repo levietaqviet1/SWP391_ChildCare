@@ -22,8 +22,8 @@
 
                 </div>
                 <div class="menu-item-container">
-                    <ul class="item-lists">
-                        <li class="menu-item current1">
+                    <ul class="item-lists" th:switch="${session.isKin}">
+                        <li class="menu-item current1" th:case="true">
                             <a href="/parents/childprofile">Child Information</a>
                         </li>
                         <li class="menu-item">
@@ -56,7 +56,7 @@
                             <div class="personel-section">
 
                             </div>
-                            <form th:action="@{/parents/childprofile}" method="GET">
+                            <form id="f1" th:action="@{/parents/childprofile}" method="GET">
 
                                 <select name="mainchildid" id="mainchildid" class="item-list">
                                     <option
@@ -147,4 +147,5 @@
 </div>
 
 </body>
+<script th:src="@{/admin/schedule/js/schedule.js}"></script>
 </html>

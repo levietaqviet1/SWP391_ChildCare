@@ -24,5 +24,13 @@ public class StudyRecord {
     @Column(name = "study_year")
     private int studyYear;
 
-
+    @Override
+    public String toString() {
+        return "StudyRecord{" +
+                "recordId=" + recordId +
+                ", classId=" + classId +
+                ", kinderId=" + kinderId +
+                ", studyYear=" + studyYear +
+                '}';
+    }
 }

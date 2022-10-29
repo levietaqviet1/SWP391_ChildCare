@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/admin/schedule/css/style.css}">
 
     <title></title>
-
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <!--script-->
     <script src="https://kit.fontawesome.com/28a1dc3e10.js" crossorigin="anonymous"></script>
     <!--<title>Admin Dashboard Panel</title>-->
@@ -59,21 +59,17 @@
 
 <div class="dashboard">
     <div class="dash-lefttop">
-        <img src="https://i.pinimg.com/originals/72/45/fb/7245fb0ca786bb4a98fb8465e437c5bb.jpg" alt="">
+        <!--        <img src="https://i.pinimg.com/originals/72/45/fb/7245fb0ca786bb4a98fb8465e437c5bb.jpg" alt="">-->
         <!--        <a href="#">${sessionScope.account.firstName} </a>-->
     </div>
-    <div class="test">
 
-    </div>
     <form id="f" th:action="@{/admin/scheduleTSearch}" method="post">
         <div class="select-menu">
             <!--class-->
             <div class="class-select">
-                <!--                <c:set value="${requestScope.cid_raw}" var="cid_raw"/>-->
-
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="cid" onchange="chage();"
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="cid"
+                        onchange="chage();"
                         style="height: 36px;">
-                    <!--<option selected>Select Class</option>-->
                     <option
                             th:each="cl:${classes}"
                             th:text="${cl.className}"
@@ -92,9 +88,9 @@
                         th:selected="${w.key==firstMonday}"></option>
             </select>
 
-<!--            <button class="btn btn-outline-success" type="submit"-->
-<!--                    onclick="changeDate()">Search-->
-<!--            </button>-->
+            <!--            <button class="btn btn-outline-success" type="submit"-->
+            <!--                    onclick="changeDate()">Search-->
+            <!--            </button>-->
     </form>
 </div>
 
@@ -128,11 +124,11 @@
 
                             <td style="min-height: 1px">
                                 <div style="display: flex">
-                                    <div class="schedule-list" style="width: 80px;" id="${map.key}:${loopT + 1}:old" >
-                                            [[${map.value[loopT].activityid.name}]]
+                                    <div class="schedule-list" style="width: 80px;" id="${map.key}:${loopT + 1}:old">
+                                        [[${map.value[loopT].activityid.name}]]
                                     </div>
 
-                                    <div id="${map.key}" style="display: none" >
+                                    <div id="${map.key}" style="display: none">
 
                                         <form action="updateschedule" method="post">
                                             <input name="schedule_id" value="${map.value[loopT.index].schedule_id}"
@@ -144,10 +140,10 @@
                                             <input name="cid_raw" value="${cid_raw}" type="hidden"/>
                                             <input name="slot_chosen" value="${loopT.index + 1}" type="hidden"/>
                                             <select name="select_activity" style="max-width: 100%; margin-bottom: 4px;">
-                                                <option  th:each="act:${activity}"
-                                                         th:text="${act.name}"
-                                                         th:value="${act.activityid}"
-                                                         th:selected="${act.activityid == map.value[loopT].activityid.activityid}"></option>
+                                                <option th:each="act:${activity}"
+                                                        th:text="${act.name}"
+                                                        th:value="${act.activityid}"
+                                                        th:selected="${act.activityid == map.value[loopT].activityid.activityid}"></option>
                                             </select>
                                             <a class="update_confirm">
                                                 <button type="submit">
@@ -169,12 +165,13 @@
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" th:href="@{/admin/deleteSchedule?id={id}(id=${map.value[loopT].scheduleId})}">
-<!--                                               onclick="doDelete('${map.value[loopT].scheduleId}')">-->
+                                            <a class="dropdown-item"
+                                               th:href="@{/admin/deleteSchedule?id={id}(id=${map.value[loopT].scheduleId})}">
+                                                <!--                                               onclick="doDelete('${map.value[loopT].scheduleId}')">-->
                                                 <i class="fa-delete fa-solid fa-trash fa-fw fa-align-center"></i> Delete</a>
-<!--                                            <a class="dropdown-item" href="#"-->
-<!--                                               onclick="doUpdate( '${map.key}' , '${map.key}:${loopT + 1}:old')">-->
-<!--                                                <i class="fa fa-edit"></i> Update</a>-->
+                                            <!--                                            <a class="dropdown-item" href="#"-->
+                                            <!--                                               onclick="doUpdate( '${map.key}' , '${map.key}:${loopT + 1}:old')">-->
+                                            <!--                                                <i class="fa fa-edit"></i> Update</a>-->
                                         </div>
                                     </div>
 
@@ -186,8 +183,10 @@
                         <div th:case="false">
                             <!--if slot null-->
                             <td style="text-align: center;vertical-align: middle;" class="empty-cell">
-                                <form th:action="@{/admin/updateSchedule?slotId={slotId}(slotId=${loopT+1})}" method="POST">
-                                    <input name="date_picked_converted" th:value="${#dates.format(map.key, 'yyyy/MM/dd')}" type="hidden"/>
+                                <form th:action="@{/admin/updateSchedule?slotId={slotId}(slotId=${loopT+1})}"
+                                      method="POST">
+                                    <input name="date_picked_converted"
+                                           th:value="${#dates.format(map.key, 'yyyy/MM/dd')}" type="hidden"/>
                                     <input name="cid_raw" th:value="${cid_raw}" type="hidden"/>
                                     <input name="slot_chosen" value="${loopT + 1}" type="hidden"/>
 

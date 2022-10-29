@@ -30,8 +30,12 @@
 //        localStorage.setItem("status", "open");
 //    }
 //});
-function chage(){
+function chage() {
     document.getElementById("f").submit();
+}
+
+function chageF1() {
+    document.getElementById("f1").submit();
 }
 
 function doDelete(id) {
@@ -44,7 +48,7 @@ function doDelete(id) {
 function doUpdate(id_update, id_old) {
 //    alert(id_update);
 //    alert(id_old);
-    const myElement1 = document.getElementById(id_update) ;
+    const myElement1 = document.getElementById(id_update);
     myElement1.style.display = "block";
     const myElement2 = document.getElementById(id_old);
     myElement2.style.display = "none";

@@ -31,8 +31,8 @@
                     <p></p>
                 </div>
                 <div class="menu-item-container">
-                    <ul class="item-lists">
-                        <li class="menu-item ">
+                    <ul class="item-lists" th:switch="${session.isKin}">
+                        <li class="menu-item " th:case="true">
                             <a href="/parents/childprofile">Child Information</a>
                         </li>
                         <li class="menu-item">

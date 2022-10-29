@@ -3,6 +3,7 @@ package com.example.SWP_1631.controller;
 import com.example.SWP_1631.entity.Account;
 import com.example.SWP_1631.entity.Kindergartner;
 import com.example.SWP_1631.entity.Role;
+import com.example.SWP_1631.service.AttendanceService;
 import com.example.SWP_1631.service.KindergartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ public class KinderController {
 
     @Autowired
     private KindergartnerService ks;
+    @Autowired
+    private AttendanceService attendanceService;
 
     @GetMapping("/")
     public String view(Model model) {
@@ -47,6 +50,7 @@ public class KinderController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String deleteKinder(@RequestParam("id") Integer KinderId, Model model) {
+        attendanceService.deleteAttendanceByIdKinder(KinderId);
         ks.delete(KinderId);
         return "redirect:/kinderController/";
     }

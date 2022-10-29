@@ -30,11 +30,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Account user = acc.getAccByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("Could not find user");
+        } else {
+            //        HttpSession session = null;
+            session.set("VaiTro", user.getRole().getRoleName());
+            session.set("acc", user);
+//            System.out.printf(user.toString());
+
+            List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
+            GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getRoleName());
+            grantList.add(authority);
         }
-//        HttpSession session = null;
-        session.set("VaiTro", user.getRole().getRoleName());
-        session.set("acc", user);
-        System.out.printf(user.toString());
+
+
         return new MyUserDetails(user);
     }
 }

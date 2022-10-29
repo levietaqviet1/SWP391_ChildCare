@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -43,11 +45,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable();
+        http.csrf().disable();
         http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
-//        http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("admin")
-//                .antMatchers("/", "/login", "/logout").permitAll()
-//                .anyRequest().permitAll();
+
+        // Trang chỉ dành cho ADMIN
+        http.authorizeRequests().antMatchers("/admin/**", "/kinderController/**").access("hasRole('ROLE_ADMIN')");
+// Trang chỉ dành cho PARENT
+        http.authorizeRequests().antMatchers("/parents/**").access("hasRole('ROLE_PARENT')");
+        // Trang chỉ dành cho PARENT
+        http.authorizeRequests().antMatchers("/teacher/**").access("hasRole('ROLE_TEACHER')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests().and().formLogin()//
@@ -60,6 +66,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")// tham số này nhận từ form login ở bước 3 có input  name='password'
                 // Cấu hình cho Logout Page. Khi logout mình trả về trang
                 .and().logout().logoutUrl("/home/logoutSuccessful").logoutSuccessUrl("/home/");
+        http.authorizeRequests().and() //
+                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+                .tokenValiditySeconds(60); // 24h
 
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); // Ta lưu tạm remember me trong memory (RAM). Nếu cần mình có thể lưu trong database
+        return memory;
     }
 }

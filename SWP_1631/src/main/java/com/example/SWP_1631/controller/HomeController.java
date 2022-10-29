@@ -11,21 +11,24 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
 
     @RequestMapping("/")
-    public String init(Model model) {
+    public String init(Model model, HttpSession session) {
 //        String name = "Viet";
 //        model.addAttribute("long",name);
+        if (session.getAttribute("VaiTro") != null) {
+            return "redirect:/home/loginSuccess";
+        }
         return "index";
     }
 
     @RequestMapping("/loginSuccess")
     public String ViewS(HttpSession session) {
-        if (session.getAttribute("VaiTro").equals("admin")) {
+        if (session.getAttribute("VaiTro").equals("ROLE_ADMIN")) {
             return "redirect:/admin/";
         }
-        if (session.getAttribute("VaiTro").equals("parent")) {
+        if (session.getAttribute("VaiTro").equals("ROLE_PARENT")) {
             return "redirect:/parents/ParentsProfile";
         }
-        if (session.getAttribute("VaiTro").equals("teacher")) {
+        if (session.getAttribute("VaiTro").equals("ROLE_TEACHER")) {
             return "redirect:/teacher/";
         }
         return "index";

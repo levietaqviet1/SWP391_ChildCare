@@ -6,6 +6,7 @@ import com.example.SWP_1631.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,5 +17,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public List<Attendance> getAllAttendanceByIdKinder(Integer id) {
         return attendanceRepository.getAllAttendanceByIdKinder(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAttendanceByIdKinder(Integer id) {
+        attendanceRepository.deleteAttendanceByIdKinder(id);
     }
 }
