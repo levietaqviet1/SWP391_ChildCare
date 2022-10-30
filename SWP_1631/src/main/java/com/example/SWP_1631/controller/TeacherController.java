@@ -1,9 +1,13 @@
 package com.example.SWP_1631.controller;
 
 import com.example.SWP_1631.entity.Account;
+import com.example.SWP_1631.entity.Clazz;
 import com.example.SWP_1631.entity.Role;
+import com.example.SWP_1631.entity.StudyRecord;
 import com.example.SWP_1631.service.AccountService;
+import com.example.SWP_1631.service.ClazzService;
 import com.example.SWP_1631.service.RoleService;
+import com.example.SWP_1631.service.StudyRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +34,11 @@ public class TeacherController {
     @Autowired
     private RoleService roleSer;
 
+    @Autowired
+    private  StudyRecordService studyRecordService;
+
+    @Autowired
+    private ClazzService clazzService;
     @RequestMapping("/checkAttendence")
     public String atten(Model model) {
         return "teacher/checkAttendence";
@@ -68,4 +81,21 @@ public class TeacherController {
         accountService.update(ac);
         return "redirect:/teacher/";
     }
+
+    @GetMapping("/homeTeacher")
+    public String homeTeacher(Model model, HttpSession session) {
+        Account accSe = (Account) session.getAttribute("acc");
+        String checkindate = LocalDate.now().toString(); // lấy date hiện tại
+        List<StudyRecord> listStudyRecord = new ArrayList<>(); // tạo list StudyRecord
+        Clazz clazz =  clazzService.getClazzByIdAccount(accSe.getAccountId()); // lấy các class do acc đó quản lý
+
+
+
+
+
+
+
+        return "teacher/teacherProfile";
+    }
+
 }

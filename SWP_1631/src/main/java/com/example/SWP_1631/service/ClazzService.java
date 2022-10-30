@@ -16,4 +16,6 @@ public interface ClazzService {
 
 
     void save(Clazz cal);
+
+    Clazz getClazzByIdAccount(int accountId);
 }

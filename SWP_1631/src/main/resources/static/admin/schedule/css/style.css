@@ -29,7 +29,7 @@
 
 body {
     min-height: 100vh;
-    background-color: var(--primary-color);
+    background-color: #fefefe;
 }
 
 /* body.dark{
@@ -60,7 +60,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #0b3cc1;
 } */
-/* 
+/*
 body.dark::-webkit-scrollbar-thumb:hover,
 body.dark .activity-data::-webkit-scrollbar-thumb:hover{
     background: #3A3B3C;
@@ -231,10 +231,10 @@ body.dark .switch:before {
 }
 
 .dashboard {
-    height: 100vh;
+    height: 95vh;
     position: relative;
     left: 250px;
-    background-color: var(--panel-color);
+    background-color: #fefefe;
 
     width: calc(100% - 250px);
 

@@ -39,4 +39,9 @@ public class ClazzServiceImpl implements ClazzService {
     public void save(Clazz cal) {
         classRes.save(cal);
     }
+
+    @Override
+    public Clazz getClazzByIdAccount(int accountId) {
+        return classRes.getClazzByIdAccount(accountId);
+    }
 }
