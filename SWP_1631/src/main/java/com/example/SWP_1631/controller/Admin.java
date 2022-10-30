@@ -240,6 +240,7 @@ public class Admin {
                 Date d = sdf.parse(date);
                 sdf = new SimpleDateFormat("yyyy-MM-dd");
                 date3 = sdf.format(d);
+                System.err.println(date3);
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -257,7 +258,7 @@ public class Admin {
         if (action == null) {
             LocalDate now = LocalDate.now();
             LocalDate firstDayOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-
+            System.err.println(firstDayOfWeek);
             model.addAttribute("firstMonday", firstDayOfWeek);
         } else {
 
@@ -309,7 +310,6 @@ public class Admin {
 
     @RequestMapping(value = "/updateSchedule", method = RequestMethod.POST)
     public String updateSchedule(@RequestParam("slotId") Integer slotId, HttpServletRequest res, HttpSession session) throws Exception {
-
         int classId = Integer.parseInt(res.getParameter("cid_raw"));
         String idActi = res.getParameter("select_activity");
         Optional<Clazz> clazz = clazzService.getById(classId);

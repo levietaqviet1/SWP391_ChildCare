@@ -54,6 +54,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Optional<Account> getAccount(Integer id) {
         Optional<Account> acc = accRes.findById(id);
+
         return acc;
     }
 }
