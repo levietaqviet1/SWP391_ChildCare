@@ -34,6 +34,9 @@ public class TeacherController {
     @Autowired
     private AttendanceService attendanceService;
 
+    @Autowired
+    private KindergartnerService kindergartnerService;
+
     @RequestMapping("/checkAttendence")
     public String atten(Model model) {
         return "teacher/checkAttendence";
@@ -164,4 +167,14 @@ public class TeacherController {
         return "redirect:/teacher/homeTeacher";
     }
 
+    @RequestMapping(value = "/searchKinder", method = RequestMethod.GET)
+    public String searchKinder(@RequestParam("id") Integer id, Model model, HttpSession session) {
+        Account accSe = (Account) session.getAttribute("acc");
+        Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(id);
+        kindergartner.ifPresent(user -> model.addAttribute("kindergartner", user));
+        Clazz clazz = clazzService.getClazzByIdAccount(accSe.getAccountId());
+        model.addAttribute("accParent", accSe);
+        model.addAttribute("clazz", clazz);
+        return "teacher/viewStudent";
+    }
 }

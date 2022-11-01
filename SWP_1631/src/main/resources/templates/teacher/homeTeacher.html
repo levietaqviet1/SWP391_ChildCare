@@ -68,19 +68,19 @@
                                 <input type="submit" name="Save" value="Check In"/>
                             </div>
                             </form>
-                             </div>
+                        </div>
                     </div>
                     <div class="body-container">
                         <form th:action="@{/teacher/UpdateAttendance?checkindate={checkindate}(checkindate=${checkindate})}"
                               method="POST">
                             <div class="list-students-ver2">
-                                 <div class="student-infor" th:each=" studyRecord : ${listStudyRecord}"
+                                <div class="student-infor" th:each=" studyRecord : ${listStudyRecord}"
                                      th:switch="${present_kids.size() == 0}">
                                     <p>[[${studyRecord.kinderId.KinderId}]]</p>
                                     <div class="img-section">
                                         <img th:src="@{/teacher/img/userImg/download.png}" alt="">
                                     </div>
-                                    <a href="#">[[${studyRecord.kinderId.firstName}]]
+                                    <a th:href="@{/teacher/searchKinder?id={id}(id=${studyRecord.kinderId.KinderId})}">[[${studyRecord.kinderId.firstName}]]
                                         [[${studyRecord.kinderId.lastName}]]</a>
                                     <div class="check-attendance" th:case="true">
                                         <input type="radio" th:name="gen+${studyRecord.kinderId.KinderId}"
