@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
     @Query("SELECT  c FROM Clazz c WHERE c.account.accountId =:accountId ")
-    Clazz getClazzByIdAccount(@Param("accountId")  int accountId);
+    Clazz getClazzByIdAccount(@Param("accountId") int accountId);
 }

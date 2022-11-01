@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Trang chỉ dành cho PARENT
         http.authorizeRequests().antMatchers("/teacher/**").access("hasRole('ROLE_TEACHER')");
 
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/home/login");
         http.authorizeRequests().and().formLogin()//
                 // Submit URL của trang login
                 .loginProcessingUrl("/authenticateTheUser") // Bạn còn nhớ bước 3 khi tạo form login thì action của nó là j_spring_security_check giống ở

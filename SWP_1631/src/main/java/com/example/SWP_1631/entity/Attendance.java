@@ -45,4 +45,15 @@ public class Attendance {
             this.checkDate = date1;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "attendanceId=" + attendanceId +
+                ", studentId=" + studentId +
+                ", checkDate=" + checkDate +
+                ", status=" + status +
+                ", teacherId=" + teacherId +
+                '}';
+    }
 }

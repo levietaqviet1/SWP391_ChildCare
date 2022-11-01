@@ -18,6 +18,7 @@ public interface StudyRecordRepository extends JpaRepository<StudyRecord, Intege
     @Modifying
     @Query("DELETE  FROM StudyRecord s WHERE s.classId.clazzId =:class_id")
     public void deleteByIdClazz(@Param("class_id") Integer id);
+
     @Query("SELECT u FROM StudyRecord u WHERE u.classId.clazzId =:clazzId")
     List<StudyRecord> getStudyRecordByIdClassId(@Param("clazzId") int clazzId);
 }

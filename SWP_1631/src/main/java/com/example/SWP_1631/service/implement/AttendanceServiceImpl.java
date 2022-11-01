@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -16,12 +19,50 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public List<Attendance> getAllAttendanceByIdKinder(Integer id) {
-        return attendanceRepository.getAllAttendanceByIdKinder(id);
+        List<Attendance> list = new ArrayList<>();
+        try {
+            list = attendanceRepository.getAllAttendanceByIdKinder(id);
+        } catch (Exception e) {
+            System.err.println("Error" + e.getMessage());
+        }
+        return list;
     }
 
     @Transactional
     @Override
     public void deleteAttendanceByIdKinder(Integer id) {
-        attendanceRepository.deleteAttendanceByIdKinder(id);
+        try {
+            attendanceRepository.deleteAttendanceByIdKinder(id);
+        } catch (Exception e) {
+            System.err.println("Error" + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public List<Attendance> getAllAttendanceOfInputDay(Date checkindate) {
+        List<Attendance> list = new ArrayList<>();
+        try {
+            list = attendanceRepository.getAllAttendanceOfInputDay(checkindate);
+        } catch (Exception e) {
+            System.err.println("Error getAllAttendanceOfInputDay: " + e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    public Optional<Attendance> getAttendanceByStudentIdAndDateAndTeacherId(int kinderId, Date checkindate, int accountId) {
+        Optional<Attendance> acc = null;
+        try {
+            acc = attendanceRepository.getAttendanceByStudentIdAndDateAndTeacherId(kinderId, checkindate, accountId);
+        } catch (Exception e) {
+            System.out.println("Error getAttendanceByStudentIdAndDateAndTeacherId: " + e.getMessage());
+        }
+        return acc;
+    }
+
+    @Override
+    public void save(Attendance attendance) {
+        attendanceRepository.save(attendance);
     }
 }

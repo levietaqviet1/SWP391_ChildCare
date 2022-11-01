@@ -16,4 +16,6 @@ public interface StudyRecordService {
 
 
     List<StudyRecord> getStudyRecordByIdClassId(int clazzId);
+
+
 }

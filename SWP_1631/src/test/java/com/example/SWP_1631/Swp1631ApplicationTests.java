@@ -13,19 +13,21 @@ import java.util.Optional;
 class Swp1631ApplicationTests {
     @Autowired
     private AccountService accountService;
+
     @Test
     void contextLoadsFirstNamById() {
         Account acc = new Account();
         acc.setFirstName("Jonah");
         Optional<Account> acc1 = accountService.getAccount(8);
-        acc1.ifPresent(use -> Assert.assertEquals(true,use.getFirstName().equals(acc.getFirstName())));
+        acc1.ifPresent(use -> Assert.assertEquals(true, use.getFirstName().equals(acc.getFirstName())));
     }
+
     @Test
     void contextLoadsGmailById() {
         Account acc = new Account();
         acc.setEmail("jonah@gmail.com");
         Optional<Account> acc1 = accountService.getAccount(8);
-        acc1.ifPresent(use -> Assert.assertEquals(true,use.getEmail().equals(acc.getEmail())));
+        acc1.ifPresent(use -> Assert.assertEquals(true, use.getEmail().equals(acc.getEmail())));
     }
 
 }

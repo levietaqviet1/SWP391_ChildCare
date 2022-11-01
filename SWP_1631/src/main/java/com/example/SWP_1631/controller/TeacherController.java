@@ -1,13 +1,7 @@
 package com.example.SWP_1631.controller;
 
-import com.example.SWP_1631.entity.Account;
-import com.example.SWP_1631.entity.Clazz;
-import com.example.SWP_1631.entity.Role;
-import com.example.SWP_1631.entity.StudyRecord;
-import com.example.SWP_1631.service.AccountService;
-import com.example.SWP_1631.service.ClazzService;
-import com.example.SWP_1631.service.RoleService;
-import com.example.SWP_1631.service.StudyRecordService;
+import com.example.SWP_1631.entity.*;
+import com.example.SWP_1631.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/teacher")
@@ -35,10 +27,13 @@ public class TeacherController {
     private RoleService roleSer;
 
     @Autowired
-    private  StudyRecordService studyRecordService;
+    private StudyRecordService studyRecordService;
 
     @Autowired
     private ClazzService clazzService;
+    @Autowired
+    private AttendanceService attendanceService;
+
     @RequestMapping("/checkAttendence")
     public String atten(Model model) {
         return "teacher/checkAttendence";
@@ -83,19 +78,89 @@ public class TeacherController {
     }
 
     @GetMapping("/homeTeacher")
-    public String homeTeacher(Model model, HttpSession session) {
+    public String homeTeacher(Model model, HttpSession session, HttpServletRequest res) {
         Account accSe = (Account) session.getAttribute("acc");
         String checkindate = LocalDate.now().toString(); // lấy date hiện tại
-        List<StudyRecord> listStudyRecord = new ArrayList<>(); // tạo list StudyRecord
-        Clazz clazz =  clazzService.getClazzByIdAccount(accSe.getAccountId()); // lấy các class do acc đó quản lý
+        if (res.getParameter("checkindate") != null) {
+            checkindate = res.getParameter("checkindate");
+        }
+        Clazz clazz = clazzService.getClazzByIdAccount(accSe.getAccountId()); // lấy các class do acc đó quản lý
+        List<StudyRecord> listStudyRecord = studyRecordService.getStudyRecordByIdClassId(clazz.getClazzId()); // tạo list StudyRecord
+        if (listStudyRecord.isEmpty()) {
+            return "redirect:/teacher/";
+        }
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for (StudyRecord kinderRecordStudy : listStudyRecord) {
 
+            map.put(kinderRecordStudy.getKinderId().getKinderId(), 0);
+        }
+        List<Attendance> attendances = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date e = sdf.parse(checkindate);
+            attendances = attendanceService.getAllAttendanceOfInputDay(e);
+        } catch (Exception e) {
 
-
-
-
-
-
-        return "teacher/teacherProfile";
+        }
+        System.err.println("1");
+        if (!attendances.isEmpty()) {
+            System.err.println("2");
+            for (Attendance a : attendances) {
+                if (a.getStatus() != 0) {
+                    map.replace(a.getStudentId().getKinderId(), 1);
+                }
+                System.err.println(a.getTeacherId() + " " + a.getStatus());
+            }
+        }
+        model.addAttribute("clazz", clazz.getClassName());
+        model.addAttribute("studentMap", map);
+        model.addAttribute("checkindate", checkindate);
+        model.addAttribute("listStudyRecord", listStudyRecord);
+        model.addAttribute("isPast", !checkindate.equalsIgnoreCase(LocalDate.now().toString()));
+        model.addAttribute("present_kids", attendances);
+        return "teacher/homeTeacher";
     }
 
+    @RequestMapping(value = "/UpdateAttendance", method = RequestMethod.POST)
+    public String updatetest(@RequestParam("checkindate") String checkdate, Model model, HttpServletRequest res, HttpSession session) {
+        Account accSe = (Account) session.getAttribute("acc");
+        String checkindate = LocalDate.now().toString(); // lấy date hiện tại
+        if (checkdate != null) {
+            checkindate = checkdate;
+            System.err.println("In" + checkindate);
+        }
+        Clazz clazz = clazzService.getClazzByIdAccount(accSe.getAccountId()); // lấy các class do acc đó quản lý
+        List<StudyRecord> listStudyRecord = studyRecordService.getStudyRecordByIdClassId(clazz.getClazzId()); // tạo list StudyRecord
+
+        for (StudyRecord list : listStudyRecord) {
+            Attendance attendance = new Attendance();
+            attendance.setTeacherId(accSe);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date dateFormat = sdf.parse(checkindate);
+                Optional<Attendance> attendanceOptional = attendanceService.getAttendanceByStudentIdAndDateAndTeacherId(list.getKinderId().getKinderId(), dateFormat, accSe.getAccountId());
+                if (attendanceOptional != null && attendanceOptional.isPresent()) {
+                    attendance = attendanceOptional.get();
+                    try {
+                        attendance.checkDate(checkindate);
+                    } catch (Exception e) {
+                    }
+                    attendance.setStatus(Integer.parseInt(res.getParameter("gen" + list.getKinderId().getKinderId())));
+                } else {
+                    try {
+                        attendance.checkDate(checkindate);
+                    } catch (Exception e) {
+                    }
+                    attendance.setStudentId(list.getKinderId());
+                    attendance.setStatus(Integer.parseInt(res.getParameter("gen" + list.getKinderId().getKinderId())));
+                    attendance.checkDate(LocalDate.now().toString());
+                }
+                attendanceService.save(attendance);
+            } catch (Exception e) {
+
+            }
+
+        }
+        return "redirect:/teacher/homeTeacher";
+    }
 }

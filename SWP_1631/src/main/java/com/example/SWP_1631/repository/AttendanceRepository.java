@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer> {
@@ -18,4 +20,10 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
     @Modifying
     @Query("DELETE  FROM Attendance s WHERE s.studentId.KinderId =:id")
     void deleteAttendanceByIdKinder(@Param("id") Integer id);
+
+    @Query("SELECT u FROM Attendance u WHERE u.checkDate =:dateS ")
+    List<Attendance> getAllAttendanceOfInputDay(@Param("dateS") Date dateS);
+
+    @Query("SELECT u FROM Attendance u WHERE u.checkDate =:dateS AND u.studentId.KinderId =:kinderId AND u.teacherId.accountId =:accountId")
+    Optional<Attendance> getAttendanceByStudentIdAndDateAndTeacherId(@Param("kinderId") int kinderId, @Param("dateS") Date dateS, @Param("accountId") int accountId);
 }
