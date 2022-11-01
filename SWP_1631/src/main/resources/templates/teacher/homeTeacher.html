@@ -18,8 +18,6 @@
 </head>
 
 <body>
-<!--<c:set var="acc" value="${sessionScope.account}"/>-->
-<!--<c:set var="kinderClass" value="${sessionScope.kinder_class}"/>-->
 <div class="wrapper">
     <div class="home">
         <div class="left-side-menu">
@@ -56,11 +54,6 @@
                             <h1>[[${clazz}]]</h1>
                         </div>
                         <div class="search-section">
-                            <!--                            <form action="filter" method="get">-->
-                            <!--                                <input type="search" name="searchbar" placeholder="Search...">-->
-                            <!--                                <input type="hidden" name="action" value="checkin"/>-->
-                            <!--                                <button type="submit">Search</button>-->
-                            <!--                            </form>-->
                         </div>
                     </div>
                     <div class="header-filter">
@@ -75,53 +68,21 @@
                                 <input type="submit" name="Save" value="Check In"/>
                             </div>
                             </form>
-                            <!--                            <div class="check-section">-->
-                            <!--                                -->
-                            <!--                                </form>-->
-                            <!--                                &lt;!&ndash;                                <div class="check-out check-item">&ndash;&gt;-->
-                            <!--                                &lt;!&ndash;                                    <a href="checkout">Check out</a>&ndash;&gt;-->
-                            <!--                                &lt;!&ndash;                                </div>&ndash;&gt;-->
-                            <!--                            </div>-->
-                            <!--                            &lt;!&ndash;                                    <div class="student-filter">-->
-                            <!--                                                                    <div class="filter-item ${!requestScope.filter.equals("absent")?"current1":""}">-->
-                            <!--                                                                        <a href="checkattendance?action=checkin&filteritem=getall&checkindate=${checkindate}" style="color: ${!requestScope.filter.equals("absent")?"#fff":""};">All</a>-->
-                            <!--                                                                    </div>-->
-                            <!--                                                                    <div class="filter-item ${requestScope.filter.equals("absent")?"current1":""}">-->
-                            <!--                                                                        <a href="checkattendance?action=checkin&filteritem=absent&checkindate=${checkindate}" style="color: ${requestScope.filter.equals("absent")?"#fff":""};">Absent only</a>-->
-                            <!--                                                                    </div>-->
-                            <!--                                                                </div>&ndash;&gt;-->
-                            <!--                        </div>-->
-                        </div>
+                             </div>
                     </div>
-                    <!--                <c:set var="map" value="${requestScope.studentMap}"/>-->
-                    <!--                <c:set var="listKinder" value="${requestScope.listKinder}"/>-->
-                    <!--                <c:set var="presentKids" value="${requestScope.present_kids}"/>-->
-                    <!--                <c:set var="attendanceStr" value="${requestScope.attendanceStr}"/>-->
-                    <!--                <c:set var="isPast" value="${requestScope.isPast}"/>-->
                     <div class="body-container">
                         <form th:action="@{/teacher/UpdateAttendance?checkindate={checkindate}(checkindate=${checkindate})}"
                               method="POST">
                             <div class="list-students-ver2">
-                                <!--                            <%-->
-                                <!--                            int count = 0;-->
-
-                                <!--                            %>-->
-                                <!--                            <c:forEach var="s" items="${listKinder}">-->
-                                <div class="student-infor" th:each=" studyRecord : ${listStudyRecord}"
+                                 <div class="student-infor" th:each=" studyRecord : ${listStudyRecord}"
                                      th:switch="${present_kids.size() == 0}">
-                                    <!--                                    <%-->
-                                    <!--                                    count++;-->
-                                    <!--                                    %>-->
                                     <p>[[${studyRecord.kinderId.KinderId}]]</p>
                                     <div class="img-section">
                                         <img th:src="@{/teacher/img/userImg/download.png}" alt="">
                                     </div>
-                                    <a href="kidprofile?kid_id=${studyRecord.kinderId.KinderId}">[[${studyRecord.kinderId.firstName}]]
+                                    <a href="#">[[${studyRecord.kinderId.firstName}]]
                                         [[${studyRecord.kinderId.lastName}]]</a>
-                                    <!--                                    <c:if test="${presentKids == null}">-->
                                     <div class="check-attendance" th:case="true">
-                                        <!--                                            <c:set var="k1" value="${s.kinder.kinder_id}:1"/>-->
-                                        <!--                                            <c:set var="k2" value="${s.kinder.kinder_id}:0"/>-->
                                         <input type="radio" th:name="gen+${studyRecord.kinderId.KinderId}"
                                                th:disabled="${isPast}"
                                                th:id="${studyRecord.kinderId.KinderId}+a" value="1"
@@ -154,7 +115,6 @@
                                     </div>
 
                                 </div>
-                                <!--                            </c:forEach>-->
                             </div>
                             <input type="hidden" name="attendanceStatus" id="attendanceStatus"/>
                             <div class="submit-btn">
@@ -162,28 +122,6 @@
                             </div>
                         </form>
                     </div>
-                    <c:if test="${requestScope.announcement != null || sessionScope.message != null}">
-                        <div id="popup1" class="overlay">
-                            <div class="popup">
-                                <div class="warning-icon">
-                                    <i class="fa-solid fa-circle-exclamation"></i>
-                                </div>
-                                <c:if test="${requestScope.announcement != null}">
-                                    <div class="content">
-                                        ${requestScope.announcement}
-                                    </div>
-                                </c:if>
-                                <c:if test="${sessionScope.message != null}">
-                                    <div class="content">
-                                        ${sessionScope.message}
-                                    </div>
-                                </c:if>
-                                <div class="close-btn" id="close">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </c:if>
                 </div>
             </div>
         </div>
