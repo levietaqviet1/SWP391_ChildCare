@@ -1,5 +1,6 @@
 package com.example.SWP_1631.controller;
 
+import com.example.SWP_1631.Utill.Utill;
 import com.example.SWP_1631.entity.*;
 import com.example.SWP_1631.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,15 @@ public class TeacherController {
 
     @Autowired
     private KindergartnerService kindergartnerService;
+    @Autowired
+    private FeedbackService feedbackService;
 
     @RequestMapping("/checkAttendence")
     public String atten(Model model) {
         return "teacher/checkAttendence";
     }
+
+    private Utill utill = new Utill();
 
     @GetMapping("/")
     public String profile(Model model, HttpSession session) {
@@ -105,14 +110,11 @@ public class TeacherController {
         } catch (Exception e) {
 
         }
-        System.err.println("1");
         if (!attendances.isEmpty()) {
-            System.err.println("2");
             for (Attendance a : attendances) {
                 if (a.getStatus() != 0) {
                     map.replace(a.getStudentId().getKinderId(), 1);
                 }
-                System.err.println(a.getTeacherId() + " " + a.getStatus());
             }
         }
         model.addAttribute("clazz", clazz.getClassName());
@@ -176,5 +178,91 @@ public class TeacherController {
         model.addAttribute("accParent", accSe);
         model.addAttribute("clazz", clazz);
         return "teacher/viewStudent";
+    }
+
+    @RequestMapping(value = "/feedbackStudent", method = RequestMethod.GET)
+    public String feedbackStudent(@RequestParam("id") Integer id, Model model, HttpSession session) {
+        Account accSe = (Account) session.getAttribute("acc");
+        Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(id);
+        kindergartner.ifPresent(user -> model.addAttribute("kindergartner", user));
+        Clazz clazz = clazzService.getClazzByIdAccount(accSe.getAccountId());
+        model.addAttribute("accParent", accSe);
+        model.addAttribute("clazz", clazz);
+        return "teacher/feedbackStudent";
+    }
+
+    @RequestMapping(value = "/addFeedbackStudent", method = RequestMethod.POST)
+    public String addFeedbackStudent(@RequestParam("id") Integer id, Model model, HttpSession session, HttpServletRequest res) {
+        Account accSe = (Account) session.getAttribute("acc");
+        Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(id);
+//        feedbackService
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            String dateNow = LocalDate.now().toString();
+            Date dateFormat = sdf.parse(dateNow);
+            String fbContent = "";
+            if (res.getParameter("fbContent") != null) {
+                fbContent = res.getParameter("fbContent").trim();
+            }
+            double rating = 0.0;
+            if (res.getParameter("rating") != null) {
+                rating = Double.parseDouble(res.getParameter("rating").trim());
+            }
+            Feedback feedback = feedbackService.getFeedbackByDate(dateFormat);
+            if (feedback != null) {
+                feedback.setFbContent(fbContent);
+                feedback.setRating(rating);
+            } else {
+                feedback = new Feedback();
+                feedback.setFbContent(fbContent);
+                feedback.setRating(rating);
+                feedback.setTeacherId(accSe);
+                feedback.setDob(dateNow);
+                feedback.setKidId(kindergartner.get());
+            }
+            feedbackService.save(feedback);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return "redirect:/teacher/homeTeacher";
+    }
+
+    @RequestMapping(value = "/viewAttendance", method = RequestMethod.GET)
+    public String viewAttendance(@RequestParam("id") Integer id, Model model, HttpSession session) {
+        Account accSe = (Account) session.getAttribute("acc");
+        Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(id);
+        kindergartner.ifPresent(user -> model.addAttribute("kindergartner", user));
+        Clazz clazz = clazzService.getClazzByIdAccount(accSe.getAccountId());
+        int month = LocalDate.now().getMonthValue();
+        List<String> listDate = utill.getAllDateOfMonth(month);
+        System.err.println("*******listDate: " + listDate);
+        List<Attendance> listAttendance = new ArrayList<>();
+        listAttendance = attendanceService.getAllAttendanceByIdKinderAndDateFromAndDateTo(id, listDate.get(0), listDate.get(listDate.size() - 1));
+        System.err.println("*******listDate A: " + listDate.get(listDate.size() - 1));
+        LinkedHashMap<Date, Integer> map = new LinkedHashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (String a : listDate) {
+            try {
+                Date dateX = sdf.parse(a);
+                map.put(dateX, 0);
+                if (listAttendance.size() > 0) {
+                    for (Attendance att : listAttendance) {
+                        Date dateS = sdf.parse(String.valueOf(att.getDate()));
+                        if (dateS.equals(dateX)) {
+                            map.replace(dateX, 0, 1);
+                            break;
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+            }
+        }
+
+        model.addAttribute("listDate", map);
+        model.addAttribute("attendance", listAttendance);
+        model.addAttribute("accParent", accSe);
+        model.addAttribute("clazz", clazz);
+        return "teacher/viewCheckAttendace";
     }
 }

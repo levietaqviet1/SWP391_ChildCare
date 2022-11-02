@@ -26,4 +26,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 
     @Query("SELECT u FROM Attendance u WHERE u.checkDate =:dateS AND u.studentId.KinderId =:kinderId AND u.teacherId.accountId =:accountId")
     Optional<Attendance> getAttendanceByStudentIdAndDateAndTeacherId(@Param("kinderId") int kinderId, @Param("dateS") Date dateS, @Param("accountId") int accountId);
+
+    @Query("SELECT u FROM Attendance u WHERE u.studentId.KinderId= :id AND u.checkDate >=:dateFrom AND u.checkDate <=:dateTo AND u.status =:st")
+    List<Attendance> getAllAttendanceByIdKinderAndDateFromAndDateTo(@Param("id") Integer id, @Param("dateFrom") Date dateFrom, @Param("dateTo") Date dateTo, @Param("st") Integer st);
 }

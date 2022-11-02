@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,5 +66,18 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public void save(Attendance attendance) {
         attendanceRepository.save(attendance);
+    }
+
+    @Override
+    public List<Attendance> getAllAttendanceByIdKinderAndDateFromAndDateTo(Integer id, String dateFrom, String dateTo) {
+        List<Attendance> list = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dateFromX = sdf.parse(dateFrom);
+            Date dateToX = sdf.parse(dateTo);
+            list = attendanceRepository.getAllAttendanceByIdKinderAndDateFromAndDateTo(id, dateFromX, dateToX, 1);
+        } catch (Exception e) {
+        }
+        return list;
     }
 }

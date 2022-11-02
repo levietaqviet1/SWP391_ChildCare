@@ -16,4 +16,6 @@ public interface AttendanceService {
     Optional<Attendance> getAttendanceByStudentIdAndDateAndTeacherId(int kinderId, Date checkindate, int accountId);
 
     public void save(Attendance attendance);
+
+    List<Attendance> getAllAttendanceByIdKinderAndDateFromAndDateTo(Integer id, String dateFrom, String dateTo);
 }

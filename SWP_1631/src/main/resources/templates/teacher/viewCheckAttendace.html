@@ -9,6 +9,12 @@
     <title></title>
     <link rel="stylesheet" th:href="@{/teacher/css/teacherhome.css}">
     <link rel="stylesheet" th:href="@{/teacher/css/kidprofile.css}">
+    <script src="https://kit.fontawesome.com/67b5c45612.js" crossorigin="anonymous"></script>
+    <script th:src="@{/teacher/js/teacherhome.js}"></script>
+    <link rel="stylesheet" th:href="@{/teacher/css/checkattendence.css}">
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -19,7 +25,7 @@
                 <div class="user-welcome">
                     <img class="user-img" th:src="@{/teacher/img/userImg/dummy-user-img.png}"
                          style="width: 80px; height: 80px;" alt="">
-                    <p>Harry Porter</p>
+                    <p>[[${accParent.firstName}]] [[${accParent.lastName}]]</p>
                 </div>
                 <div class="menu-item-container">
                     <ul class="item-lists">
@@ -40,8 +46,8 @@
         <div class="right-side">
             <div class="page-content">
                 <div class="kid-profile">
+                    <!--          <c:set var="kinder" value="${requestScope.kinder}"/>-->
                     <div class="kid-profile_header">
-                        <!--            <c:set var="kid" value="${requestScope.kid_info}" />-->
                         <div class="img-section">
                             <img th:src="@{/teacher/img/userImg/dummy-user-img.png}" alt="">
                         </div>
@@ -51,40 +57,39 @@
                             <p>[[${kindergartner.dob}]]</p>
                         </div>
                     </div>
-
                     <div class="list-option" id="options">
-                        <div class="attendence option-item">
-                            <a th:href="@{/teacher/viewAttendance?id={id}(id=${kindergartner.KinderId})}">Attendance</a>
+                        <div class="attendence option-item current1">
+                            <a th:href="@{/teacher/viewAttendance?id={id}(id=${kindergartner.KinderId})}"
+                               style="color: #fff;">Attendance</a>
                         </div>
-                        <div class="feedback option-item">
+                        <div class="feedback option-item ">
                             <a th:href="@{/teacher/feedbackStudent?id={id}(id=${kindergartner.KinderId})}">Feedback</a>
                         </div>
-                        <div class="profile option-item current1">
-                            <a th:href="@{/teacher/searchKinder?id={id}(id=${kindergartner.KinderId})}"
-                               style="color: #fff;">Profile</a>
+                        <div class="profile option-item ">
+                            <a th:href="@{/teacher/searchKinder?id={id}(id=${kindergartner.KinderId})}">Profile</a>
                         </div>
                     </div>
 
-                    <div class="kid-profile_content">
-                        <div class="class content-item">
-                            <div class="item-title">
-                                <strong>Class</strong>
+                    <div class="attendence-section">
+                        <div class="table-attendance">
+                            <div th:each=" lDate : ${listDate}">
+                                <div class="attendance-box absent" th:case="true"
+                                     th:switch="${listDate.get(lDate.key) == 0}">
+                                    <p>[[${#dates.format(lDate.key, 'dd') }]]</p>
+                                </div>
+                                <div class="attendance-box present" th:case="false"
+                                     th:switch="${listDate.get(lDate.key) == 0}">
+                                    <p>[[${#dates.format(lDate.key, 'dd') }]]</p>
+                                </div>
                             </div>
-                            <p>[[${clazz.className}]]</p>
                         </div>
-                        <div class="content-item phone">
-                            <div class="item-title">
-                                <strong>Parent's phone</strong>
-                            </div>
-                            <p>[[${accParent.phoneNumber}]]</p>
-                        </div>
-                        <div class="content-item address">
-                            <div class="item-title">
-                                <strong>Address</strong>
-                            </div>
-                            <p>[[${accParent.address}]]</p>
+                        <div class="guide">
+                            <i class="fa-solid fa-square" style="color: #EB5353;"><p>Absent</p></i>
+                            <i class="fa-solid fa-square" style="color: #f0ef21;"><p>Present</p></i>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@ public class Feedback {
     private String fbContent;
 
     @Column(name = "rating")
-    private Float rating;
+    private double rating;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(style = "")
