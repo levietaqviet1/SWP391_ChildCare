@@ -219,6 +219,12 @@ public class Admin {
 
         //**
         String date = request.getParameter("recentMonday");
+
+        if(session.getAttribute("dateSessionViewSchedluAdmin")!= null){
+//            date = String.valueOf(session.getAttribute("dateSessionViewSchedluAdmin"));
+
+            System.err.println("dateSe "+session.getAttribute("dateSessionViewSchedluAdmin"));
+        }
         String date2 = date;
 
         if (date != null) {
@@ -231,16 +237,16 @@ public class Admin {
             } catch (Exception e) {
                 System.out.println(e);
             }
+            System.err.println("date1 "+date);
         } else {
             date = scheduleService.firstDayOfWeek(new Date());
-
+            System.err.println("date2 "+date);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String date3 = "";
             try {
                 Date d = sdf.parse(date);
                 sdf = new SimpleDateFormat("yyyy-MM-dd");
                 date3 = sdf.format(d);
-                System.err.println(date3);
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -320,7 +326,9 @@ public class Admin {
         schedule.setActivityid(activity.get());
         schedule.setClazzId(clazz.get());
         schedule.setSlotId(slot.get());
-        schedule.setScheduleDate(res.getParameter("date_picked_converted"));
+        String date = res.getParameter("date_picked_converted");
+        schedule.setScheduleDate(date);
+        session.setAttribute("dateSessionViewSchedluAdmin",date);
         scheduleService.save(schedule);
         return "redirect:/admin/scheduleT";
     }
