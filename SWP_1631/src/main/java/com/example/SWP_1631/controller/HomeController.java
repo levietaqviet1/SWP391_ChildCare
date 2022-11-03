@@ -572,6 +572,35 @@ public class HomeController {
         model.addAttribute("title", "Logout");
         return "redirect:/home/";
     }
+    @RequestMapping(value = "/changePassWo")
+    public String changePassWo(Model model, HttpSession session,HttpServletRequest res) {
+//        http://localhost:2030/home/changePassWo
+        if (session.getAttribute("daLogin") != null) {
+            if(res.getParameter("newPass")!= null && res.getParameter("newPassAgain")!= null){
+                Account accSe = (Account) session.getAttribute("acc");
+//                System.err.println(accSe.getPassword().equals(BCrypt.hashpw(oldPass.trim(), BCrypt.gensalt(12))));
+//                if(accSe.getPassword().equals(BCrypt.hashpw(oldPass.trim(), BCrypt.gensalt(12)))){
+//                }
+                String newPass = res.getParameter("newPass").trim();
+                String newPassAgain = res.getParameter("newPassAgain").trim();
+                if(newPass.equals(newPassAgain)){
+                    accSe.setPassword(BCrypt.hashpw(newPass.trim(), BCrypt.gensalt(12)));
+                    accountService.save(accSe);
+                    model.addAttribute("isSuccessful",true);
+                }else {
+                    model.addAttribute("newPass",newPass);
+                    model.addAttribute("newPassAgain",newPassAgain);
+                    model.addAttribute("isError",true);
+                }
+
+                return "changePassWo";
+            }
+            
+            return "changePassWo";
+
+        }
+        return "redirect:/home/";
+    }
 
 
 }
