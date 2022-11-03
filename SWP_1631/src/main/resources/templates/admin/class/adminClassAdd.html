@@ -71,18 +71,20 @@
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Class Name</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{className}"
-                       name="txtClassName">
+                       name="txtClassName" required="">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput11" class="form-label">Grade</label>
                 <input type="number" class="form-control" id="exampleFormControlInput11" th:field="*{grade}"
+                       required=""
+                       pattern="[0-9]" title="grade nhap sai "
                        name="txtGrade">
             </div>
 
 
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Description class</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{classDescription}"
+                <textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{classDescription}" required=""
                           name="taDesClass" rows="3"></textarea>
             </div>
 

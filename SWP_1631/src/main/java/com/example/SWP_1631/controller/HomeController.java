@@ -28,9 +28,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String init(Model model, HttpSession session) {
-//        String name = "Viet";
-//        model.addAttribute("long",name);
-        if (session.getAttribute("VaiTro") != null) {
+        if (session.getAttribute("daLogin") != null) {
             return "redirect:/home/loginSuccess";
         }
         return "index";
@@ -39,15 +37,15 @@ public class HomeController {
     @RequestMapping("/loginSuccess")
     public String ViewS(HttpSession session) {
         if (session.getAttribute("VaiTro").equals("ROLE_ADMIN")) {
-            session.setAttribute("daLogin",true);
+            session.setAttribute("daLogin", "true");
             return "redirect:/admin/";
         }
         if (session.getAttribute("VaiTro").equals("ROLE_PARENT")) {
-            session.setAttribute("daLogin",true);
+            session.setAttribute("daLogin", "true");
             return "redirect:/parents/ParentsProfile";
         }
         if (session.getAttribute("VaiTro").equals("ROLE_TEACHER")) {
-            session.setAttribute("daLogin",true);
+            session.setAttribute("daLogin", "true");
             return "redirect:/teacher/";
         }
         return "index";
@@ -55,6 +53,9 @@ public class HomeController {
 
     @RequestMapping("/register")
     public String req(Model model, HttpSession session) {
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
+        }
         if (session.getAttribute("forPassHome") != null) {
             session.removeAttribute("forPassHome");
         }
@@ -69,6 +70,9 @@ public class HomeController {
 
     @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
     public String createAccount(Model model, HttpSession session, HttpServletRequest res) {
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
+        }
         if (res.getParameter("id") != null && res.getParameter("id").equals(session.getAttribute("registerSession"))) {
             Account account = new Account();
             account.setFirstName(res.getParameter("fname"));
@@ -180,6 +184,9 @@ public class HomeController {
 
     @RequestMapping(value = "/checkRegister", method = RequestMethod.POST)
     public String checkRegister(Model model, HttpSession session, HttpServletRequest res) {
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
+        }
         if (session.getAttribute("accountTamThoiRegister") != null) {
             if (res.getParameter("id") != null && res.getParameter("id").trim().equals(session.getAttribute("registerSession"))) {
 //                codeRegister 101010 là mã code dự phòng kẻo trên trường ko gửi mã về gmail đc do mạng kém
@@ -290,7 +297,7 @@ public class HomeController {
     }
 
     @RequestMapping("/login")
-    public String login(Model model, HttpSession session,HttpServletRequest request) {
+    public String login(Model model, HttpSession session, HttpServletRequest request) {
         if (session.getAttribute("accountTamThoiRegister") != null) {
             session.removeAttribute("accountTamThoiRegister");
         }
@@ -300,23 +307,13 @@ public class HomeController {
         if (session.getAttribute("forPassHome") != null) {
             session.removeAttribute("forPassHome");
         }
-        if(session.getAttribute("daLogin")!= null){
-            if (session.getAttribute("VaiTro") != null) {
-                if (session.getAttribute("VaiTro").equals("ROLE_ADMIN")) {
-                    return "redirect:/admin/";
-                }
-                if (session.getAttribute("VaiTro").equals("ROLE_PARENT")) {
-                    return "redirect:/parents/ParentsProfile";
-                }
-                if (session.getAttribute("VaiTro").equals("ROLE_TEACHER")) {
-                    return "redirect:/teacher/";
-                }
-            }
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
         }
-        if(request.getParameter("id")!= null){
-            model.addAttribute("error",true);
-        }else {
-            model.addAttribute("error",false);
+        if (request.getParameter("id") != null) {
+            model.addAttribute("error", true);
+        } else {
+            model.addAttribute("error", false);
         }
 
         return "login";
@@ -324,6 +321,9 @@ public class HomeController {
 
     @RequestMapping(value = "/nextForgotPass")
     public String nextForgotPass(Model model, HttpSession session) {
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
+        }
         session.setAttribute("forPassHome", utill.RandomStringg(10));
         session.setMaxInactiveInterval(60 * 10);
         model.addAttribute("isCheck", false);
@@ -334,6 +334,9 @@ public class HomeController {
 
     @RequestMapping(value = "/forgotPass")
     public String forgotPass(Model model, HttpSession session, HttpServletRequest res) {
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
+        }
         if (res.getParameter("id") != null && res.getParameter("id").equals(session.getAttribute("forPassHome"))) {
             Account account = new Account();
             account.setFirstName(res.getParameter("fname"));
@@ -355,10 +358,10 @@ public class HomeController {
                 if (!account.isGender()) {
                     gen = "FeMale";
                 }
-                session.setAttribute("accountTamThoi",accCheck);
+                session.setAttribute("accountTamThoi", accCheck);
                 String code = utill.RandNum(10);
-                session.setAttribute("codeChagePass",code);
-                session.setMaxInactiveInterval(60*15);
+                session.setAttribute("codeChagePass", code);
+                session.setMaxInactiveInterval(60 * 15);
                 String html = "" +
                         "<!DOCTYPE html>\n" +
                         "<html lang=\"en\">\n" +
@@ -426,8 +429,8 @@ public class HomeController {
 //                sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
                 model.addAttribute("isCheck", true);
                 session.setAttribute("registerSessionForgotHome", utill.RandomStringg(12));
-                session.setMaxInactiveInterval(60*15);
-                model.addAttribute("doneRegis",false);
+                session.setMaxInactiveInterval(60 * 15);
+                model.addAttribute("doneRegis", false);
                 session.removeAttribute("forPassHome");
                 return "forgotPassHome";
             } else {
@@ -440,9 +443,13 @@ public class HomeController {
         }
         return "redirect:/home/";
     }
+
     @RequestMapping(value = "/checkForgotPassInHome")
     public String checkForgotPassInHome(Model model, HttpSession session, HttpServletRequest res) {
-        if(res.getParameter("id") != null && session.getAttribute("registerSessionForgotHome") != null && res.getParameter("id").equals(session.getAttribute("registerSessionForgotHome"))){
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
+        }
+        if (res.getParameter("id") != null && session.getAttribute("registerSessionForgotHome") != null && res.getParameter("id").equals(session.getAttribute("registerSessionForgotHome"))) {
             if (res.getParameter("codeRe").equals(session.getAttribute("codeChagePass")) || res.getParameter("codeRe").equals("101010")) {
                 Account account = (Account) session.getAttribute("accountTamThoi");
 //                    ac.setPassword();

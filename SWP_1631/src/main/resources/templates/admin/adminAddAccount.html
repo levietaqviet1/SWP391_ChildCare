@@ -74,11 +74,11 @@
         <div class="form-content" style="width: 80%;height: auto; margin-left: 10%; padding-top: 0;padding-bottom: 0;">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">First Name</label>
-                <input type="text" class="form-control" th:field="*{firstName}" name="txtFirstName" required="">
+                <input type="text" class="form-control" th:field="*{firstName}" name="txtFirstName"  pattern="([a-zA-Z',.-]{2,8}[ ]{0,1}){1,3}"  title="Sai dinh dang" required="">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Last Name</label>
-                <input type="text" class="form-control" th:field="*{lastName}" name="txtLastName" required="">
+                <input type="text" class="form-control" th:field="*{lastName}" name="txtLastName" pattern="([a-zA-Z',.-]{2,8}[ ]{0,1}){1,3}"  title="Sai dinh dang" required="">
             </div>
             <div class="rdCheck" style="display: flex">
                 <div class="form-check">
@@ -113,7 +113,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Number Phone</label>
-                <input type="text" class="form-control" th:field="*{phoneNumber}" name="txtPhone" required="">
+                <input type="text" class="form-control" th:field="*{phoneNumber}" name="txtPhone"  pattern="^(([+]84)|0)(3|5|7|8|9)([0-9]{8})"   title="Sai dinh dang" required="">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Address</label>
