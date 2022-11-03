@@ -1,11 +1,23 @@
 package com.example.SWP_1631.Utill;
 
+import lombok.Data;
+
 import java.io.PrintWriter;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+@Data
 public class SendMail {
+    boolean status;
+    String defaupass ;
+
+    public SendMail() {
+        this.status = false;
+        this.defaupass = "101010";
+    }
+
+
     public static void SendMail(String to, String sub,
                                 String msg, final String user, final String pass) {
 

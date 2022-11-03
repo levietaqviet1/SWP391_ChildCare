@@ -29,4 +29,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query("SELECT u FROM Account u WHERE u.role.roleID= :id")
     public List<Account> getAllAccountByRoldId(@Param("id") Integer id);
+
+    @Query("SELECT u FROM Account u LEFT JOIN Clazz c ON u.accountId = c.account.accountId WHERE u.role.roleID =3 AND  c.clazzId IS NULL ")
+    public List<Account> getAllAccountByTeacher();
 }

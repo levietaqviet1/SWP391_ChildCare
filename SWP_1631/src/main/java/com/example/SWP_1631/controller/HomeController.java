@@ -167,7 +167,9 @@ public class HomeController {
                         "    \n" +
                         "</body>\n" +
                         "</html>";
-                sendMail.sendFuncition(account.getEmail(), code + " is your Confirm Your email!! !", html);
+                if(sendMail.isStatus()){
+                    sendMail.sendFuncition(account.getEmail(), code + " is your Confirm Your email!! !", html);
+                }
                 model.addAttribute("isRegis", true);
                 model.addAttribute("accountTam", new Account());
                 model.addAttribute("exitEmail", false);
@@ -190,7 +192,8 @@ public class HomeController {
         if (session.getAttribute("accountTamThoiRegister") != null) {
             if (res.getParameter("id") != null && res.getParameter("id").trim().equals(session.getAttribute("registerSession"))) {
 //                codeRegister 101010 là mã code dự phòng kẻo trên trường ko gửi mã về gmail đc do mạng kém
-                if (res.getParameter("codeRe").equals(session.getAttribute("codeRegister")) || res.getParameter("codeRe").equals("101010")) {
+                SendMail sendMail = new SendMail();
+                if (res.getParameter("codeRe").equals(session.getAttribute("codeRegister")) || res.getParameter("codeRe").equals(sendMail.getDefaupass())) {
                     Account account = (Account) session.getAttribute("accountTamThoiRegister");
 //                    ac.setPassword();
                     String pass = account.getPassword();
@@ -266,14 +269,12 @@ public class HomeController {
                             "    \n" +
                             "</body>\n" +
                             "</html>";
-                    SendMail sendMail = new SendMail();
+                    if(sendMail.isStatus()){
+                        sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
+                    }else {
+                        System.err.println("Pass: "+pass);
+                    }
                     sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
-//                    List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-//                    GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getRoleName());
-//                    grantList.add(authority);
-//
-//                    session.setAttribute("VaiTro", user.getRole().getRoleName());
-//                    session.setAttribute("acc", user);
                     session.removeAttribute("accountTamThoiRegister");
                     session.removeAttribute("codeRegister");
                     session.removeAttribute("registerSession");
@@ -426,7 +427,9 @@ public class HomeController {
                         "</body>\n" +
                         "</html>";
                 SendMail sendMail = new SendMail();
-//                sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
+                if(sendMail.isStatus()){
+                    sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
+                }
                 model.addAttribute("isCheck", true);
                 session.setAttribute("registerSessionForgotHome", utill.RandomStringg(12));
                 session.setMaxInactiveInterval(60 * 15);
@@ -450,7 +453,8 @@ public class HomeController {
             return "redirect:/home/loginSuccess";
         }
         if (res.getParameter("id") != null && session.getAttribute("registerSessionForgotHome") != null && res.getParameter("id").equals(session.getAttribute("registerSessionForgotHome"))) {
-            if (res.getParameter("codeRe").equals(session.getAttribute("codeChagePass")) || res.getParameter("codeRe").equals("101010")) {
+            SendMail sendMail = new SendMail();
+            if (res.getParameter("codeRe").equals(session.getAttribute("codeChagePass")) || res.getParameter("codeRe").equals(sendMail.getDefaupass())) {
                 Account account = (Account) session.getAttribute("accountTamThoi");
 //                    ac.setPassword();
                 String pass = utill.RandNum(10);
@@ -524,8 +528,12 @@ public class HomeController {
                         "    \n" +
                         "</body>\n" +
                         "</html>";
-                SendMail sendMail = new SendMail();
-//                sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
+
+                if(sendMail.isStatus()){
+                    sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
+                }else {
+                    System.err.println("Pass: "+pass);
+                }
                 session.removeAttribute("registerSessionForgotHome");
                 model.addAttribute("isCheck", true);
                 model.addAttribute("accountTam", account);

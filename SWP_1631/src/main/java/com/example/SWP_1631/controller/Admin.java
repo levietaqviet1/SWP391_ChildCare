@@ -148,8 +148,7 @@ public class Admin {
     public String editClazz(@RequestParam("id") Integer userId, Model model) {
         Optional<Clazz> userEdit = clazzService.getById(userId);
         userEdit.ifPresent(user -> model.addAttribute("Clazz", user));
-        System.out.println(userEdit.get().getClassDescription());
-        List<Account> listTeacher = accountService.getListAccountByIdRole(3);
+        List<Account> listTeacher = accountService.getListAccountTeacherNotClass();
         model.addAttribute("listTeacher", listTeacher);
         return "admin/class/adminClasstUpdate";
     }
@@ -159,8 +158,10 @@ public class Admin {
         Optional<Clazz> userEdit = clazzService.getById(userId);
         if (userEdit.isPresent()) {
             Clazz cal = userEdit.get();
-            Optional<Account> userDB = accountService.getAccount(Integer.parseInt(res.getParameter("slTeacher")));
-            cal.setAccount(userDB.get());
+            if(res.getParameter("slTeacher")!= null){
+                Optional<Account> userDB = accountService.getAccount(Integer.parseInt(res.getParameter("slTeacher")));
+                cal.setAccount(userDB.get());
+            }
             cal.setGrade(Integer.parseInt(res.getParameter("txtGrade")));
             cal.setClassDescription(res.getParameter("taDesClass"));
             clazzService.save(cal);
@@ -170,7 +171,8 @@ public class Admin {
 
     @RequestMapping(value = "/addadminClazz")
     public String addClazz(Model model) {
-        List<Account> listTeacher = accountService.getListAccountByIdRole(3);
+        List<Account> listTeacher = accountService.getListAccountTeacherNotClass();
+        System.err.println(listTeacher.size());
         model.addAttribute("listTeacher", listTeacher);
         model.addAttribute("Clazz", new Clazz());
         return "admin/class/adminClassAdd";
@@ -178,8 +180,10 @@ public class Admin {
 
     @RequestMapping(value = "/saveClazz", method = RequestMethod.POST)
     public String saveClazz(Clazz user) {
-        clazzService.save(user);
-        return "redirect:/admin/";
+        if(user.getAccount() != null){
+            clazzService.save(user);
+        }
+        return "redirect:/admin/clazz";
     }
 
     @GetMapping("/scheduleT")
