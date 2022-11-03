@@ -32,6 +32,20 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public boolean checkEmailExitInDatabase(String email) {
+        Account account = accRes.getAccByEmail(email);
+        if (account == null) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Account getAccByEmail(String email) {
+        return accRes.getAccByEmail(email);
+    }
+
+    @Override
     public List<Account> getListAccount() {
         return accRes.findAll();
     }

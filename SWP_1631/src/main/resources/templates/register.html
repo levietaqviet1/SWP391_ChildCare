@@ -26,7 +26,8 @@
 <div class="limiter">
     <div class="container-login100" th:style="'background: url(/image/register.jpg)'">
         <div class="wrap-login100">
-            <form class="" method="post" action="register">
+            <form th:action="@{/home/createAccount?id={id}(id=${session.registerSession})}" method="post"
+                  th:case="false" th:switch="${isRegis}">
                 <span class="login100-form-title"> Member Register </span>
                 <p class="text-center danger" id="err">
                     <!--          ${error1}-->
@@ -34,8 +35,10 @@
                 </p>
                 <!-- Name -->
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" pattern="[a-zA-Z]+" title="Alphabetical letters only"
-                           name="fname" id="fname" placeholder="First Name" required/>
+                    <input class="input100" type="text" th:value="${accountTam.getFirstName()}"
+                           name="fname" id="fname" placeholder="First Name"
+                           pattern="([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"
+                           title="Name sai dinh dang" required="">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                                 <i class="fa-solid fa-circle-user"></i>
@@ -43,8 +46,10 @@
                 </div>
 
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" pattern="[a-zA-Z]+" title="Alphabetical letters only"
-                           name="lname" id="lname" placeholder="Last Name" required/>
+                    <input class="input100" type="text"
+                           name="lname" id="lname" placeholder="Last Name" th:value="${accountTam.getLastName()}"
+                           pattern="([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"
+                           title="Name sai dinh dang" required="">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                                 <i class="fa-solid fa-circle-user"></i>
@@ -61,7 +66,8 @@
                 </div>
                 <!-- Address -->
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" name="address" placeholder="Address" required/>
+                    <input class="input100" type="text" name="address" placeholder="Address"
+                           th:value="${accountTam.getAddress()}" required/>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                                 <i class="fa-solid fa-house"></i>
@@ -69,17 +75,22 @@
                 </div>
                 <!-- Phone -->
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" pattern="(0)(3|5|7|8|9)+([0-9]{8})" id="phone"
-                           title="Must start with 09/03/07/08/05 and contain 10 characters" name="phone"
-                           placeholder="Phone" required/>
+                    <input class="input100" type="text" name="phone"
+                           placeholder="0858050379"
+                           pattern="^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}" title="Phone in VN"
+                           th:value="${accountTam.getPhoneNumber()}"
+                           required="">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100"><i class="fa-solid fa-mobile-button"></i>
                             </span>
                 </div>
-
                 <!-- Email -->
+                <div class="wrap-input100 validate-input" th:case="true" th:switch="${exitEmail}">
+                    <span style="color: red">Email đã tồn tại</span>
+                </div>
                 <div class="wrap-input100 validate-input">
                     <input class="input100" type="text" name="email" id="email" placeholder="Email"
+                           th:value="${accountTam.getEmail()}"
                            title="Must contain @" required/>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100"><i class="fa-solid fa-envelope"></i>
@@ -93,39 +104,10 @@
                     <span class="symbol-input100"><i class="fa-regular fa-calendar"></i>
                             </span>
                 </div>
-                <!-- Password -->
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" type="password" name="password" id="password" placeholder="Password"
-                           required/>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
-                            </span>
-                </div>
-                <!-- Re-password -->
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" type="password" name="password2" id="password2"
-                           placeholder="Re-enter password" required/>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
-                            </span>
-                </div>
                 <div class="container-login100-form-btn">
                     <button type="submit" class="btn btn-danger login100-form-btn">Create Account</button>
                 </div>
                 <hr/>
-                <!--        <div class="row">-->
-                <!--          <div class="col-md-3">-->
-                <!--            <a class="btn btn-outline-dark" href="http://localhost:5000/auth/google" role="button"-->
-                <!--               style="text-transform:none; width: 290px">-->
-                <!--              <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"-->
-                <!--                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />-->
-                <!--              Sign up with Google-->
-                <!--            </a>-->
-                <!--          </div>-->
-                <!--        </div>-->
-
                 <div class="text-center p-t-136" id="create-account">
                     <a class="txt2" href="login">
                         <i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
@@ -133,25 +115,51 @@
                     </a>
                 </div>
             </form>
-            <div class="chat-bubbles">
-                <div class="message bubbles" id="fnameinvalid">
-                    <p>Names cannot contain numeric or special characters</p>
-                </div>
-                <div class="message bubbles" id="lnameinvalid">
-                    <p>Names cannot contain numeric or special characters</p>
-                </div>
-                <div class="message bubbles">
-                    <br/><br/><br/><br/>
-                </div>
-                <div class="message bubbles" id="phoneinvalid">
-                    <span>Phone numbers cannot contain alphabetical characters, </span><br/>
-                    <span> special characters, must start with 09/03/07/08/05 and</span><br/>
-                    <span> contain exactly 10 characters</span>
-                </div>
-                <div class="message bubbles" id="emailinvalid">
-                    <p>Emails must contain '@'</p>
-                </div>
+            <div th:case="true" th:switch="${isRegis}">
+                <form th:action="@{/home/checkRegister?id={id}(id=${session.registerSession})}" method="post"  th:case="false"
+                      th:switch="${doneRegis}">
+                    <span class="login100-form-title"> We have sent your verification email</span>
+                    <!-- Code -->
+                    <div class="wrap-input100 validate-input" th:case="true" th:switch="${exitEmail}">
+                        <span style="color: red">Code sai</span>
+                    </div>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" type="text"
+                               name="codeRe" id="fname" th:value="${codeFalse}" placeholder="Insert code here" required="">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                                <i class="fa-solid fa-circle-user"></i>
+                            </span>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="btn btn-danger login100-form-btn">Submit</button>
+                    </div>
+                    <hr/>
+                    <div class="text-center p-t-136" id="create-account">
+                        <a class="txt2" href="login">
+                            <i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
+                            Already have account? Login
+                        </a>
+                    </div>
+                </form>
+<!--                // tao xong acc-->
+                <form th:action="@{/home/login}" method="get"  th:case="true"
+                      th:switch="${doneRegis}">
+                    <span class="login100-form-title">Pls check, We have sent your email</span>
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="btn btn-danger login100-form-btn">Home</button>
+                    </div>
+                    <hr/>
+                    <div class="text-center p-t-136" id="create-account">
+                        <a class="txt2" href="login">
+                            <i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
+                            Already have account? Login
+                        </a>
+                    </div>
+                </form>
             </div>
+
+
         </div>
     </div>
 </div>
@@ -198,28 +206,6 @@
         } else {
             document.getElementById("phoneinvalid").style.visibility = "visible";
         }
-
-        // if (phone.value.match(letters)) {
-        //     document.getElementById("phoneinvalid1").style.display = "block";
-        // } else {
-        //     document.getElementById("phoneinvalid1").style.display = "none";
-        // }
-        // var specs = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-        // if (phone.value.match(specs)) {
-        //     document.getElementById("phoneinvalid2").style.display = "block";
-        // } else {
-        //     document.getElementById("phoneinvalid2").style.display = "none";
-        // }
-        // if (phone.value.length !== 10) {
-        //     document.getElementById("phoneinvalid3").style.display = "block";
-        // } else {
-        //     document.getElementById("phoneinvalid3").style.display = "none";
-        // }
-        // if (phone.value.startsWith("03") || phone.value.startsWith("05") || phone.value.startsWith("07") || phone.value.startsWith("08") || phone.value.startsWith("09")) {
-        //     document.getElementById("phoneinvalid4").style.display = "none";
-        // } else {
-        //     document.getElementById("phoneinvalid4").style.display = "block";
-        // }
     }
 
     email.onkeyup = function () {

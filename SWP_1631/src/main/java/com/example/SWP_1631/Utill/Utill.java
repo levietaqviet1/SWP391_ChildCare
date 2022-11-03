@@ -4,8 +4,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 public class Utill {
+    public String RandNum(int Nnum) {
+        int min = 0;
+        int max = 10;
+        String num = "";
+        for (int i = 0; i < Nnum; i++) {
+            num += String.valueOf((int) (Math.random() * (max - min + 1) + min));
+        }
+        return num;
+    }
+
+    public String RandomStringg(int s) {
+        String randomString = "";
+        Random random = new Random();
+        while (randomString.length() != s) {
+            char randomizedCharacter = (char) (random.nextInt(26) + 'a');
+            randomString += randomizedCharacter;
+        }
+        return randomString;
+    }
+
     public List<String> getAllDateOfMonth(int month) {
         List<String> list = new ArrayList<>();
         Calendar cal = Calendar.getInstance();

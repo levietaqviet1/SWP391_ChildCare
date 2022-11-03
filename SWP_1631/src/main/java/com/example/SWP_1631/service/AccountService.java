@@ -23,4 +23,8 @@ public interface AccountService extends UserDetailsService {
 
 
     List<Account> getListAccountByIdRole(int id);
+
+    boolean checkEmailExitInDatabase(String email);
+
+    Account getAccByEmail(String email);
 }
