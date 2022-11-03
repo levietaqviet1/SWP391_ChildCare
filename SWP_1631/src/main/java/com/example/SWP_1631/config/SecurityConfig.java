@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+        http.authorizeRequests().antMatchers("/", "/home/login", "/logout").permitAll();
 
         // Trang chỉ dành cho ADMIN
         http.authorizeRequests().antMatchers("/admin/**", "/kinderController/**").access("hasRole('ROLE_ADMIN')");
@@ -61,14 +61,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authenticateTheUser") // Bạn còn nhớ bước 3 khi tạo form login thì action của nó là j_spring_security_check giống ở
                 .loginPage("/home/login")//
                 .defaultSuccessUrl("/home/loginSuccess")//đây Khi đăng nhập thành công thì vào trang này. userAccountInfo sẽ được khai báo trong controller để hiển thị trang view tương ứng
-                .failureUrl("/home/login")// Khi đăng nhập sai username và password thì nhập lại
+                .failureUrl("/home/login?id=1")// Khi đăng nhập sai username và password thì nhập lại
                 .usernameParameter("email")// tham số này nhận từ form login ở bước 3 có input  name='username'
                 .passwordParameter("password")// tham số này nhận từ form login ở bước 3 có input  name='password'
                 // Cấu hình cho Logout Page. Khi logout mình trả về trang
                 .and().logout().logoutUrl("/home/logoutSuccessful").logoutSuccessUrl("/home/");
-        http.authorizeRequests().and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(60); // 24h
+//        http.authorizeRequests().and() //
+//                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+//                .tokenValiditySeconds(60); // 24h
 
     }
 

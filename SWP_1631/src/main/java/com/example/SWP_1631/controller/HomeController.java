@@ -39,12 +39,15 @@ public class HomeController {
     @RequestMapping("/loginSuccess")
     public String ViewS(HttpSession session) {
         if (session.getAttribute("VaiTro").equals("ROLE_ADMIN")) {
+            session.setAttribute("daLogin",true);
             return "redirect:/admin/";
         }
         if (session.getAttribute("VaiTro").equals("ROLE_PARENT")) {
+            session.setAttribute("daLogin",true);
             return "redirect:/parents/ParentsProfile";
         }
         if (session.getAttribute("VaiTro").equals("ROLE_TEACHER")) {
+            session.setAttribute("daLogin",true);
             return "redirect:/teacher/";
         }
         return "index";
@@ -287,7 +290,7 @@ public class HomeController {
     }
 
     @RequestMapping("/login")
-    public String login(Model model, HttpSession session) {
+    public String login(Model model, HttpSession session,HttpServletRequest request) {
         if (session.getAttribute("accountTamThoiRegister") != null) {
             session.removeAttribute("accountTamThoiRegister");
         }
@@ -297,16 +300,23 @@ public class HomeController {
         if (session.getAttribute("forPassHome") != null) {
             session.removeAttribute("forPassHome");
         }
-        if (session.getAttribute("VaiTro") != null) {
-            if (session.getAttribute("VaiTro").equals("ROLE_ADMIN")) {
-                return "redirect:/admin/";
+        if(session.getAttribute("daLogin")!= null){
+            if (session.getAttribute("VaiTro") != null) {
+                if (session.getAttribute("VaiTro").equals("ROLE_ADMIN")) {
+                    return "redirect:/admin/";
+                }
+                if (session.getAttribute("VaiTro").equals("ROLE_PARENT")) {
+                    return "redirect:/parents/ParentsProfile";
+                }
+                if (session.getAttribute("VaiTro").equals("ROLE_TEACHER")) {
+                    return "redirect:/teacher/";
+                }
             }
-            if (session.getAttribute("VaiTro").equals("ROLE_PARENT")) {
-                return "redirect:/parents/ParentsProfile";
-            }
-            if (session.getAttribute("VaiTro").equals("ROLE_TEACHER")) {
-                return "redirect:/teacher/";
-            }
+        }
+        if(request.getParameter("id")!= null){
+            model.addAttribute("error",true);
+        }else {
+            model.addAttribute("error",false);
         }
 
         return "login";
@@ -540,6 +550,9 @@ public class HomeController {
         }
         if (session.getAttribute("cidSession") != null) {
             session.removeAttribute("cidSession");
+        }
+        if (session.getAttribute("daLogin") != null) {
+            session.removeAttribute("daLogin");
         }
         model.addAttribute("title", "Logout");
         return "redirect:/home/";
