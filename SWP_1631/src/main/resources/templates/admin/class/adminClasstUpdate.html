@@ -71,19 +71,20 @@
         <div class="form-content" style="width: 80%;height: auto; margin-left: 10%; padding-top: 0;padding-bottom: 0;">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Class Name</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="txtClassName"
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="txtClassName" required=""
                        th:value="${Clazz.className}">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Grade</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${Clazz.grade}"
+                <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${Clazz.grade}" required=""
+                       pattern="[0-9]" title="grade nhap sai "
                        name="txtGrade">
             </div>
 
 
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Description class</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" name="taDesClass" rows="3"
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="taDesClass" rows="3" required=""
                           th:text="${Clazz.classDescription}"></textarea>
             </div>
 

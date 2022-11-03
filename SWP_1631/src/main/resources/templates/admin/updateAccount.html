@@ -74,11 +74,15 @@
 
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">First Name</label>
-                <input type="text" class="form-control" name="txtFirstName" th:value="${Account.firstName}">
+                <input type="text" class="form-control" name="txtFirstName" th:value="${Account.firstName}"
+                       pattern="([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"
+                       title="Name sai dinh dang" required="">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Last Name</label>
-                <input type="text" class="form-control" name="txtLastName" th:value="${Account.lastName}">
+                <input type="text" class="form-control" name="txtLastName" th:value="${Account.lastName}"
+                       pattern="([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"
+                       title="Name sai dinh dang" required="">
             </div>
             <div class="rdCheck" style="display: flex">
                 <div class="form-check">
@@ -108,22 +112,22 @@
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Pass Word</label>
-                <input type="password" class="form-control" name="txtPassword" th:value="${Account.password}"
+                <input type="password" class="form-control" name="txtPassword" th:value="${Account.password}" required=""
                        id="exampleFormControlInput1">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">DOB</label>
-                <input type="date" name="dob" th:value="${Account.dob}"/>(yyyy-MM-dd)<br/>
+                <input type="date" name="dob" th:value="${Account.dob}" required=""/>(yyyy-MM-dd)<br/>
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Number Phone</label>
                 <input type="text" class="form-control" name="txtPhone" th:value="${Account.phoneNumber}"
-                       placeholder="name@example.com">
+                       placeholder="0858050379"  pattern="^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}" title="Phone in VN" required="">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Address</label>
                 <input type="text" class="form-control" th:value="${Account.address}" name="ttAddress"
-                       value="${s.address}" placeholder="HN, Vietnam">
+                       value="${s.address}" placeholder="HN, Vietnam" required="">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Image</label>

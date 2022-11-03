@@ -171,8 +171,6 @@ public class ParentController {
             model.addAttribute("studyRecord", studyRecord);
             model.addAttribute("mainchildid", index);
         }
-
-
         return "Parents/childupdateprofile";
     }
 

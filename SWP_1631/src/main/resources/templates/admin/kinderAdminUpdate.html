@@ -72,15 +72,19 @@
 
             <div class="mb-3">
                 <label class="form-label">First Name</label>
-                <input type="text" class="form-control" name="txtFirstName" th:value="${Kindergartner.firstName}">
+                <input type="text" class="form-control" name="txtFirstName" th:value="${Kindergartner.firstName}"
+                       pattern="([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"
+                       title="Name sai dinh dang" required="">
             </div>
             <div class="mb-3">
                 <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" name="txtLastName" th:value="${Kindergartner.lastName}">
+                <input type="text" class="form-control" name="txtLastName" th:value="${Kindergartner.lastName}"
+                       pattern="([a-zA-Z',.-]+( [a-zA-Z',.-]+)*){2,30}"
+                       title="Name sai dinh dang" required="">
             </div>
             <div class="mb-3">
                 <label class="form-label">DOB</label>
-                <input type="date" name="dob" th:value="${Kindergartner.dob}"/>(yyyy-MM-dd)<br/>
+                <input type="date" name="dob" th:value="${Kindergartner.dob}" required=""/>(yyyy-MM-dd)<br/>
             </div>
             <div class="rdCheck" style="display: flex">
                 <div class="form-check">
