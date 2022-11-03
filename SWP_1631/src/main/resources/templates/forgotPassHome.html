@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8"/>
@@ -26,12 +26,11 @@
 <div class="limiter">
     <div class="container-login100" th:style="'background: url(/image/register.jpg)'">
         <div class="wrap-login100">
-            <form th:action="@{/home/createAccount?id={id}(id=${session.registerSession})}" method="post"
-                  th:case="false" th:switch="${isRegis}">
-                <span class="login100-form-title"> Member Register </span>
-                <p class="text-center danger" id="err">
-                    <!--          ${error1}-->
-                    <!--          ${error4}-->
+            <form th:action="@{/home/forgotPass?id={id}(id=${session.forPassHome})}" method="post"
+                  th:case="false" th:switch="${isCheck}">
+                <span class="login100-form-title"> Forgot Password </span>
+                <p class="text-center danger" id="err" th:case="true" th:switch="${notExit}">
+                    <span style="color: red">Sai thông tin</span>
                 </p>
                 <!-- Name -->
                 <div class="wrap-input100 validate-input">
@@ -60,18 +59,9 @@
                 <div class="wrap-input100 validate-input">
                     <select name="gender">
                         <!--<option selected disabled>Gender</option>-->
-                        <option selected value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option th:selected="${accountTam.isGender()}" value="male">Male</option>
+                        <option th:selected="${!accountTam.isGender()}" value="female">Female</option>
                     </select>
-                </div>
-                <!-- Address -->
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" name="address" placeholder="Address"
-                           th:value="${accountTam.getAddress()}" required/>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                                <i class="fa-solid fa-house"></i>
-                            </span>
                 </div>
                 <!-- Phone -->
                 <div class="wrap-input100 validate-input">
@@ -97,15 +87,8 @@
                             </span>
 
                 </div>
-                <!-- DOB -->
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" type="date" name="dob" th:value="${accountTam.getDob()}" required/>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100"><i class="fa-regular fa-calendar"></i>
-                            </span>
-                </div>
                 <div class="container-login100-form-btn">
-                    <button type="submit" class="btn btn-danger login100-form-btn">Create Account</button>
+                    <button type="submit" class="btn btn-danger login100-form-btn">Submit</button>
                 </div>
                 <hr/>
                 <div class="text-center p-t-136" id="create-account">
@@ -115,8 +98,8 @@
                     </a>
                 </div>
             </form>
-            <div th:case="true" th:switch="${isRegis}">
-                <form th:action="@{/home/checkRegister?id={id}(id=${session.registerSession})}" method="post"
+            <div th:case="true" th:switch="${isCheck}">
+                <form th:action="@{/home/checkForgotPassInHome?id={id}(id=${session.registerSessionForgotHome})}" method="post"
                       th:case="false"
                       th:switch="${doneRegis}">
                     <span class="login100-form-title"> We have sent your verification email</span>
