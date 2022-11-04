@@ -24,7 +24,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin")
 public class Admin {
-
+// version 1.2
 
     @Autowired
     private AccountService accountService;
