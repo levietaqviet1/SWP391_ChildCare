@@ -21,7 +21,7 @@
         <div class="left-side-menu">
             <div class="vertical-menu" style="position: relative;">
                 <div class="user-welcome">
-                    <img class="user-img" src="@{/parent/img/userImg/dummy-user-img.png}"
+                    <img class="user-img" th:src="@{/parent/img/userImg/dummy-user-img.png}"
                          style="width: 80px; height: 80px;" alt="">
                     <p th:text="${Teacher.firstName}+' '+${Teacher.lastName}"></p>
                 </div>
@@ -52,7 +52,7 @@
                     <div class="kid-profile_header">
 
                         <div class="img-section">
-                            <img src="@{/parent/img/userImg/dummy-user-img.png}" alt="">
+                            <img th:src="@{/parent/img/userImg/dummy-user-img.png}" alt="">
                         </div>
                         <div class="personel-section">
                             <h1 th:text="${Teacher.firstName}+' '+${Teacher.lastName}"></h1>

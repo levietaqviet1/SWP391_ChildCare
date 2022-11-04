@@ -13,6 +13,8 @@ public class SendMail {
     String defaupass ;
 
     public SendMail() {
+//        status : false thì sẽ ko gửi maill
+//        code xác minh là defaupass
         this.status = false;
         this.defaupass = "101010";
     }
