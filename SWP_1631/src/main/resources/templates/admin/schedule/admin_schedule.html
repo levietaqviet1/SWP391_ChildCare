@@ -86,10 +86,6 @@
                         th:value="${w.key}"
                         th:selected="${w.key==firstMonday}"></option>
             </select>
-
-            <!--            <button class="btn btn-outline-success" type="submit"-->
-            <!--                    onclick="changeDate()">Search-->
-            <!--            </button>-->
     </form>
 </div>
 
@@ -126,38 +122,6 @@
                                     <div class="schedule-list" style="width: 80px;" id="${map.key}:${loopT + 1}:old">
                                         [[${map.value[loopT].activityid.name}]]
                                     </div>
-
-                                    <!--                                    <div id="${map.key}" style="display: none">-->
-
-                                    <!--                                        <form action="updateschedule" method="post">-->
-                                    <!--                                            <input name="schedule_id" value="${map.value[loopT.index].schedule_id}"-->
-                                    <!--                                                   type="hidden"/>-->
-                                    <!--                                            <input name="schedule-update-index" value="${schedule_update_index}"-->
-                                    <!--                                                   type="hidden"/>-->
-                                    <!--                                            <input name="date_picked_converted" value="${date_picked_converted}"-->
-                                    <!--                                                   type="hidden"/>-->
-                                    <!--                                            <input name="cid_raw" value="${cid_raw}" type="hidden"/>-->
-                                    <!--                                            <input name="slot_chosen" value="${loopT.index + 1}" type="hidden"/>-->
-                                    <!--                                            <select name="select_activity" style="max-width: 100%; margin-bottom: 4px;">-->
-                                    <!--                                                -->
-                                    <!--                                                <option th:each="act:${activity}"-->
-                                    <!--                                                        th:text="${act.name}"-->
-                                    <!--                                                        th:value="${act.activityid}"-->
-                                    <!--                                                        th:selected="${act.activityid == map.value[loopT].activityid.activityid}"></option>-->
-                                    <!--                                            </select>-->
-                                    <!--                                            <a class="update_confirm">-->
-                                    <!--                                                <button type="submit">-->
-                                    <!--                                                    Update <i class="fa-solid fa-pen"></i>-->
-                                    <!--                                                </button>-->
-                                    <!--                                            </a>-->
-
-                                    <!--                                            <a class="update_cancel"-->
-                                    <!--                                               onclick="cancelUpdate('${map.key}:${loopT + 1}', '${map.key}:${loopT + 1}:old')">-->
-                                    <!--                                                Cancel <i class="fa-solid fa-ban"></i>-->
-                                    <!--                                            </a>-->
-                                    <!--                                        </form>-->
-                                    <!--                                    </div>-->
-
                                     <div class="dropdown" style="flex-grow: 1;">
                                         <button
                                                 class="btn-sm btn-option btn-secondary dropdown-toggle" type="button"

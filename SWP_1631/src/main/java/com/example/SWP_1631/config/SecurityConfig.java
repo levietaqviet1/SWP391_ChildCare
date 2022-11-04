@@ -46,11 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/", "/home/login", "/logout").permitAll();
+        http.authorizeRequests().antMatchers("/", "/home/login", "/logout","/static/**").permitAll();
 
         // Trang chỉ dành cho ADMIN
         http.authorizeRequests().antMatchers("/admin/**", "/kinderController/**").access("hasRole('ROLE_ADMIN')");
-// Trang chỉ dành cho PARENT
+        // Trang chỉ dành cho PARENT
         http.authorizeRequests().antMatchers("/parents/**").access("hasRole('ROLE_PARENT')");
         // Trang chỉ dành cho PARENT
         http.authorizeRequests().antMatchers("/teacher/**").access("hasRole('ROLE_TEACHER')");

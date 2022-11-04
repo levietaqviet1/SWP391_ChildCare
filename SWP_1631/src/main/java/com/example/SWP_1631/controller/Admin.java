@@ -158,7 +158,7 @@ public class Admin {
         Optional<Clazz> userEdit = clazzService.getById(userId);
         if (userEdit.isPresent()) {
             Clazz cal = userEdit.get();
-            if(res.getParameter("slTeacher")!= null){
+            if (res.getParameter("slTeacher") != null) {
                 Optional<Account> userDB = accountService.getAccount(Integer.parseInt(res.getParameter("slTeacher")));
                 cal.setAccount(userDB.get());
             }
@@ -180,7 +180,7 @@ public class Admin {
 
     @RequestMapping(value = "/saveClazz", method = RequestMethod.POST)
     public String saveClazz(Clazz user) {
-        if(user.getAccount() != null){
+        if (user.getAccount() != null) {
             clazzService.save(user);
         }
         return "redirect:/admin/clazz";

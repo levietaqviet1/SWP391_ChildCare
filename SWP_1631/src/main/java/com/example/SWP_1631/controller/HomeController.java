@@ -2,9 +2,11 @@ package com.example.SWP_1631.controller;
 
 import com.example.SWP_1631.Utill.SendMail;
 import com.example.SWP_1631.Utill.Utill;
-import com.example.SWP_1631.entity.Account;
-import com.example.SWP_1631.entity.Role;
+import com.example.SWP_1631.entity.*;
 import com.example.SWP_1631.service.AccountService;
+import com.example.SWP_1631.service.ActivityService;
+import com.example.SWP_1631.service.ClazzService;
+import com.example.SWP_1631.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Controller
@@ -24,7 +32,108 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private ScheduleService scheduleService;
+    @Autowired
+    private ClazzService clazzService;
+
+    @Autowired
+    private ActivityService activityService;
     private Utill utill = new Utill();
+
+    @RequestMapping("/testHome")
+    public String testHome(Model model, HttpSession session, HttpServletRequest request) {
+        List<Clazz> listClass = clazzService.getAllClazz();
+        String classid_raw = request.getParameter("cid");
+        int classid = 1;
+        if (classid_raw == null) {
+            classid = listClass.get(0).getClazzId();
+
+        } else {
+            try {
+                classid = Integer.parseInt(classid_raw);
+            } catch (Exception e) {
+            }
+        }
+        if (session.getAttribute("cidSession") != null) {
+            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim());
+            classid = cid;
+            model.addAttribute("cid_raw", classid);
+        } else {
+            try {
+                model.addAttribute("cid_raw", listClass.get(0).getClazzId());
+            } catch (Exception e) {
+
+            }
+        }
+        session.setAttribute("cidSession", classid);
+        LinkedHashMap<LocalDate, String> allWeeks = scheduleService.getAllWeeksInYear(2022);
+        model.addAttribute("weeks", allWeeks);
+
+
+        model.addAttribute("classes", listClass);
+
+        List<Activity> listActivity = activityService.getAll();
+        model.addAttribute("activity", listActivity);
+
+        //**
+        String date = request.getParameter("recentMonday");
+
+        if (session.getAttribute("dateSessionViewSchedluAdmin") != null) {
+//            date = String.valueOf(session.getAttribute("dateSessionViewSchedluAdmin"));
+
+            System.err.println("dateSe " + session.getAttribute("dateSessionViewSchedluAdmin"));
+        }
+        String date2 = date;
+
+        if (date != null) {
+            try {
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+                Date d = sdf1.parse(date);
+
+                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+                date = sdf2.format(d);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            System.err.println("date1 " + date);
+        } else {
+            date = scheduleService.firstDayOfWeek(new Date());
+            System.err.println("date2 " + date);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String date3 = "";
+            try {
+                Date d = sdf.parse(date);
+                sdf = new SimpleDateFormat("yyyy-MM-dd");
+                date3 = sdf.format(d);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            session.setAttribute("recentMonday", date3);
+        }
+        ScheduleDetails sde = scheduleService.getScheduleDetailsByClassDate(classid, date);
+
+//        System.out.println("*********************");
+//        System.out.println(sde.getScheduleMap());
+        model.addAttribute("scheduleDetails", sde);
+        int[] loop = {0, 1, 2, 3, 4, 5, 6};
+        model.addAttribute("loop", loop);
+        //return true date
+        String action = request.getParameter("action");
+        if (action == null) {
+            LocalDate now = LocalDate.now();
+            LocalDate firstDayOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            System.err.println(firstDayOfWeek);
+            model.addAttribute("firstMonday", firstDayOfWeek);
+        } else {
+
+            model.addAttribute("recentMonday", date2);
+//            session.setAttribute("recentMonday", date);
+
+        }
+        return "Parents/parentsViewTimeTable";
+    }
 
     @RequestMapping("/")
     public String init(Model model, HttpSession session) {
@@ -167,7 +276,7 @@ public class HomeController {
                         "    \n" +
                         "</body>\n" +
                         "</html>";
-                if(sendMail.isStatus()){
+                if (sendMail.isStatus()) {
                     sendMail.sendFuncition(account.getEmail(), code + " is your Confirm Your email!! !", html);
                 }
                 model.addAttribute("isRegis", true);
@@ -269,10 +378,10 @@ public class HomeController {
                             "    \n" +
                             "</body>\n" +
                             "</html>";
-                    if(sendMail.isStatus()){
+                    if (sendMail.isStatus()) {
                         sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
-                    }else {
-                        System.err.println("Pass: "+pass);
+                    } else {
+                        System.err.println("Pass: " + pass);
                     }
                     sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
                     session.removeAttribute("accountTamThoiRegister");
@@ -427,7 +536,7 @@ public class HomeController {
                         "</body>\n" +
                         "</html>";
                 SendMail sendMail = new SendMail();
-                if(sendMail.isStatus()){
+                if (sendMail.isStatus()) {
                     sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
                 }
                 model.addAttribute("isCheck", true);
@@ -529,10 +638,10 @@ public class HomeController {
                         "</body>\n" +
                         "</html>";
 
-                if(sendMail.isStatus()){
+                if (sendMail.isStatus()) {
                     sendMail.sendFuncition(account.getEmail(), "Welcome to us", html);
-                }else {
-                    System.err.println("Pass: "+pass);
+                } else {
+                    System.err.println("Pass: " + pass);
                 }
                 session.removeAttribute("registerSessionForgotHome");
                 model.addAttribute("isCheck", true);
@@ -572,30 +681,31 @@ public class HomeController {
         model.addAttribute("title", "Logout");
         return "redirect:/home/";
     }
+
     @RequestMapping(value = "/changePassWo")
-    public String changePassWo(Model model, HttpSession session,HttpServletRequest res) {
+    public String changePassWo(Model model, HttpSession session, HttpServletRequest res) {
 //        http://localhost:2030/home/changePassWo
         if (session.getAttribute("daLogin") != null) {
-            if(res.getParameter("newPass")!= null && res.getParameter("newPassAgain")!= null){
+            if (res.getParameter("newPass") != null && res.getParameter("newPassAgain") != null) {
                 Account accSe = (Account) session.getAttribute("acc");
 //                System.err.println(accSe.getPassword().equals(BCrypt.hashpw(oldPass.trim(), BCrypt.gensalt(12))));
 //                if(accSe.getPassword().equals(BCrypt.hashpw(oldPass.trim(), BCrypt.gensalt(12)))){
 //                }
                 String newPass = res.getParameter("newPass").trim();
                 String newPassAgain = res.getParameter("newPassAgain").trim();
-                if(newPass.equals(newPassAgain)){
+                if (newPass.equals(newPassAgain)) {
                     accSe.setPassword(BCrypt.hashpw(newPass.trim(), BCrypt.gensalt(12)));
                     accountService.save(accSe);
-                    model.addAttribute("isSuccessful",true);
-                }else {
-                    model.addAttribute("newPass",newPass);
-                    model.addAttribute("newPassAgain",newPassAgain);
-                    model.addAttribute("isError",true);
+                    model.addAttribute("isSuccessful", true);
+                } else {
+                    model.addAttribute("newPass", newPass);
+                    model.addAttribute("newPassAgain", newPassAgain);
+                    model.addAttribute("isError", true);
                 }
 
                 return "changePassWo";
             }
-            
+
             return "changePassWo";
 
         }

@@ -10,7 +10,7 @@ import javax.mail.internet.*;
 @Data
 public class SendMail {
     boolean status;
-    String defaupass ;
+    String defaupass;
 
     public SendMail() {
 //        status : false thì sẽ ko gửi maill

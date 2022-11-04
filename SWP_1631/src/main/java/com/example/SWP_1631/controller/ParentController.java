@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +37,11 @@ public class ParentController {
 
     @Autowired
     private AttendanceService attendanceService;
+
+    @Autowired
+    private ScheduleService scheduleService;
+    @Autowired
+    private ActivityService activityService;
 
 
     @RequestMapping("/ParentsProfile")
@@ -192,6 +203,107 @@ public class ParentController {
         }
         kindergartnerService.update(kindergartner);
         return "redirect:/parents/childprofile";
+    }
+
+    @RequestMapping("/viewTimeTable")
+    public String viewTimeTable(Model model, HttpSession session, HttpServletRequest request) {
+        Account accSession = (Account) session.getAttribute("acc");
+        List<Kindergartner> listKinder = kindergartnerService.getListKinderByIdParent(accSession.getAccountId());
+        model.addAttribute("listKinder", listKinder);
+        List<Clazz> listClass = clazzService.getAllClazz();
+        StudyRecord studyRecord = new StudyRecord();
+        String classid_raw = request.getParameter("cid");
+        int classid = 1;
+        if (classid_raw == null) {
+            if(listKinder.size()>0){
+                studyRecord = studyRecordService.getStudyRecordByIdKinderId(listKinder.get(0).getKinderId());
+                classid = studyRecord.getClassId().getClazzId();
+            }
+        } else {
+            try {
+                studyRecord = studyRecordService.getStudyRecordByIdKinderId(Integer.parseInt(classid_raw));
+                classid = studyRecord.getClassId().getClazzId();
+            } catch (Exception e) {
+            }
+        }
+        if (session.getAttribute("cidSession") != null) {
+            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim());
+            classid = cid;
+            model.addAttribute("cid_raw", classid);
+        } else {
+            try {
+                model.addAttribute("cid_raw", listClass.get(0).getClazzId());
+            } catch (Exception e) {
+
+            }
+        }
+        session.setAttribute("cidSession", classid);
+        LinkedHashMap<LocalDate, String> allWeeks = scheduleService.getAllWeeksInYear(2022);
+        model.addAttribute("weeks", allWeeks);
+
+
+        model.addAttribute("classes", listClass);
+
+        List<Activity> listActivity = activityService.getAll();
+        model.addAttribute("activity", listActivity);
+
+        //**
+        String date = request.getParameter("recentMonday");
+
+        if (session.getAttribute("dateSessionViewSchedluAdmin") != null) {
+//            date = String.valueOf(session.getAttribute("dateSessionViewSchedluAdmin"));
+
+            System.err.println("dateSe " + session.getAttribute("dateSessionViewSchedluAdmin"));
+        }
+        String date2 = date;
+
+        if (date != null) {
+            try {
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+                Date d = sdf1.parse(date);
+
+                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+                date = sdf2.format(d);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            System.err.println("date1 " + date);
+        } else {
+            date = scheduleService.firstDayOfWeek(new Date());
+            System.err.println("date2 " + date);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String date3 = "";
+            try {
+                Date d = sdf.parse(date);
+                sdf = new SimpleDateFormat("yyyy-MM-dd");
+                date3 = sdf.format(d);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            session.setAttribute("recentMonday", date3);
+        }
+        ScheduleDetails sde = scheduleService.getScheduleDetailsByClassDate(classid, date);
+
+//        System.out.println("*********************");
+//        System.out.println(sde.getScheduleMap());
+        model.addAttribute("scheduleDetails", sde);
+        int[] loop = {0, 1, 2, 3, 4, 5, 6};
+        model.addAttribute("loop", loop);
+        //return true date
+        String action = request.getParameter("action");
+        if (action == null) {
+            LocalDate now = LocalDate.now();
+            LocalDate firstDayOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            System.err.println(firstDayOfWeek);
+            model.addAttribute("firstMonday", firstDayOfWeek);
+        } else {
+
+            model.addAttribute("recentMonday", date2);
+//            session.setAttribute("recentMonday", date);
+
+        }
+
+        return "Parents/parentsViewTimeTable";
     }
 
     // n.a
