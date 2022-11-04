@@ -3,8 +3,6 @@ package com.example.SWP_1631.controller;
 import com.example.SWP_1631.entity.*;
 import com.example.SWP_1631.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -129,12 +127,23 @@ public class ParentController {
                 model.addAttribute("studyRecord", studyRecord); // set attribute
                 model.addAttribute("mainchildid", index); // set attribute id của trẻ
             } else {
-                if (listKinder.size() > 0) {
-                    model.addAttribute("Kinder", listKinder.get(0));
-                    StudyRecord studyRecord = studyRecordService.getStudyRecordByIdKinderId(listKinder.get(0).getKinderId());
-                    model.addAttribute("studyRecord", studyRecord);
-                    model.addAttribute("mainchildid", listKinder.get(0).getKinderId());
+                if (res.getParameter("idKinSearch") != null) {
+                    int index = Integer.parseInt(res.getParameter("idKinSearch")); // id của trẻ em muốn get data
+                    Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(index); // lấy thông tin của đứa trẻ
+                    kindergartner.ifPresent(user -> model.addAttribute("Kinder", user));  // set attribute
+                    StudyRecord studyRecord = studyRecordService.getStudyRecordByIdKinderId(index); // lấy thông tin việc học của trẻ theo id trẻ
+                    model.addAttribute("studyRecord", studyRecord); // set attribute
+                    model.addAttribute("idKinSearch", index); // set attribute id của trẻ
+                    model.addAttribute("mainchildid", index); // set attribute id của trẻ
+                }else {
+                    if (listKinder.size() > 0) {
+                        model.addAttribute("Kinder", listKinder.get(0));
+                        StudyRecord studyRecord = studyRecordService.getStudyRecordByIdKinderId(listKinder.get(0).getKinderId());
+                        model.addAttribute("studyRecord", studyRecord);
+                        model.addAttribute("mainchildid", listKinder.get(0).getKinderId());
+                    }
                 }
+
             }
 
         }
@@ -157,12 +166,23 @@ public class ParentController {
                 List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(index);
                 model.addAttribute("listAttendance", listAttendance);
             } else {
-                if (listKinder.size() > 0) {
-                    model.addAttribute("Kinder", listKinder.get(0));
-                    model.addAttribute("mainchildid", listKinder.get(0).getKinderId());
-                    List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(listKinder.get(0).getKinderId());
+                if (res.getParameter("idKinSearch") != null) {
+                    int index = Integer.parseInt(res.getParameter("idKinSearch"));
+                    Optional<Kindergartner> kindergartner = kindergartnerService.getKindergartnerById(index);
+                    kindergartner.ifPresent(user -> model.addAttribute("Kinder", user));
+                    model.addAttribute("mainchildid", index);
+                    model.addAttribute("idKinSearch", index);
+                    List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(index);
                     model.addAttribute("listAttendance", listAttendance);
+                }else {
+                    if (listKinder.size() > 0) {
+                        model.addAttribute("Kinder", listKinder.get(0));
+                        model.addAttribute("mainchildid", listKinder.get(0).getKinderId());
+                        List<Attendance> listAttendance = attendanceService.getAllAttendanceByIdKinder(listKinder.get(0).getKinderId());
+                        model.addAttribute("listAttendance", listAttendance);
+                    }
                 }
+
             }
 
         }
@@ -187,22 +207,26 @@ public class ParentController {
 
     @RequestMapping(value = "/updateChild", method = RequestMethod.POST)
     public String updateC(@RequestParam("id") Integer userId, HttpServletRequest res, HttpSession session) {
-        Kindergartner kindergartner = new Kindergartner();
-        Optional<Kindergartner> opKin = kindergartnerService.getKindergartnerById(userId);
-        if (opKin.isPresent()) {
-            kindergartner = opKin.get();
-        }
-        kindergartner.setFirstName(res.getParameter("txtFirstName"));
-        kindergartner.setLastName(res.getParameter("txtLastName"));
-        boolean gen = res.getParameter("gender").equals("1");
-        kindergartner.setGender(gen);
-        try {
-            kindergartner.setDob(res.getParameter("dob"));
-        } catch (Exception e) {
+        if(userId != null){
+            Kindergartner kindergartner = new Kindergartner();
+            Optional<Kindergartner> opKin = kindergartnerService.getKindergartnerById(userId);
+            if (opKin.isPresent()) {
+                kindergartner = opKin.get();
+            }
+            kindergartner.setFirstName(res.getParameter("txtFirstName"));
+            kindergartner.setLastName(res.getParameter("txtLastName"));
+            boolean gen = res.getParameter("gender").equals("1");
+            kindergartner.setGender(gen);
+            try {
+                kindergartner.setDob(res.getParameter("dob"));
+            } catch (Exception e) {
 
+            }
+            kindergartnerService.update(kindergartner);
+            return "redirect:/parents/childprofile?mainchildid="+userId;
         }
-        kindergartnerService.update(kindergartner);
-        return "redirect:/parents/childprofile";
+
+        return "redirect:/parents/editChild";
     }
 
     @RequestMapping("/viewTimeTable")
@@ -218,32 +242,23 @@ public class ParentController {
             if(listKinder.size()>0){
                 studyRecord = studyRecordService.getStudyRecordByIdKinderId(listKinder.get(0).getKinderId());
                 classid = studyRecord.getClassId().getClazzId();
+                model.addAttribute("cid_raw", listKinder.get(0).getKinderId());
+                System.err.println("A: "+listKinder.get(0).getKinderId());
             }
+
         } else {
             try {
                 studyRecord = studyRecordService.getStudyRecordByIdKinderId(Integer.parseInt(classid_raw));
                 classid = studyRecord.getClassId().getClazzId();
+                model.addAttribute("cid_raw", Integer.parseInt(classid_raw));
+                System.err.println("B: "+Integer.parseInt(classid_raw));
             } catch (Exception e) {
             }
         }
-        if (session.getAttribute("cidSession") != null) {
-            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim());
-            classid = cid;
-            model.addAttribute("cid_raw", classid);
-        } else {
-            try {
-                model.addAttribute("cid_raw", listClass.get(0).getClazzId());
-            } catch (Exception e) {
 
-            }
-        }
-        session.setAttribute("cidSession", classid);
+
         LinkedHashMap<LocalDate, String> allWeeks = scheduleService.getAllWeeksInYear(2022);
         model.addAttribute("weeks", allWeeks);
-
-
-        model.addAttribute("classes", listClass);
-
         List<Activity> listActivity = activityService.getAll();
         model.addAttribute("activity", listActivity);
 
@@ -311,7 +326,7 @@ public class ParentController {
     public String view(Model model) {
         List<Clazz> list = clazzService.getAllClazz();
         model.addAttribute("ListClazz", list);
-        return "childrenregister/childregister";
+        return "Parents/childregister";
     }
 
     @RequestMapping(value = "/registerChild", method = RequestMethod.POST)

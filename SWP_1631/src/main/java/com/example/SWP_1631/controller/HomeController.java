@@ -42,119 +42,124 @@ public class HomeController {
     private ActivityService activityService;
     private Utill utill = new Utill();
 
-    @RequestMapping("/testHome")
-    public String testHome(Model model, HttpSession session, HttpServletRequest request) {
-        List<Clazz> listClass = clazzService.getAllClazz();
-        String classid_raw = request.getParameter("cid");
-        int classid = 1;
-        if (classid_raw == null) {
-            classid = listClass.get(0).getClazzId();
-
-        } else {
-            try {
-                classid = Integer.parseInt(classid_raw);
-            } catch (Exception e) {
-            }
-        }
-        if (session.getAttribute("cidSession") != null) {
-            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim());
-            classid = cid;
-            model.addAttribute("cid_raw", classid);
-        } else {
-            try {
-                model.addAttribute("cid_raw", listClass.get(0).getClazzId());
-            } catch (Exception e) {
-
-            }
-        }
-        session.setAttribute("cidSession", classid);
-        LinkedHashMap<LocalDate, String> allWeeks = scheduleService.getAllWeeksInYear(2022);
-        model.addAttribute("weeks", allWeeks);
-
-
-        model.addAttribute("classes", listClass);
-
-        List<Activity> listActivity = activityService.getAll();
-        model.addAttribute("activity", listActivity);
-
-        //**
-        String date = request.getParameter("recentMonday");
-
-        if (session.getAttribute("dateSessionViewSchedluAdmin") != null) {
-//            date = String.valueOf(session.getAttribute("dateSessionViewSchedluAdmin"));
-
-            System.err.println("dateSe " + session.getAttribute("dateSessionViewSchedluAdmin"));
-        }
-        String date2 = date;
-
-        if (date != null) {
-            try {
-                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-                Date d = sdf1.parse(date);
-
-                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-                date = sdf2.format(d);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            System.err.println("date1 " + date);
-        } else {
-            date = scheduleService.firstDayOfWeek(new Date());
-            System.err.println("date2 " + date);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String date3 = "";
-            try {
-                Date d = sdf.parse(date);
-                sdf = new SimpleDateFormat("yyyy-MM-dd");
-                date3 = sdf.format(d);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            session.setAttribute("recentMonday", date3);
-        }
-        ScheduleDetails sde = scheduleService.getScheduleDetailsByClassDate(classid, date);
-
-//        System.out.println("*********************");
-//        System.out.println(sde.getScheduleMap());
-        model.addAttribute("scheduleDetails", sde);
-        int[] loop = {0, 1, 2, 3, 4, 5, 6};
-        model.addAttribute("loop", loop);
-        //return true date
-        String action = request.getParameter("action");
-        if (action == null) {
-            LocalDate now = LocalDate.now();
-            LocalDate firstDayOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-            System.err.println(firstDayOfWeek);
-            model.addAttribute("firstMonday", firstDayOfWeek);
-        } else {
-
-            model.addAttribute("recentMonday", date2);
-//            session.setAttribute("recentMonday", date);
-
-        }
-        return "Parents/parentsViewTimeTable";
-    }
+//    @RequestMapping("/testHome")
+//    public String testHome(Model model, HttpSession session, HttpServletRequest request) {
+//        List<Clazz> listClass = clazzService.getAllClazz();
+//        String classid_raw = request.getParameter("cid");
+//        int classid = 1;
+//        if (classid_raw == null) {
+//            classid = listClass.get(0).getClazzId();
+//
+//        } else {
+//            try {
+//                classid = Integer.parseInt(classid_raw);
+//            } catch (Exception e) {
+//            }
+//        }
+//        if (session.getAttribute("cidSession") != null) {
+//            int cid = Integer.parseInt(String.valueOf(session.getAttribute("cidSession")).trim());
+//            classid = cid;
+//            model.addAttribute("cid_raw", classid);
+//        } else {
+//            try {
+//                model.addAttribute("cid_raw", listClass.get(0).getClazzId());
+//            } catch (Exception e) {
+//
+//            }
+//        }
+//        session.setAttribute("cidSession", classid);
+//        LinkedHashMap<LocalDate, String> allWeeks = scheduleService.getAllWeeksInYear(2022);
+//        model.addAttribute("weeks", allWeeks);
+//
+//
+//        model.addAttribute("classes", listClass);
+//
+//        List<Activity> listActivity = activityService.getAll();
+//        model.addAttribute("activity", listActivity);
+//
+//        //**
+//        String date = request.getParameter("recentMonday");
+//
+//        if (session.getAttribute("dateSessionViewSchedluAdmin") != null) {
+////            date = String.valueOf(session.getAttribute("dateSessionViewSchedluAdmin"));
+//
+//            System.err.println("dateSe " + session.getAttribute("dateSessionViewSchedluAdmin"));
+//        }
+//        String date2 = date;
+//
+//        if (date != null) {
+//            try {
+//                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+//                Date d = sdf1.parse(date);
+//
+//                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+//                date = sdf2.format(d);
+//            } catch (Exception e) {
+//                System.out.println(e);
+//            }
+//            System.err.println("date1 " + date);
+//        } else {
+//            date = scheduleService.firstDayOfWeek(new Date());
+//            System.err.println("date2 " + date);
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            String date3 = "";
+//            try {
+//                Date d = sdf.parse(date);
+//                sdf = new SimpleDateFormat("yyyy-MM-dd");
+//                date3 = sdf.format(d);
+//            } catch (Exception e) {
+//                System.out.println(e);
+//            }
+//            session.setAttribute("recentMonday", date3);
+//        }
+//        ScheduleDetails sde = scheduleService.getScheduleDetailsByClassDate(classid, date);
+//
+////        System.out.println("*********************");
+////        System.out.println(sde.getScheduleMap());
+//        model.addAttribute("scheduleDetails", sde);
+//        int[] loop = {0, 1, 2, 3, 4, 5, 6};
+//        model.addAttribute("loop", loop);
+//        //return true date
+//        String action = request.getParameter("action");
+//        if (action == null) {
+//            LocalDate now = LocalDate.now();
+//            LocalDate firstDayOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+//            System.err.println(firstDayOfWeek);
+//            model.addAttribute("firstMonday", firstDayOfWeek);
+//        } else {
+//
+//            model.addAttribute("recentMonday", date2);
+////            session.setAttribute("recentMonday", date);
+//
+//        }
+//        return "Parents/parentsViewTimeTable";
+//    }
 
     @RequestMapping("/")
     public String init(Model model, HttpSession session) {
         if (session.getAttribute("daLogin") != null) {
             return "redirect:/home/loginSuccess";
+        }else {
+            return "index";
         }
-        return "index";
+
     }
 
     @RequestMapping("/loginSuccess")
     public String ViewS(HttpSession session) {
         if (session.getAttribute("VaiTro").equals("ROLE_ADMIN")) {
-            session.setAttribute("daLogin", "true");
+            session.setAttribute("daLogin", "trueA");
+            session.setMaxInactiveInterval(60*60*24);
             return "redirect:/admin/";
         }
         if (session.getAttribute("VaiTro").equals("ROLE_PARENT")) {
-            session.setAttribute("daLogin", "true");
+            session.setAttribute("daLogin", "trueA");
+            session.setMaxInactiveInterval(60*60*24);
             return "redirect:/parents/ParentsProfile";
         }
         if (session.getAttribute("VaiTro").equals("ROLE_TEACHER")) {
-            session.setAttribute("daLogin", "true");
+            session.setAttribute("daLogin", "trueA");
+            session.setMaxInactiveInterval(60*60*24);
             return "redirect:/teacher/";
         }
         return "index";
@@ -408,6 +413,9 @@ public class HomeController {
 
     @RequestMapping("/login")
     public String login(Model model, HttpSession session, HttpServletRequest request) {
+        if (session.getAttribute("daLogin") != null) {
+            return "redirect:/home/loginSuccess";
+        }
         if (session.getAttribute("accountTamThoiRegister") != null) {
             session.removeAttribute("accountTamThoiRegister");
         }
@@ -416,9 +424,6 @@ public class HomeController {
         }
         if (session.getAttribute("forPassHome") != null) {
             session.removeAttribute("forPassHome");
-        }
-        if (session.getAttribute("daLogin") != null) {
-            return "redirect:/home/loginSuccess";
         }
         if (request.getParameter("id") != null) {
             model.addAttribute("error", true);
@@ -704,12 +709,13 @@ public class HomeController {
                 }
 
                 return "changePassWo";
+            }else {
+                return "changePassWo";
             }
-
-            return "changePassWo";
-
+        }else {
+            return "redirect:/home/";
         }
-        return "redirect:/home/";
+
     }
 
 

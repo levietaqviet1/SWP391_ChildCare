@@ -35,6 +35,9 @@
                         <li class="menu-item">
                             <a href="/home/changePassWo">Change Password</a>
                         </li>
+                        <li class="menu-item ">
+                            <a href="/parents/viewTimeTable">View Time Table</a>
+                        </li>
                     </ul>
                 </div>
                 <div style="border-top: 3px solid gray;"></div>
@@ -59,7 +62,7 @@
                             <div class="personel-section">
 
                             </div>
-                            <form th:action="@{/parents/childprofile}" method="GET">
+                            <form th:action="@{/parents/childdetailAttdence}" method="GET">
 
                                 <select name="mainchildid" id="mainchildid" class="item-list">
                                     <option
@@ -78,10 +81,10 @@
 
                     <div class="list-option" id="options">
                         <div class="attendence option-item current">
-                            <a href="/parents/childdetailAttdence">Attendance</a>
+                            <a th:href="@{/parents/childdetailAttdence?idKinSearch={idKinSearch}(idKinSearch=${mainchildid})}">Attendance</a>
                         </div>
                         <div class="profile option-item ">
-                            <a href="/parents/childprofile">Profile</a>
+                            <a th:href="@{/parents/childprofile?idKinSearch={idKinSearch}(idKinSearch=${mainchildid})}">Profile</a>
                         </div>
                     </div>
 

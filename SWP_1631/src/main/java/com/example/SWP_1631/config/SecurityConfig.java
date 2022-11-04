@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/", "/home/login", "/logout","/static/**").permitAll();
+        http.authorizeRequests().antMatchers("/", "/home/login", "/home/logoutSuccessful").permitAll();
 
         // Trang chỉ dành cho ADMIN
         http.authorizeRequests().antMatchers("/admin/**", "/kinderController/**").access("hasRole('ROLE_ADMIN')");
@@ -72,9 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); // Ta lưu tạm remember me trong memory (RAM). Nếu cần mình có thể lưu trong database
-        return memory;
-    }
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); // Ta lưu tạm remember me trong memory (RAM). Nếu cần mình có thể lưu trong database
+//        return memory;
+//    }
 }
